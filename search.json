@@ -1,0 +1,1722 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Statistical Machine Learning (208 @ LU) Notes",
+    "section": "",
+    "text": "Welcome",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "Slides1.html",
+    "href": "Slides1.html",
+    "title": "1  Terminologies and Notations",
+    "section": "",
+    "text": "1.1 What is Machine Learning?",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#what-is-machine-learning",
+    "href": "Slides1.html#what-is-machine-learning",
+    "title": "1  Terminologies and Notations",
+    "section": "",
+    "text": "Machine Learning is the study of tools/techniques for understanding complex datasets.\nThe name machine learning was coined in 1959 by Arthur Samuel.\n\n“Field of study that gives computers the ability to learn without being explicitly programmed.”",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#what-is-machine-learning-1",
+    "href": "Slides1.html#what-is-machine-learning-1",
+    "title": "1  Terminologies and Notations",
+    "section": "1.2 What is Machine Learning?",
+    "text": "1.2 What is Machine Learning?\nTom M. Mitchell (1998) defined algorithms studied in the machine learning field as\n“A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P if its performance at tasks in T, as measured by P, improves with experience E.”",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#question",
+    "href": "Slides1.html#question",
+    "title": "1  Terminologies and Notations",
+    "section": "1.3 Question!!!",
+    "text": "1.3 Question!!!\nSuppose your email program watches which emails you do or do not mark as spam, and based on that learns how to better filter spam. According to Tom Mitchell’s definition, what is the task T, experience E, and performance measure P in this setting?\n\nThe number (or fraction) of emails correctly classified as spam/ham.\nClassifying emails as spam or ham (not spam)\nWatching you label emails as spam or ham.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#question-1",
+    "href": "Slides1.html#question-1",
+    "title": "1  Terminologies and Notations",
+    "section": "1.4 Question!!!",
+    "text": "1.4 Question!!!\nSuppose you are interested in the problem of housing price prediction. You have collected a set of data on house prices at a city and want to use the house characteristics (square footage, number of bedrooms, etc.) to predict the price.\n\nAccording to Tom Mitchell’s definition, what is the task T, experience E, and performance measure P in this setting?",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#what-is-machine-learning-2",
+    "href": "Slides1.html#what-is-machine-learning-2",
+    "title": "1  Terminologies and Notations",
+    "section": "1.5 What is Machine Learning?",
+    "text": "1.5 What is Machine Learning?\n\n\n\n\n\nMNIST handwritten digits (from ISLR, James et al.)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#statistical-learning-vs-machine-learning-vs-data-science",
+    "href": "Slides1.html#statistical-learning-vs-machine-learning-vs-data-science",
+    "title": "1  Terminologies and Notations",
+    "section": "1.6 Statistical Learning vs Machine Learning vs Data Science",
+    "text": "1.6 Statistical Learning vs Machine Learning vs Data Science\n\nMachine learning arose as a subfield of Artificial Intelligence.\nStatistical learning arose as a subfield of Statistics.\nThere is much overlap, a great deal of “cross-fertilization”.\n“Data Science” - Reflects the fact that both statistical and machine learning are about data.\n“Machine learning” or “Data Science” are “fancier” terms.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#supervised-vs-unsupervised",
+    "href": "Slides1.html#supervised-vs-unsupervised",
+    "title": "1  Terminologies and Notations",
+    "section": "1.7 Supervised vs Unsupervised",
+    "text": "1.7 Supervised vs Unsupervised\n\n\n\n\n\nMachine Learning Tasks (from Bunker and Fayez, 2017)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#supervised-learning",
+    "href": "Slides1.html#supervised-learning",
+    "title": "1  Terminologies and Notations",
+    "section": "1.8 Supervised Learning",
+    "text": "1.8 Supervised Learning\n\nWe have access to labeled data\nThe objective is to learn the overall pattern of the relationship between the inputs (\\(\\mathbf{X}\\)) and response (\\(Y\\)) in order to\n\nInvestigate the relationship between inputs and response.\nPredict for potential unseen test cases.\nAssess the quality of predictions.\n\n\n\n\n\nSupervised Learning problems can be categorized into\n\nRegression problems (response is quantitative, continuous)\nClassification problems (response is qualitative, categorical)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#unsupervised-learning",
+    "href": "Slides1.html#unsupervised-learning",
+    "title": "1  Terminologies and Notations",
+    "section": "1.9 Unsupervised Learning",
+    "text": "1.9 Unsupervised Learning\n\nNo response/outcome variable, just \\(\\mathbf{X}\\).\nUnderstand structure within data.\n\nfind similar groups of observations based on features (clustering)\nfind a smaller subset of features with the most variation (dimensionality reduction)\n\nNo gold-standard.\nEasier to collect unlabeled data.\nUseful pre-processing step for supervised learning.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#terminologiesnotations",
+    "href": "Slides1.html#terminologiesnotations",
+    "title": "1  Terminologies and Notations",
+    "section": "1.10 Terminologies/Notations",
+    "text": "1.10 Terminologies/Notations\n\nResponse/Target/Outcome - variable we are interested in predicting, denoted as \\(Y\\)\nFeatures/Inputs/Predictors - variables used to predict the response, denoted as \\(X\\)\nFeature Matrix - all features taken together, denoted as \\(\\mathbf{X}\\)\n\n\n\n\n\n\nNumber of data points/observations denoted as \\(n\\)\nNumber of features/inputs/predictors denoted as \\(p\\)\nMissing entries in R are denoted as NA",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#question-2",
+    "href": "Slides1.html#question-2",
+    "title": "1  Terminologies and Notations",
+    "section": "1.11 Question!!!",
+    "text": "1.11 Question!!!\nSuppose you have information about 867 cancer patients on their age, tumor size, clump thickness of the tumor, uniformity of cell size, and whether the tumor is malignant or benign. Based on these data, you are interested in building a model to predict the type of tumor (malignant or benign) for future cancer patients.\n\nWhat are the values of \\(n\\) and \\(p\\) in this dataset?\nWhat are the inputs/features?",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides1.html#question-3",
+    "href": "Slides1.html#question-3",
+    "title": "1  Terminologies and Notations",
+    "section": "1.12 Question!!!",
+    "text": "1.12 Question!!!\nSome of the problems below are best addressed using a supervised learning algorithm, while others with an unsupervised learning algorithm. In each case, identify whether the problem belongs to the supervised or unsupervised learning paradigm. (Assume some appropriate dataset is available for your algorithm to “learn” from.)\n\nExamine the statistics of two football teams, and predict which team will win tomorrow’s match (given historical data of teams’ wins/losses to learn from).\nGiven genetic (DNA) data from a person, predict the probability of the person developing diabetes over the next 10 years.\nTake a collection of 1000 essays written on the US economy, and find a way to automatically group these essays into a small number of groups of essays that are somehow “similar” or “related”.\n\n\n\n\nExamine data on the income and years of education of adults in a neighborhood and build a model to predict the income from years of education.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Terminologies and Notations</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html",
+    "href": "Slides2.html",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "",
+    "text": "2.1 Supervised Learning\nMore mathematically, the “true”/population model can be represented by\n\\[Y=f(\\mathbf{X}) + \\epsilon\\]\nwhere \\(\\epsilon\\) is a random error term (includes measurement error, other discrepancies) independent of \\(\\mathbf{X}\\) and has mean zero.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-why-estimate-fmathbfx",
+    "href": "Slides2.html#supervised-learning-why-estimate-fmathbfx",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.2 Supervised Learning: Why Estimate \\(f(\\mathbf{X})\\)?",
+    "text": "2.2 Supervised Learning: Why Estimate \\(f(\\mathbf{X})\\)?\nWe wish to know about \\(f(\\mathbf{X})\\) for two reasons:\n\nPrediction at new unseen data points \\(x_0\\)\n\n\\[\\hat{y}_0=\\hat{f}(x_0) \\ \\ \\ \\text{or} \\ \\ \\ \\hat{y}_0=\\hat{C}(x_0)\\]\n\nInference: Understand the relationship between \\(\\mathbf{X}\\) and \\(Y\\).\nAn ML algorithm that is developed mainly for predictive purposes is often termed as a Black Box algorithm.\n\n\n\nThe primary objective is to:\n\nRegression (response \\(Y\\) is quantitative): Build a model \\(\\hat{Y} = \\hat{f}(\\mathbf{X})\\)\nClassification (response \\(Y\\) is qualitative): Build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-prediction-and-inference",
+    "href": "Slides2.html#supervised-learning-prediction-and-inference",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.3 Supervised Learning: Prediction and Inference",
+    "text": "2.3 Supervised Learning: Prediction and Inference\nIncome dataset\n\n\n\n\n\nWhy ML? (from ISLR2)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-prediction-and-inference-1",
+    "href": "Slides2.html#supervised-learning-prediction-and-inference-1",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.4 Supervised Learning: Prediction and Inference",
+    "text": "2.4 Supervised Learning: Prediction and Inference\nIncome dataset\n\n\n\n\n\nWhy ML? (from ISLR2)\n\n\n\n\n\n\n\nWhy ML? (from ISLR2)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-how-do-we-estimate-fmathbfx",
+    "href": "Slides2.html#supervised-learning-how-do-we-estimate-fmathbfx",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.5 Supervised Learning: How Do We Estimate \\(f(\\mathbf{X})\\)?",
+    "text": "2.5 Supervised Learning: How Do We Estimate \\(f(\\mathbf{X})\\)?\nBroadly speaking, we have two approaches.\n\nParametric and Structured Methods\n\nA functional form of \\(f(\\mathbf{X})\\) is assumed, such as \\[f(\\mathbf{X})=\\beta_0 + \\beta_1 \\mathbf{x}_1 + \\beta_2 \\mathbf{x}_2 + \\ldots + \\beta_p \\mathbf{x}_p\\]\nWe estimate the parameters \\(\\beta_0, \\beta_1, \\ldots, \\beta_p\\) by fitting the model to labeled training data.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-parametric-methods",
+    "href": "Slides2.html#supervised-learning-parametric-methods",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.6 Supervised Learning: Parametric Methods",
+    "text": "2.6 Supervised Learning: Parametric Methods\nIncome dataset\n\n\n\n\n\nParametric model fit (from ISLR2)\n\n\n\n\n\n\n\nParametric model fit (from ISLR2)\n\n\n\n\n\\[\\text{Income} \\approx \\beta_0 + \\beta_1 \\times \\text{Years of Education} + \\beta_2 \\times \\text{Seniority}\\]",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-non-parametric-methods",
+    "href": "Slides2.html#supervised-learning-non-parametric-methods",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.7 Supervised Learning: Non-parametric Methods",
+    "text": "2.7 Supervised Learning: Non-parametric Methods\nNon-parametric approaches do not make any explicit assumptions about the functional form of \\(f(\\mathbf{X})\\). A very large number of observations (compared to a parametric approach) is required to fit a model using the non-parametric approach.\nIncome dataset\n\n\n\n\n\nNon-parametric model fit (from ISLR2)\n\n\n\n\n\n\n\nNon-parametric model fit (from ISLR2)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-flexibility-of-models",
+    "href": "Slides2.html#supervised-learning-flexibility-of-models",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.8 Supervised Learning: Flexibility of Models",
+    "text": "2.8 Supervised Learning: Flexibility of Models\nFlexibility refers to the smoothness of functions. (More theoretically, flexibility depends on the number of parameters of the function).\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMore flexible \\(\\implies\\) More complex \\(\\implies\\) Less Smooth \\(\\implies\\) Less Restrictive \\(\\implies\\) Less Interpretable",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-some-trade-offs",
+    "href": "Slides2.html#supervised-learning-some-trade-offs",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.9 Supervised Learning: Some Trade-offs",
+    "text": "2.9 Supervised Learning: Some Trade-offs\n\nPrediction Accuracy versus Interpretability\nGood Fit versus Over-fit or Under-fit",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-some-trade-offs-1",
+    "href": "Slides2.html#supervised-learning-some-trade-offs-1",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.10 Supervised Learning: Some Trade-offs",
+    "text": "2.10 Supervised Learning: Some Trade-offs\n\n\n\n\n\nTrade-off between flexibility and interpretability (from ISLR2)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-assessing-model-accuracy",
+    "href": "Slides2.html#supervised-learning-assessing-model-accuracy",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.11 Supervised Learning: Assessing Model Accuracy",
+    "text": "2.11 Supervised Learning: Assessing Model Accuracy\nWhy are we going to study so many different ML techniques?\nThere is no free lunch in statistics: No one method dominates all others over all possible datasets.\n\n\n\nWhen we estimate \\(f(\\mathbf{X})\\) using \\(\\hat{f}(\\mathbf{X})\\), then,\n\\[E\\left[Y-\\hat{Y}\\right]^2=E\\left[f(\\mathbf{X})+\\epsilon - \\hat{f}(\\mathbf{X})\\right]^2=\\underbrace{\\left[f(\\mathbf{X})-\\hat{f}(\\mathbf{X})\\right]^2}_{Reducible} + \\underbrace{Var(\\epsilon)}_{Irreducible}\\]\n\\(E\\left[Y-\\hat{Y}\\right]^2\\): Expected (average) squared difference between predicted and actual (observed) response.\nWe will focus on techniques for estimating \\(f(\\mathbf{X})\\) with the objective of minimizing the reducible error.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-assessing-model-accuracy-1",
+    "href": "Slides2.html#supervised-learning-assessing-model-accuracy-1",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.12 Supervised Learning: Assessing Model Accuracy",
+    "text": "2.12 Supervised Learning: Assessing Model Accuracy\nSuppose we have labeled training data \\((x_1,y_1), (x_2, y_2), \\ldots, (x_n,y_n)\\), i.e, \\(n\\) training data points/observations.\nWe fit/train a model \\(\\hat{y}=\\hat{f}(x)\\) (or, a classifier \\(\\hat{y}=\\hat{C}(x)\\)) on the training data and obtain estimates \\(\\hat{f}(x_1), \\hat{f}(x_2), \\ldots, \\hat{f}(x_n)\\) (or, \\(\\hat{C}(x_1), \\hat{C}(x_2), \\ldots, \\hat{C}(x_n)\\)).\nWe could then compute the\n\nRegression\n\n\\[\\text{Training MSE}=\\text{Average}_{Training} \\left(y-\\hat{f}(x)\\right)^2 = \\frac{1}{n} \\displaystyle \\sum_{i=1}^{n} \\left(y_i-\\hat{f}(x_i)\\right)^2\\]\n\nClassification\n\n\\[\\text{Training Error Rate}=\\text{Average}_{Training} \\ \\left[I \\left(y\\ne\\hat{C}(x)\\right) \\right]= \\frac{1}{n} \\displaystyle \\sum_{i=1}^{n} \\ I\\left(y_i \\ne \\hat{C}(x_i)\\right)\\]",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-assessing-model-accuracy-2",
+    "href": "Slides2.html#supervised-learning-assessing-model-accuracy-2",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.13 Supervised Learning: Assessing Model Accuracy",
+    "text": "2.13 Supervised Learning: Assessing Model Accuracy\nBut in general, we are not interested in how the method works on the training data. We want to measure the accuracy of the method on previously unseen test data.\nSuppose, if possible, we have fresh test data, \\((x_1^{test},y_1^{test}), (x_2^{test},y_2^{test}), \\ldots, (x_m^{test},y_m^{test})\\). Then we can compute,\n\nRegression\n\n\\[\\text{Test MSE}=\\text{Average}_{Test} \\left(y-\\hat{f}(x)\\right)^2 = \\frac{1}{m} \\displaystyle \\sum_{i=1}^{m} \\left(y_i^{test}-\\hat{f}(x_i^{test})\\right)^2\\]\n\nClassification\n\n\\[\\text{Test Error Rate}=\\text{Average}_{Test} \\ \\left[I \\left(y\\ne\\hat{C}(x)\\right) \\right]= \\frac{1}{m} \\displaystyle \\sum_{i=1}^{m} \\ I\\left(y_i^{test} \\ne \\hat{C}(x_i^{test})\\right)\\]",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#supervised-learning-bias-variance-trade-off",
+    "href": "Slides2.html#supervised-learning-bias-variance-trade-off",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.14 Supervised Learning: Bias-Variance Trade-off",
+    "text": "2.14 Supervised Learning: Bias-Variance Trade-off\n\nSuppose we have fit a model \\(\\hat{f}(x)\\) to some training data. Let the “true” model be \\(Y=f(x)+\\epsilon\\). Let \\((x_0, y_0)\\) be a test observation.\nWe have,\n\\[\\underbrace{\\text{Average}_{Test}\\left(y_0-\\hat{f}(x_0)\\right)^2}_{total \\ error}=\\underbrace{Var\\left(\\hat{f}(x_0)\\right)}_{source \\ 3} + \\underbrace{\\left[Bias\\left(\\hat{f}(x_0)\\right)\\right]^2}_{source \\ 2}+\\underbrace{Var(\\epsilon)}_{source \\ 1}\\]\nwhere \\(Bias\\left(\\hat{f}(x_0)\\right)=E\\left(\\hat{f}(x_0)\\right)-f(x_0)\\)\n\n\nsource 1: how \\(y\\) differs from “true” \\(f(x)\\)\nsource 2: how \\(\\hat{f}(x)\\) (when fitted to the test data) differs from \\(f(x)\\)\nsource 3: how \\(\\hat{f}(x)\\) varies among different randomly selected possible training data",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#bias-variance-trade-off",
+    "href": "Slides2.html#bias-variance-trade-off",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.15 Bias-Variance Trade-off",
+    "text": "2.15 Bias-Variance Trade-off\n\n\n\n\n\nFigure from ISLR2",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#question",
+    "href": "Slides2.html#question",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.16 Question!!!",
+    "text": "2.16 Question!!!\nAs the flexibility of a model \\(\\hat{f}(\\mathbf{X})\\) increases,\n\nits variance \\(\\underline{\\hspace{5cm}}\\) (increases/decreases)\nits bias \\(\\underline{\\hspace{5cm}}\\) (increases/decreases)\nits training MSE \\(\\underline{\\hspace{5cm}}\\) (increases/decreases)\nits test MSE \\(\\underline{\\hspace{5cm}}\\) (increases/decreases/U-shaped)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#linear-regression",
+    "href": "Slides2.html#linear-regression",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.17 Linear Regression",
+    "text": "2.17 Linear Regression\nMathematically, a supervised learning problem can be represented by\n\\[Y=f(\\mathbf{X}) + \\epsilon\\]\nwhere \\(\\epsilon\\) is a random error term (includes measurement error, other discrepancies) independent of \\(\\mathbf{X}\\) and has mean zero.\nObjective: To approximate/estimate \\(f(\\mathbf{X})\\)\nFor linear regression, we assume that \\(f(\\mathbf{X})\\) is a linear function of \\(\\mathbf{X}\\), that is, for \\(p=1\\)\n\\[f(\\mathbf{X}) = \\beta_0 + \\beta_1 X_1\\]",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#linear-regression-example",
+    "href": "Slides2.html#linear-regression-example",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.18 Linear Regression: Example",
+    "text": "2.18 Linear Regression: Example\nSuppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.\nThey have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets.\nThe first ten observations of the dataset are shown below.\n\n\n   population  profit\n1      6.1101 17.5920\n2      5.5277  9.1302\n3      8.5186 13.6620\n4      7.0032 11.8540\n5      5.8598  6.8233\n6      8.3829 11.8860\n7      7.4764  4.3483\n8      8.5781 12.0000\n9      6.4862  6.5987\n10     5.0546  3.8166",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#linear-regression-1",
+    "href": "Slides2.html#linear-regression-1",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.19 Linear Regression",
+    "text": "2.19 Linear Regression\nGiven this dataset, our objective is to estimate \\(\\beta_0\\) and \\(\\beta_1\\).\nIf we are able to estimate \\(\\beta_0\\) and \\(\\beta_1\\), we can\n\npredict the profit for a new city with a given population,\nunderstand the relationship between population and profit better.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#linear-regression-example-1",
+    "href": "Slides2.html#linear-regression-example-1",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.20 Linear Regression: Example",
+    "text": "2.20 Linear Regression: Example\nSome Exploratory Data Analysis (EDA)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#linear-regression-estimating-parameters",
+    "href": "Slides2.html#linear-regression-estimating-parameters",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.21 Linear Regression: Estimating Parameters",
+    "text": "2.21 Linear Regression: Estimating Parameters\nWe use training data to find \\(b_0\\) and \\(b_1\\) such that\n\\[\\hat{y}=b_0 + b_1 \\ x\\] Observed response: \\(y_i\\) for \\(i=1,\\ldots,n\\)\nPredicted response: \\(\\hat{y}_i\\) for \\(i=1, \\ldots, n\\)\nResidual: \\(e_i = \\hat{y}_i - y_i\\) for \\(i=1, \\ldots, n\\)\nMean Squared Error (MSE): \\(MSE =\\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\) also known as the loss/cost function\nProblem: Find \\(b_0\\) and \\(b_1\\) which minimizes \\(MSE\\)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#gradient-descent-algorithm",
+    "href": "Slides2.html#gradient-descent-algorithm",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.22 Gradient Descent Algorithm",
+    "text": "2.22 Gradient Descent Algorithm\nHow do we minimize the \\(MSE\\)?\nOne optimization technique we can use is called the gradient descent.\nNOTE: Gradient Descent is not a machine learning technique. It is an optimization technique that helps to build machine learning models.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#gradient-descent-algorithm-1",
+    "href": "Slides2.html#gradient-descent-algorithm-1",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.23 Gradient Descent Algorithm",
+    "text": "2.23 Gradient Descent Algorithm\n\n\n\n\n\n\n\n\n\nUpdates to the variable:\n\\[\\text{new value of variable} = \\text{old value of variable} - \\big(\\text{step size} \\times \\text{gradient of function with respect to variable}\\big)\\]",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#gradient-descent-algorithm-2",
+    "href": "Slides2.html#gradient-descent-algorithm-2",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.24 Gradient Descent Algorithm",
+    "text": "2.24 Gradient Descent Algorithm",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#gradient-descent-algorithm-3",
+    "href": "Slides2.html#gradient-descent-algorithm-3",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.25 Gradient Descent Algorithm",
+    "text": "2.25 Gradient Descent Algorithm",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#gradient-descent-for-linear-regression",
+    "href": "Slides2.html#gradient-descent-for-linear-regression",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.26 Gradient Descent for Linear Regression",
+    "text": "2.26 Gradient Descent for Linear Regression\nObjective: We want to find \\(b_0\\) and \\(b_1\\) which minimizes\n\\[MSE = \\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n} = \\dfrac{(\\hat{y}_1 - y_1)^2 +  (\\hat{y}_2 - y_2)^2 + \\ldots + (\\hat{y}_n - y_n)^2}{n}\\]\n\n\n\\[MSE = \\dfrac{(b_0 + b_1 \\ x_1 - y_1)^2 +  (b_0 + b_1 \\ x_2 - y_2)^2 + \\ldots + (b_0 + b_1 \\ x_n - y_n)^2}{n}\\]\n\n\n\\[MSE = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (b_0 + b_1 \\ x_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (\\hat{y}_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (e_i)^2\\]",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#gradient-descent-for-linear-regression-1",
+    "href": "Slides2.html#gradient-descent-for-linear-regression-1",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.27 Gradient Descent for Linear Regression",
+    "text": "2.27 Gradient Descent for Linear Regression\nTo minimize \\(MSE\\) with respect to \\(b_0\\) and \\(b_1\\), we need the derivatives/gradients of \\(MSE\\) with respect to \\(b_0\\) and \\(b_1\\).\n\\[\\text{gradient of MSE with respect to} \\ b_0 = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (b_0 + b_1 \\ x_i - y_i) = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{y}_i - y_i)\\]\n\n\n\n\\[\\text{gradient of MSE with respect to} \\ b_1 = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (b_0 + b_1 \\ x_i - y_i) = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (\\hat{y}_i - y_i)\\]",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides2.html#gradient-descent-for-linear-regression-2",
+    "href": "Slides2.html#gradient-descent-for-linear-regression-2",
+    "title": "2  Supervised Learning and Trade-offs in SML",
+    "section": "2.28 Gradient Descent for Linear Regression",
+    "text": "2.28 Gradient Descent for Linear Regression\nThe gradient descent updates will be as follows:\n\nFor \\(b_0\\)\n\n\\[b_0 \\ \\text{(new)} = b_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\text{gradient with respect to} \\ b_0\\bigg)\\] \\[b_0 \\ \\text{(new)} = b_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{y}_i - y_i)\\bigg)\\]\n\n\n\n\nFor \\(b_1\\)\n\n\\[b_1  \\ \\text{(new)} = b_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\text{gradient with respect to} \\ b_1 \\bigg)\\]\n\\[b_1  \\ \\text{(new)} = b_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_i (\\hat{y}_i - y_i)\\bigg)\\]\nLet’s now implement this algorithm in R.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Supervised Learning and Trade-offs in SML</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html",
+    "href": "Slides3.html",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "",
+    "text": "3.1 Linear Regression\nMathematically, a supervised learning problem can be represented by\n\\[Y=f(\\mathbf{X}) + \\epsilon\\]\nwhere \\(\\epsilon\\) is a random error term (includes measurement error, other discrepancies) independent of \\(\\mathbf{X}\\) and has mean zero.\nObjective: To approximate/estimate \\(f(\\mathbf{X})\\)\nFor linear regression, we assume that \\(f(\\mathbf{X})\\) is a linear function of \\(\\mathbf{X}\\), that is, for \\(p=1\\)\n\\[f(\\mathbf{X}) = \\beta_0 + \\beta_1 X_1\\]",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#linear-regression-example",
+    "href": "Slides3.html#linear-regression-example",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.2 Linear Regression: Example",
+    "text": "3.2 Linear Regression: Example\nSuppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits.\nThey have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets.\nThe first ten observations of the dataset are shown below.\n\n\n   population  profit\n1      6.1101 17.5920\n2      5.5277  9.1302\n3      8.5186 13.6620\n4      7.0032 11.8540\n5      5.8598  6.8233\n6      8.3829 11.8860\n7      7.4764  4.3483\n8      8.5781 12.0000\n9      6.4862  6.5987\n10     5.0546  3.8166",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#linear-regression-1",
+    "href": "Slides3.html#linear-regression-1",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.3 Linear Regression",
+    "text": "3.3 Linear Regression\nGiven this dataset, our objective is to estimate \\(\\beta_0\\) and \\(\\beta_1\\).\nIf we are able to estimate \\(\\beta_0\\) and \\(\\beta_1\\), we can\n\npredict the profit for a new city with a given population,\nunderstand the relationship between population and profit better.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#linear-regression-estimating-parameters",
+    "href": "Slides3.html#linear-regression-estimating-parameters",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.4 Linear Regression: Estimating Parameters",
+    "text": "3.4 Linear Regression: Estimating Parameters\nWe use training data to find \\(b_0\\) and \\(b_1\\) such that\n\\[\\hat{y}=b_0 + b_1 \\ x_1\\] Observed response: \\(y_i\\) for \\(i=1,\\ldots,n\\)\nPredicted response: \\(\\hat{y}_i\\) for \\(i=1, \\ldots, n\\)\nResidual: \\(e_i = \\hat{y}_i - y_i\\) for \\(i=1, \\ldots, n\\)\nMean Squared Error (MSE): \\(MSE =\\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\) also known as the loss/cost function\nProblem: Find \\(b_0\\) and \\(b_1\\) which minimizes \\(MSE\\)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#gradient-descent-algorithm",
+    "href": "Slides3.html#gradient-descent-algorithm",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.5 Gradient Descent Algorithm",
+    "text": "3.5 Gradient Descent Algorithm\nHow do we minimize the \\(MSE\\)?\nOne optimization technique we can use is called the gradient descent.\nNOTE: Gradient Descent is not a machine learning technique. It is an optimization technique that helps to build machine learning models.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#gradient-descent-algorithm-1",
+    "href": "Slides3.html#gradient-descent-algorithm-1",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.6 Gradient Descent Algorithm",
+    "text": "3.6 Gradient Descent Algorithm\n\n\n\n\n\n\n\n\n\nUpdates to the variable:\n\\[\\text{new value of variable} = \\text{old value of variable} - \\big(\\text{step size} \\times \\text{gradient of function with respect to variable}\\big)\\]",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#gradient-descent-algorithm-2",
+    "href": "Slides3.html#gradient-descent-algorithm-2",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.7 Gradient Descent Algorithm",
+    "text": "3.7 Gradient Descent Algorithm",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#gradient-descent-algorithm-3",
+    "href": "Slides3.html#gradient-descent-algorithm-3",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.8 Gradient Descent Algorithm",
+    "text": "3.8 Gradient Descent Algorithm",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#gradient-descent-for-linear-regression",
+    "href": "Slides3.html#gradient-descent-for-linear-regression",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.9 Gradient Descent for Linear Regression",
+    "text": "3.9 Gradient Descent for Linear Regression\nObjective: We want to find \\(b_0\\) and \\(b_1\\) which minimizes\n\\[MSE = \\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n} = \\dfrac{(\\hat{y}_1 - y_1)^2 +  (\\hat{y}_2 - y_2)^2 + \\ldots + (\\hat{y}_n - y_n)^2}{n}\\]\n\n\n\\[MSE = \\dfrac{(b_0 + b_1 \\ x_{11} - y_1)^2 +  (b_0 + b_1 \\ x_{12} - y_2)^2 + \\ldots + (b_0 + b_1 \\ x_{1n} - y_n)^2}{n}\\]\n\n\n\\[MSE = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (b_0 + b_1 \\ x_{1i} - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (\\hat{y}_i - y_i)^2 = \\displaystyle \\dfrac{1}{n}\\sum_{i=1}^{n} (e_i)^2\\]",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#gradient-descent-for-linear-regression-1",
+    "href": "Slides3.html#gradient-descent-for-linear-regression-1",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.10 Gradient Descent for Linear Regression",
+    "text": "3.10 Gradient Descent for Linear Regression\nTo minimize \\(MSE\\) with respect to \\(b_0\\) and \\(b_1\\), we need the derivatives/gradients of \\(MSE\\) with respect to \\(b_0\\) and \\(b_1\\).\n\\[\\text{gradient of MSE with respect to} \\ b_0 = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (b_0 + b_1 \\ x_{1i} - y_i) = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{y}_i - y_i)\\]\n\n\n\n\\[\\text{gradient of MSE with respect to} \\ b_1 = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_{1i} (b_0 + b_1 \\ x_{1i} - y_i) = \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_{1i} (\\hat{y}_i - y_i)\\]",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#gradient-descent-for-linear-regression-2",
+    "href": "Slides3.html#gradient-descent-for-linear-regression-2",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.11 Gradient Descent for Linear Regression",
+    "text": "3.11 Gradient Descent for Linear Regression\nThe gradient descent updates will be as follows:\n\nFor \\(b_0\\)\n\n\\[b_0 \\ \\text{(new)} = b_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\text{gradient with respect to} \\ b_0\\bigg)\\] \\[b_0 \\ \\text{(new)} = b_0 \\ \\text{(old)}- \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} (\\hat{y}_i - y_i)\\bigg)\\]\n\n\n\n\nFor \\(b_1\\)\n\n\\[b_1  \\ \\text{(new)} = b_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\text{gradient with respect to} \\ b_1 \\bigg)\\]\n\\[b_1  \\ \\text{(new)} = b_1  \\ \\text{(old)} - \\bigg(\\text{step size} \\times \\dfrac{2}{n} \\displaystyle \\sum_{i=1}^{n} x_{1i} (\\hat{y}_i - y_i)\\bigg)\\]\nLet’s now implement this algorithm in R.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#multiple-linear-regression",
+    "href": "Slides3.html#multiple-linear-regression",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.12 Multiple Linear Regression",
+    "text": "3.12 Multiple Linear Regression\nResponse \\(Y\\) and predictor variables \\(X_1, X_2, \\ldots, X_p\\). We assume\n\\[Y=f(\\mathbf{X}) + \\epsilon=\\beta_0 + \\beta_1 X_1 + \\beta_2 X_2 + \\ldots + \\beta_p X_p + \\epsilon\\]\n\\(\\beta_j\\) quantifies the association between the \\(j^{th}\\) predictor and the response.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#multiple-linear-regression-estimating-parameters",
+    "href": "Slides3.html#multiple-linear-regression-estimating-parameters",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.13 Multiple Linear Regression: Estimating Parameters",
+    "text": "3.13 Multiple Linear Regression: Estimating Parameters\nWe use training data to find \\(b_0, b_1, \\ldots, b_p\\) such that\n\\[\\hat{y}=b_0 + b_1 \\ x_1 + \\ldots + b_p \\ x_p\\] Observed response: \\(y_i\\) for \\(i=1,\\ldots,n\\)\nPredicted response: \\(\\hat{y}_i\\) for \\(i=1, \\ldots, n\\)\nResidual: \\(e_i = \\hat{y}_i - y_i\\) for \\(i=1, \\ldots, n\\)\nMean Squared Error (MSE): \\(MSE =\\dfrac{e^2_1+e^2_2+\\ldots+e^2_n}{n}\\) also known as the loss/cost function\nProblem: Find \\(b_0, b_1, \\ldots, b_p\\) which minimizes \\(MSE\\)\n\n\n\nWe can use Gradient Descent to minimize the \\(MSE\\) with respect to \\(b_0, b_1, \\ldots, b_p\\).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#multiple-linear-regression-1",
+    "href": "Slides3.html#multiple-linear-regression-1",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.14 Multiple Linear Regression",
+    "text": "3.14 Multiple Linear Regression\nHouse Prices dataset\n\nsize is in square feet\nnum_bedrooms is a count\nprice is in $1,000",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#multiple-linear-regression-2",
+    "href": "Slides3.html#multiple-linear-regression-2",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.15 Multiple Linear Regression",
+    "text": "3.15 Multiple Linear Regression\nSome Exploratory Data Analysis (EDA)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#multiple-linear-regression-gradient-descent",
+    "href": "Slides3.html#multiple-linear-regression-gradient-descent",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.16 Multiple Linear Regression: Gradient Descent",
+    "text": "3.16 Multiple Linear Regression: Gradient Descent\nThe gradient descent framework for multiple regression is an extension of the ideas covered in simple (one-predictor) linear regression.\n\n\nImplementing gradient descent for multiple regression is an extension of the ideas/R codes we used for simple (one-predictor) regression.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#linear-regression-comparing-models",
+    "href": "Slides3.html#linear-regression-comparing-models",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.17 Linear Regression: Comparing Models",
+    "text": "3.17 Linear Regression: Comparing Models\n\nWith the House Prices dataset, we create three models with price as the response:\n\n\n\n\nfit1: a simple linear regression model with num_bedrooms as the only predictor\nfit2: a simple linear regression model with size as the only predictor\nmlr_model: a multiple regression model with both size and num_bedrooms as predictors",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#linear-regression-comparing-models-1",
+    "href": "Slides3.html#linear-regression-comparing-models-1",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.18 Linear Regression: Comparing Models",
+    "text": "3.18 Linear Regression: Comparing Models\n\n\nMean Squared Error (MSE)\n\n\\[MSE = \\displaystyle \\sum_{i=1}^n e_i^2\\]\n\nResidual Standard Error (RSE)\n\n\\[RSE=\\sqrt{\\dfrac{MSE}{n-p-1}}\\]",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#regression-conditional-averaging",
+    "href": "Slides3.html#regression-conditional-averaging",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.19 Regression: Conditional Averaging",
+    "text": "3.19 Regression: Conditional Averaging\nRestaurant Outlets Profit dataset\n\n\n\n\n\n\n\n\n\nWhat is a good value of \\(\\hat{f}(x)\\) (expected profit), say at \\(x=6\\)?\nA possible choice is the average of the observed responses at \\(x=6\\). But we may not observe responses for certain \\(x\\) values.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#k-nearest-neighbors-regression",
+    "href": "Slides3.html#k-nearest-neighbors-regression",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.20 K-Nearest Neighbors Regression",
+    "text": "3.20 K-Nearest Neighbors Regression\n\nNon-parametric approach\nGiven a value for \\(K\\) and a test data point \\(x_0\\),\n\n\\[\\hat{f}(x_0)=\\dfrac{1}{K} \\sum_{x_i \\in \\mathcal{N}_0} y_i=\\text{Average} \\ \\left(y_i \\ \\text{for all} \\ i:\\ x_i \\in \\mathcal{N}_0\\right) \\]\nwhere \\(\\mathcal{N}_0\\) is known as the neighborhood of \\(x_0\\).\n\nThe method is based on the concept of closeness of \\(x_i\\)’s from \\(x_0\\) for inclusion in the neighborhood \\(\\mathcal{N}_0\\). Usually, the Euclidean distance is used as a measure of closeness. The Euclidean distance between two \\(p\\)-dimensional vectors \\(\\mathbf{a}=(a_1, a_2, \\ldots, a_p)\\) and \\(\\mathbf{b}=(b_1, b_2, \\ldots, b_p)\\) is\n\n\\[||\\mathbf{a}-\\mathbf{b}||_2 = \\sqrt{(a_1-b_1)^2 + (a_2-b_2)^2 + \\ldots + (a_p-b_p)^2}\\]",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#question",
+    "href": "Slides3.html#question",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.21 Question!!!",
+    "text": "3.21 Question!!!\nAs \\(k\\) in KNN regression increases,\n\nthe flexibility of the fit \\(\\underline{\\hspace{5cm}}\\) (increases/decreases)\nthe bias of the fit \\(\\underline{\\hspace{5cm}}\\) (increases/decreases)\nthe variance of the fit \\(\\underline{\\hspace{5cm}}\\) (increases/decreases)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#k-nearest-neighbors-regression-multiple-predictors",
+    "href": "Slides3.html#k-nearest-neighbors-regression-multiple-predictors",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.22 K-Nearest Neighbors Regression (multiple predictors)",
+    "text": "3.22 K-Nearest Neighbors Regression (multiple predictors)\nIt is important to scale (subtract mean and divide by standard deviation) the predictors when considering KNN regression so that the Euclidean distance is not dominated by a few of them with large values.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides3.html#linear-regression-vs-k-nearest-neighbors",
+    "href": "Slides3.html#linear-regression-vs-k-nearest-neighbors",
+    "title": "3  Linear Regression and KNN Regression",
+    "section": "3.23 Linear Regression vs K-Nearest Neighbors",
+    "text": "3.23 Linear Regression vs K-Nearest Neighbors\n\n\n\n\n\n\n\n\n\n\nLinear Regression\nKNN Regression\n\n\n\n\nType\n\n\n\n\nTask\n\n\n\n\nPredictive Performance\n\n\n\n\nInterpretability\n\n\n\n\nOther",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Linear Regression and KNN Regression</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html",
+    "href": "Slides4.html",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "",
+    "text": "4.1 K-Nearest Neighbors Regression\n\\[\\hat{f}(x_0)=\\dfrac{1}{K} \\sum_{x_i \\in \\mathcal{N}_0} y_i=\\text{Average} \\ \\left(y_i \\ \\text{for all} \\ i:\\ x_i \\in \\mathcal{N}_0\\right) \\]\nwhere \\(\\mathcal{N}_0\\) is known as the neighborhood of \\(x_0\\).\n\\[||\\mathbf{a}-\\mathbf{b}||_2 = \\sqrt{(a_1-b_1)^2 + (a_2-b_2)^2 + \\ldots + (a_p-b_p)^2}\\]",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#k-nearest-neighbors-regression",
+    "href": "Slides4.html#k-nearest-neighbors-regression",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "",
+    "text": "Non-parametric approach\nGiven a value for \\(K\\) and a test data point \\(x_0\\),\n\n\n\n\nThe method is based on the concept of closeness of \\(x_i\\)’s from \\(x_0\\) for inclusion in the neighborhood \\(\\mathcal{N}_0\\). Usually, the Euclidean distance is used as a measure of closeness. The Euclidean distance between two \\(p\\)-dimensional vectors \\(\\mathbf{a}=(a_1, a_2, \\ldots, a_p)\\) and \\(\\mathbf{b}=(b_1, b_2, \\ldots, b_p)\\) is",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#k-nearest-neighbors-regression-multiple-predictors",
+    "href": "Slides4.html#k-nearest-neighbors-regression-multiple-predictors",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.2 K-Nearest Neighbors Regression (multiple predictors)",
+    "text": "4.2 K-Nearest Neighbors Regression (multiple predictors)\nIt is important to scale (subtract mean and divide by standard deviation) the predictors when considering KNN regression so that the Euclidean distance is not dominated by a few of them with large values.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#linear-regression-vs-k-nearest-neighbors",
+    "href": "Slides4.html#linear-regression-vs-k-nearest-neighbors",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.3 Linear Regression vs K-Nearest Neighbors",
+    "text": "4.3 Linear Regression vs K-Nearest Neighbors\n\n\n\n\n\n\n\n\n\n\nLinear Regression\nKNN Regression\n\n\n\n\nType\n\n\n\n\nTask\n\n\n\n\nPredictive Performance\n\n\n\n\nInterpretability\n\n\n\n\nOther",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#classification-problems",
+    "href": "Slides4.html#classification-problems",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.4 Classification Problems",
+    "text": "4.4 Classification Problems\n\nResponse \\(Y\\) is qualitative (categorical).\nThe objective is to build a classifier \\(\\hat{Y}=\\hat{C}(\\mathbf{X})\\) that assigns a class label to a future unlabeled (unseen) observation and understand the relationship between the predictors and response.\nThere can be two types of predictions based on the research problem.\n\nClass probabilities\nClass labels",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#k-nearest-neighbors-classifier",
+    "href": "Slides4.html#k-nearest-neighbors-classifier",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.5 K-Nearest Neighbors Classifier",
+    "text": "4.5 K-Nearest Neighbors Classifier\nGiven a value for \\(K\\) and a test data point \\(x_0\\), \\[P(Y=j | X=x_0)=\\dfrac{1}{K} \\sum_{x_i \\in \\mathcal{N}_0} I(y_i = j)\\]\nwhere \\(\\mathcal{N}_0\\) is known as the neighborhood of \\(x_0\\).\nFor classification problems, the predictions are obtained in terms of majority vote (unlike in regression where predictions are obtained by averaging).\nLet’s implement this classifier in R.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#logistic-regression",
+    "href": "Slides4.html#logistic-regression",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.6 Logistic Regression",
+    "text": "4.6 Logistic Regression\nA logistic regression classifier is a common ML model for binary classification problems. It assumes a functional form of the relationship between the response and the predictors.\n\n\nConsider a one-dimensional two-class problem.\n\nTransform the linear model \\(\\beta_0 + \\beta_1 \\ X\\) so that the output is a probability.\nUse logistic or sigmoid function \\[g(t)=\\dfrac{e^t}{1+e^t} \\ \\ \\ \\text{for} \\ t \\in \\mathcal{R}\\]\nSuppose \\(p(X)=P(Y=1|X)\\). Then, \\[p(X)=g\\left(\\beta_0 + \\beta_1 \\ X\\right)=\\dfrac{e^{\\beta_0 + \\beta_1 \\ X}}{1+e^{\\beta_0 + \\beta_1 \\ X}}\\]\n\\(e \\approx 2.71828\\) is a mathematical constant (Euler’s number).\n\\(\\log \\left(\\dfrac{p(X)}{1-p(X)}\\right) = \\beta_0 + \\beta_1 \\ X\\)\n\nLet’s implement this model in R.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#why-not-linear-regression",
+    "href": "Slides4.html#why-not-linear-regression",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.7 Why Not Linear Regression?",
+    "text": "4.7 Why Not Linear Regression?\nDefault dataset\n\n\n\n\n\n\n\n\n\nLinear regression does not model probabilities well. Linear regression might produce probabilities less than zero or bigger than one.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#logistic-regression-1",
+    "href": "Slides4.html#logistic-regression-1",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.8 Logistic Regression",
+    "text": "4.8 Logistic Regression\nDefault dataset",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#why-not-linear-regression-1",
+    "href": "Slides4.html#why-not-linear-regression-1",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.9 Why Not Linear Regression?",
+    "text": "4.9 Why Not Linear Regression?\nSuppose we have a response \\(Y\\),\n\n\\(Y=\\begin{cases}\n1; & \\text{if stroke} \\\\\n2; & \\text{if drug overdose} \\\\\n3; & \\text{if epileptic seizure}\n\\end{cases}\\)\n\n\n\nLinear regression suggests an ordering, and in fact implies that the difference between stroke and drug overdose is the same as between drug overdose and epileptic seizure.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#logistic-regression-predictions-and-interpretation",
+    "href": "Slides4.html#logistic-regression-predictions-and-interpretation",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.10 Logistic Regression: Predictions and Interpretation",
+    "text": "4.10 Logistic Regression: Predictions and Interpretation\nDefault dataset\nFor balance=$700,\n\n\\[\\hat{p}(X)=\\dfrac{e^{b_0+b_1 X}}{1+e^{b_0+b_1 X}}=\\dfrac{e^{-10.68 + (0.005516 \\times 700)}}{1+e^{-10.68 + (0.005516 \\times 700)}}=0.0011\\]\n\n\n\n\n\n\nInterpretations: A positive \\(\\hat{\\beta}_1\\) indicates that a higher balance is associated with a larger log odds of default, in other words, a higher probability of default. However, the change in the probability of default due to a one-unit change in balance depends on the current balance value.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#logistic-regression-vs-k-nearest-neighbors",
+    "href": "Slides4.html#logistic-regression-vs-k-nearest-neighbors",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.11 Logistic Regression vs K-Nearest Neighbors",
+    "text": "4.11 Logistic Regression vs K-Nearest Neighbors\n\n\n\n\n\n\n\n\n\n\nLogistic Regression\nKNN Classifier\n\n\n\n\nType\n\n\n\n\nTask\n\n\n\n\nPredictive Performance\n\n\n\n\nInterpretability\n\n\n\n\nOther",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#model-assessment-confusion-matrix",
+    "href": "Slides4.html#model-assessment-confusion-matrix",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.12 Model Assessment: Confusion Matrix",
+    "text": "4.12 Model Assessment: Confusion Matrix\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nActual Positive/Event\nActual Negative/Non-event\n\n\n\n\nPredicted Positive/Event\n\n\n\n\nPredicted Negative/non-event",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides4.html#model-assessment-roc-curve",
+    "href": "Slides4.html#model-assessment-roc-curve",
+    "title": "4  Logistic Regression and KNN Classifiers",
+    "section": "4.13 Model Assessment: ROC Curve",
+    "text": "4.13 Model Assessment: ROC Curve\nA Receiver Operating Characteristic curve, or ROC curve, is a graphical plot that illustrates the performance of a binary classifier model at varying threshold values.\nThe ROC curve with the pROC package in R plots sensitivity (recall) along the vertical y-axis and specificity along the horizontal x-axis.\nThe closer the curve hugs the upper left-hand corner, the better is the performance of the classifier. AUC refers to the Area Under this Curve.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Logistic Regression and KNN Classifiers</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html",
+    "href": "Slides5.html",
+    "title": "5  Cross-Validation",
+    "section": "",
+    "text": "5.1 The Machine Learning Process\nFor the next 2-3 class periods, we are going to discuss the overall ML process. Note that, the procedures we will discuss are not ML models, rather the models go through this process to obtain the best (optimal) predictive model.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html#the-machine-learning-process",
+    "href": "Slides5.html#the-machine-learning-process",
+    "title": "5  Cross-Validation",
+    "section": "",
+    "text": "Identify the task.\nSplit the data into (typically) training and test datasets.\nPerform EDA (Exploratory Data Analysis) on the training set.\nPerform feature engineering.\nPerform CV for hyperparameter tuning and model selection. Choose the optimal model.\nCreate the final model using the overall training data and estimate its performance on the test data.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html#data-splitting",
+    "href": "Slides5.html#data-splitting",
+    "title": "5  Cross-Validation",
+    "section": "5.2 Data Splitting",
+    "text": "5.2 Data Splitting\nAvailable data split into training and test datasets.\n\nTraining set: these data are used to develop feature sets, train our algorithms, tune hyperparameters, compare models, and all of the other activities required to choose an optimal model.\nTest set: having chosen a final optimal model, these data are used to obtain an unbiased estimate of the model’s performance.\n\n\n\nIt is critical that the test set not be used prior to selecting your final model.\n\n\nAssessing results on the test set prior to final model selection biases the model selection process since the testing data will have become part of the model development process.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html#resampling-methods",
+    "href": "Slides5.html#resampling-methods",
+    "title": "5  Cross-Validation",
+    "section": "5.3 Resampling Methods",
+    "text": "5.3 Resampling Methods\n\nIdea: Repeatedly draw samples from the training data and refit a model on each sample, and evaluate its performance on the other parts.\nObjective: To obtain additional information about the fitted model.\nCross-Validation (CV) is probably the most widely used resampling method. It is a general approach that can be applied to almost any statistical learning method.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html#cross-validation-cv",
+    "href": "Slides5.html#cross-validation-cv",
+    "title": "5  Cross-Validation",
+    "section": "5.4 Cross-Validation (CV)",
+    "text": "5.4 Cross-Validation (CV)\nUsed for\n\nmodel selection: select the optimum level of flexibility (tune hyperparameters) or compare different models to choose the best one\nmodel assessment: evaluate the performance of a model (estimate the error and variability)\n\nWe will talk about\n\n\nLeave-One-Out Cross-Validation (LOOCV)\n\\(k\\)-Fold Cross-Validation",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html#leave-one-out-cross-validation-loocv",
+    "href": "Slides5.html#leave-one-out-cross-validation-loocv",
+    "title": "5  Cross-Validation",
+    "section": "5.5 Leave-One-Out Cross-Validation (LOOCV)",
+    "text": "5.5 Leave-One-Out Cross-Validation (LOOCV)",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html#your-turn",
+    "href": "Slides5.html#your-turn",
+    "title": "5  Cross-Validation",
+    "section": "5.6 Your Turn!!!",
+    "text": "5.6 Your Turn!!!\nSuppose you implement LOOCV on a dataset with \\(n=100\\) observations.\n\nWhat is the size (number of observations) of each training set?\nWhat is the size of each validation set?\nHow many steps/iterations are required to complete the overall LOOCV process?",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html#leave-one-out-cross-validation-loocv-1",
+    "href": "Slides5.html#leave-one-out-cross-validation-loocv-1",
+    "title": "5  Cross-Validation",
+    "section": "5.7 Leave-One-Out Cross-Validation (LOOCV)",
+    "text": "5.7 Leave-One-Out Cross-Validation (LOOCV)\nAdvantages\n\nLOOCV will give approximately unbiased estimates of the test error, since each training set contains \\(n−1\\) observations, which is almost as many as the number of observations in the full training dataset.\n\n\n\nPerforming LOOCV multiple times will always yield the same results.\n\nDisadvantages\n\nCan be potentially expensive to implement, specially for large \\(n\\).\nLOOCV error estimate can have high variance.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html#k-fold-cross-validation",
+    "href": "Slides5.html#k-fold-cross-validation",
+    "title": "5  Cross-Validation",
+    "section": "5.8 \\(k\\)-Fold Cross-Validation",
+    "text": "5.8 \\(k\\)-Fold Cross-Validation\n\nRandomly divide the training data into \\(k\\) groups or folds (approximately equal size).\nConsider one of these folds as the validation set. Fit the model on the remaining \\(k-1\\) folds combined, and obtain predictions for the \\(k^{th}\\) fold. Repeat for all \\(k\\) folds.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html#your-turn-1",
+    "href": "Slides5.html#your-turn-1",
+    "title": "5  Cross-Validation",
+    "section": "5.9 Your Turn!!!",
+    "text": "5.9 Your Turn!!!\nSuppose you implement 10-fold CV on a dataset with \\(n=100\\) observations.\n\nWhat is the size (number of observations) of each training set?\nWhat is the size of each validation set?\nHow many steps/iterations are required to complete the overall CV process?",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides5.html#bias-variance-trade-off-for-loocv-and-k-fold-cv",
+    "href": "Slides5.html#bias-variance-trade-off-for-loocv-and-k-fold-cv",
+    "title": "5  Cross-Validation",
+    "section": "5.10 Bias-Variance Trade-off for LOOCV and \\(k\\)-fold CV",
+    "text": "5.10 Bias-Variance Trade-off for LOOCV and \\(k\\)-fold CV\n\nLOOCV has very less bias. Using \\(k=5\\) or \\(10\\) yields more bias than LOOCV.\n\n\n\nFor LOOCV, the error estimates for each fold are highly (positively) correlated. \\(k\\)-fold CV error estimates are somewhat less correlated. LOOCV error estimate has higher variance than \\(k\\)-fold CV error estimate.\nTypically, \\(k=5\\) or \\(10\\) is chosen.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html",
+    "href": "Slides6.html",
+    "title": "6  Feature Engineering",
+    "section": "",
+    "text": "6.1 The Machine Learning Process",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#the-machine-learning-process",
+    "href": "Slides6.html#the-machine-learning-process",
+    "title": "6  Feature Engineering",
+    "section": "",
+    "text": "Identify the task, perform preliminary EDA (Exploratory Data Analysis).\nSplit the data into training and test data.\nPerform additional EDA on the training set (graphs, correlation plot, additional checks, etc.)\nPerform feature engineering.\nPerform CV for hyperparameter tuning and model selection. Choose the optimal model.\nCreate the final model using the overall training data and estimate its performance on the test data.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#data-preprocessing-and-feature-enginnering",
+    "href": "Slides6.html#data-preprocessing-and-feature-enginnering",
+    "title": "6  Feature Engineering",
+    "section": "6.2 Data Preprocessing and Feature Enginnering",
+    "text": "6.2 Data Preprocessing and Feature Enginnering\nData preprocessing and engineering techniques generally refer to the addition, deletion, or transformation of data.\nWe will cover several fundamental and common preprocessing tasks that can potentially significantly improve modeling performance.\n\nDealing with zero-variance (zv) and/or near-zero variance (nzv) variables\nImputing missing entries\nLabel encoding ordinal categorical variables\nStandardizing (centering and scaling) numeric predictors\nLumping predictors\nOne-hot/dummy encoding categorical predictors",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#zero-variance-zv-andor-near-zero-variance-nzv-variables",
+    "href": "Slides6.html#zero-variance-zv-andor-near-zero-variance-nzv-variables",
+    "title": "6  Feature Engineering",
+    "section": "6.3 Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables",
+    "text": "6.3 Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables\nA rule of thumb for detecting near-zero variance features is:\n\nThe fraction of unique values over the sample size is low (say \\(\\le 10\\%\\)).\nThe ratio of the frequency of the most prevalent value to the frequency of the second most prevalent value is large (say \\(\\ge 20\\%\\)).",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#imputing-missing-entries",
+    "href": "Slides6.html#imputing-missing-entries",
+    "title": "6  Feature Engineering",
+    "section": "6.4 Imputing Missing Entries",
+    "text": "6.4 Imputing Missing Entries\nCommon imputation techniques:\n\nstep_impute_median: used for numeric (especially discrete) variables\nstep_impute_mean: used for numeric variables\nstep_impute_knn: used for both numeric and categorical variables (computationally expensive)\nstep_impute_mode: used for nominal (having no order) categorical variables",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#label-encoding-ordinal-categorical-variables",
+    "href": "Slides6.html#label-encoding-ordinal-categorical-variables",
+    "title": "6  Feature Engineering",
+    "section": "6.5 Label Encoding Ordinal Categorical Variables",
+    "text": "6.5 Label Encoding Ordinal Categorical Variables\nLabel encoding is a pure numeric conversion of the levels of a categorical variable. If a categorical variable is a factor and it has pre-specified levels then the numeric conversion will be in level order. If no levels are specified, the encoding will be based on alphabetical order.\nWe should be careful with label encoding unordered categorical features because most models will treat them as ordered numeric features",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#normalizing-centering-and-scaling-numeric-predictors",
+    "href": "Slides6.html#normalizing-centering-and-scaling-numeric-predictors",
+    "title": "6  Feature Engineering",
+    "section": "6.6 Normalizing (centering and scaling) Numeric Predictors",
+    "text": "6.6 Normalizing (centering and scaling) Numeric Predictors\nNormalizing features includes centering and scaling so that numeric variables have zero mean and unit variance, which provides a common comparable unit of measure across all the variables.\nBefore centering and scaling, it is better to remove zv/nzv variables, and perform necessary imputation and label encoding.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#lumping-predictors",
+    "href": "Slides6.html#lumping-predictors",
+    "title": "6  Feature Engineering",
+    "section": "6.7 Lumping Predictors",
+    "text": "6.7 Lumping Predictors\nSometimes features (numerical or categorical) will contain levels that have very few observations (decided by a threshold). It can be beneficial to collapse, or “lump” these into a lesser number of categories.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#one-hotdummy-encoding-categorical-predictors",
+    "href": "Slides6.html#one-hotdummy-encoding-categorical-predictors",
+    "title": "6  Feature Engineering",
+    "section": "6.8 One-hot/dummy Encoding Categorical Predictors",
+    "text": "6.8 One-hot/dummy Encoding Categorical Predictors\n\n\n\n\n\nAdapted from Hands-on Machine Learning with R, Bradley Boehmke & Brandon Greenwell",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#preprocessing-steps",
+    "href": "Slides6.html#preprocessing-steps",
+    "title": "6  Feature Engineering",
+    "section": "6.9 Preprocessing Steps",
+    "text": "6.9 Preprocessing Steps\nA suggested order of potential steps that should work for most problems:\n\nFilter out zero or near-zero variance features.\nPerform imputation if required.\nLabel encode ordinal categorical features.\nNormalize/Standardize (center and scale) numeric features.\nLump certain features if required.\nOne-hot or dummy encode categorical features.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#data-leakage-a-serious-common-problem",
+    "href": "Slides6.html#data-leakage-a-serious-common-problem",
+    "title": "6  Feature Engineering",
+    "section": "6.10 Data Leakage (A Serious, Common Problem)",
+    "text": "6.10 Data Leakage (A Serious, Common Problem)\nData leakage is when information from outside the training data set is used to create the model. Data leakage often occurs when the data preprocessing task is implemented with CV. To minimize this, feature engineering should be done in isolation of each resampling iteration.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#data-leakage-example",
+    "href": "Slides6.html#data-leakage-example",
+    "title": "6  Feature Engineering",
+    "section": "6.11 Data Leakage (Example)",
+    "text": "6.11 Data Leakage (Example)\nKNN Classification: Toy Example\n\n\n\n\nObs.\n\\(X_1\\)\n\\(X_2\\)\nY\n\n\n\n\n1\n1033\n1.7\nRed\n\n\n2\n1112\n1.5\nRed\n\n\n3\n1500\n1\nRed\n\n\n4\n999\n1\nGreen\n\n\n5\n1012\n1.5\nGreen\n\n\n6\n1013\n1\nRed\n\n\n7\n1233\n1\nGreen\n\n\n8\n1332\n1\nRed\n\n\n\n\n\n\nSuppose you implement 4-fold CV. Let’s say the folds are randomly chosen to be observation pairs (2, 3), (4, 7), (1, 8), and (5, 6).",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides6.html#preprocessing-with-recipes-package",
+    "href": "Slides6.html#preprocessing-with-recipes-package",
+    "title": "6  Feature Engineering",
+    "section": "6.12 Preprocessing With recipes Package",
+    "text": "6.12 Preprocessing With recipes Package\nThere are three main steps in creating and applying feature engineering with recipes:\n\nrecipe: where you define your feature engineering steps to create your blueprint\nprepare: estimate feature engineering parameters based on training data\nbake: apply the blueprint to data",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html",
+    "href": "Slides8.html",
+    "title": "7  Decision Trees",
+    "section": "",
+    "text": "7.1 Tree-Based Methods",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#tree-based-methods",
+    "href": "Slides8.html#tree-based-methods",
+    "title": "7  Decision Trees",
+    "section": "",
+    "text": "Involves stratifying or segmenting the predictor space into a number of simple regions.\nThe set of splitting rules used to segment the predictor space can be summarized in a tree, thus, the name decision tree methods.\nCan be used for both classification and regression.\nTree-based methods are simple and useful for interpretation, however, not the best in terms of prediction accuracy.\nMethods such as bagging, random forests, and boosting grow multiple trees and then combine their results.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#terminology-for-trees",
+    "href": "Slides8.html#terminology-for-trees",
+    "title": "7  Decision Trees",
+    "section": "7.2 Terminology for Trees",
+    "text": "7.2 Terminology for Trees\n\nEvery split is considered to be a node.\nWe refer to the first node at the top of the tree as the root node (this node contains all of the training data).\nThe final nodes at the bottom of the tree are called the terminal nodes or leaves.\n\n\n\nDecision trees are typically drawn upside down, in the sense that the leaves are at the bottom of the tree.\nThe points along the tree where the predictor space is split are referred to as internal nodes, that is, every node in between the root node and terminal nodes is referred to as an internal node.\nThe segments of the trees that connect the nodes are known as branches.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#terminology-for-trees-1",
+    "href": "Slides8.html#terminology-for-trees-1",
+    "title": "7  Decision Trees",
+    "section": "7.3 Terminology for Trees",
+    "text": "7.3 Terminology for Trees\n\n\n\n\n\nAdapted from HMLR, Boehmke & Greenwell",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#building-a-tree",
+    "href": "Slides8.html#building-a-tree",
+    "title": "7  Decision Trees",
+    "section": "7.4 Building a Tree",
+    "text": "7.4 Building a Tree\n\nFirst select the predictor \\(X_j\\) and the cutpoint \\(s\\) such that splitting the predictor space into the regions \\(\\{X|X_j &lt; s\\}\\) and \\(\\{X|X_j \\ge s\\}\\) leads to the greatest possible reduction in \\(SSE\\).\n\nFor any \\(j\\) and \\(s\\), define\n\\[R_1 = \\{X|X_j &lt; s\\} \\ \\ \\text{and} \\ \\ R_2 = \\{X|X_j &gt; s\\}\\]\n\n\n\nFind \\(j\\) and \\(s\\) that minimize\n\\[SSE = \\displaystyle \\sum_{i \\in R_1}\\left(y_i - \\hat{y}_{R_1}\\right)^2 + \\sum_{i \\in R_2}\\left(y_i - \\hat{y}_{R_2}\\right)^2\\]\n\n\n\n\nNext, repeat the process, look for the best predictor and best cutpoint in order to split the data further. However, this time, instead of splitting the entire predictor space, split one of the two previously identified regions.\nThe process continues until a stopping criterion is reached; say, we may continue until no region contains more than five observations.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#prediction",
+    "href": "Slides8.html#prediction",
+    "title": "7  Decision Trees",
+    "section": "7.5 Prediction",
+    "text": "7.5 Prediction\n\n\n\nFor every observation that falls into the region \\(R_j\\), make the same prediction, which is\n\nthe mean response of the training set observations in \\(R_j\\) (for regression problems),\nmajority vote response of the training set observations in \\(R_j\\) (for classification problems).",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#building-a-tree-and-prediction",
+    "href": "Slides8.html#building-a-tree-and-prediction",
+    "title": "7  Decision Trees",
+    "section": "7.6 Building a Tree and Prediction",
+    "text": "7.6 Building a Tree and Prediction\n\n\n\n\n\nAdapted from HMLR, Boehmke & Greenwell",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#building-a-tree-and-prediction-1",
+    "href": "Slides8.html#building-a-tree-and-prediction-1",
+    "title": "7  Decision Trees",
+    "section": "7.7 Building a Tree and Prediction",
+    "text": "7.7 Building a Tree and Prediction\n\n\n\n\n\nAdapted from HMLR, Boehmke & Greenwell",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#building-a-tree-and-prediction-2",
+    "href": "Slides8.html#building-a-tree-and-prediction-2",
+    "title": "7  Decision Trees",
+    "section": "7.8 Building a Tree and Prediction",
+    "text": "7.8 Building a Tree and Prediction\nDefault Dataset",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#building-a-tree-and-prediction-3",
+    "href": "Slides8.html#building-a-tree-and-prediction-3",
+    "title": "7  Decision Trees",
+    "section": "7.9 Building a Tree and Prediction",
+    "text": "7.9 Building a Tree and Prediction\nDefault Dataset",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#building-a-tree-and-prediction-4",
+    "href": "Slides8.html#building-a-tree-and-prediction-4",
+    "title": "7  Decision Trees",
+    "section": "7.10 Building a Tree and Prediction",
+    "text": "7.10 Building a Tree and Prediction\n\n\n\n\n\nAdapted from ISLR, James et al.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#building-a-tree-1",
+    "href": "Slides8.html#building-a-tree-1",
+    "title": "7  Decision Trees",
+    "section": "7.11 Building a Tree",
+    "text": "7.11 Building a Tree\n\nIt is computationally infeasible to consider every possible partition of the feature space into \\(J\\) boxes.\nFor this reason, we take a top-down, greedy approach known as recursive binary splitting.\n\ntop-down because it begins at the top of the tree and then successively splits the predictor space.\ngreedy because at each step of the tree-building process, the best split is made at that particular step, rather than looking ahead and picking a split that will lead to a better tree in some future step.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#tree-pruning",
+    "href": "Slides8.html#tree-pruning",
+    "title": "7  Decision Trees",
+    "section": "7.12 Tree Pruning",
+    "text": "7.12 Tree Pruning\nThe process described above may overfit the data.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#tree-pruning-1",
+    "href": "Slides8.html#tree-pruning-1",
+    "title": "7  Decision Trees",
+    "section": "7.13 Tree Pruning",
+    "text": "7.13 Tree Pruning\n\n\nGrow a very large tree, and then prune it back to obtain a subtree.\n\n\n\nThe technique uses is known as cost complexity pruning (also known as weakest link pruning).\nConsider a sequence of trees indexed by \\(\\alpha\\). For each \\(\\alpha\\), consider the tree that minimizes\n\n\\[SSE + \\alpha \\ |T|\\]\n\n\n\n\n\nChoose optimal \\(\\alpha\\) by CV.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#classification-trees",
+    "href": "Slides8.html#classification-trees",
+    "title": "7  Decision Trees",
+    "section": "7.14 Classification Trees",
+    "text": "7.14 Classification Trees\n\nStill use recursive binary splitting to grow a classification tree.\n\\(SSE\\) can be replaced by\n\nclassification error rate, the fraction of the training observations in that region that do not belong to the most common class.\n\n\\[E = 1 - \\max_k \\left(\\hat{p}_{mk}\\right)\\]\n\nGini index, a measure of node purity—a small value indicates that a node contains predominantly observations from a single class.\n\n\\[G = \\displaystyle \\sum_{k=1}^{K} \\hat{p}_{mk}\\left(1-\\hat{p}_{mk}\\right)\\]\n\n\n\n\nHere \\(\\hat{p}_{mk}\\) represents the proportion of training observations in the \\(m^{th}\\) region that are from the \\(k^{th}\\) class.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#trees",
+    "href": "Slides8.html#trees",
+    "title": "7  Decision Trees",
+    "section": "7.15 Trees",
+    "text": "7.15 Trees\nAdvantages\n\nEasy to explain.\nClosely mirror human decision-making.\nCan be displayed graphically, and are easily interpreted by non-experts.\nHandle qualitative predictors without creating dummy variables. Does not require standardization of predictors.\n\nDisadvantages\n\nDo not have same level of prediction accuracy.\nCan be very non-robust.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#ensemble-methods",
+    "href": "Slides8.html#ensemble-methods",
+    "title": "7  Decision Trees",
+    "section": "7.16 Ensemble Methods",
+    "text": "7.16 Ensemble Methods\nSingle regression or classification trees usually have poor predictive performance.\nEnsemble Methods use a collection of multiple trees to improve the predictive performance at the cost of interpretability.\n\nBagging\nRandom Forests\nBoosting\n\n\n\n\n\n\nAdapted from ISLR, James et al.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#bagging",
+    "href": "Slides8.html#bagging",
+    "title": "7  Decision Trees",
+    "section": "7.17 Bagging",
+    "text": "7.17 Bagging\n\nBootstrap aggregation or bagging is a general-purpose procedure for reducing the variance of a statistical learning method.\nIdea: Build multiple trees and average their results.\nResult: Given a set of \\(n\\) independent observations (random variables) \\(Z_1, \\ldots, Z_n\\), each with variance \\(\\sigma^2\\), the variance of the mean/average \\(\\bar{Z} = \\displaystyle \\dfrac{Z_1 + Z_2 + \\cdots + Z_n}{n}\\) of the observations is \\(\\sigma^2/n\\).\n\nIn other words, averaging a set of observations reduces variance.\n\nIn reality, we do not have multiple training datasets.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#bagging-1",
+    "href": "Slides8.html#bagging-1",
+    "title": "7  Decision Trees",
+    "section": "7.18 Bagging",
+    "text": "7.18 Bagging\nBootstrapping\n\n\n\n\n\nAdapted from ISLR, James et al.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides8.html#bagging-2",
+    "href": "Slides8.html#bagging-2",
+    "title": "7  Decision Trees",
+    "section": "7.19 Bagging",
+    "text": "7.19 Bagging\n\nTake repeated bootstrap samples (say \\(B\\)) from the original (single) available dataset.\nBuild a tree on each bootstrap sample and obtain predictions \\(\\hat{f}^{*b}(x), \\ b=1, 2, \\ldots, B\\).\nAverage all the predictions.\n\n\n\n\n\n\n\n\n\n\n\nIndividual trees are grown deep and are not pruned. They have high variance, but low bias.\nFor classification trees, take majority vote: the overall prediction is the most commonly occurring class among the \\(B\\) predictions.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Decision Trees</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html",
+    "href": "Slides9.html",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "",
+    "text": "8.1 Single Decision Trees\nAdvantages\nDisadvantages",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#single-decision-trees",
+    "href": "Slides9.html#single-decision-trees",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "",
+    "text": "Easy to explain.\nClosely mirror human decision-making.\nCan be displayed graphically, and are easily interpreted by non-experts.\nHandle qualitative predictors without creating dummy variables. Does not require standardization of predictors.\n\n\n\nDo not have same level of prediction accuracy.\nCan be very non-robust.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#ensemble-methods",
+    "href": "Slides9.html#ensemble-methods",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.2 Ensemble Methods",
+    "text": "8.2 Ensemble Methods\nSingle regression or classification trees usually have poor predictive performance.\nEnsemble Methods use a collection of multiple trees to improve the predictive performance at the cost of interpretability.\n\nBagging\nRandom Forests\nBoosting\n\n\n\n\n\n\nAdapted from ISLR, James et al.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#bagging",
+    "href": "Slides9.html#bagging",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.3 Bagging",
+    "text": "8.3 Bagging\n\nBootstrap aggregation or bagging is a general-purpose procedure for reducing the variance of a statistical learning method.\nIdea: Build multiple trees and average their results.\nResult: Given a set of \\(n\\) independent observations (random variables) \\(Z_1, \\ldots, Z_n\\), each with variance \\(\\sigma^2\\), the variance of the mean/average \\(\\bar{Z} = \\displaystyle \\dfrac{Z_1 + Z_2 + \\cdots + Z_n}{n}\\) of the observations is \\(\\sigma^2/n\\).\n\nIn other words, averaging a set of observations reduces variance.\n\nIn reality, we do not have multiple training datasets.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#bagging-1",
+    "href": "Slides9.html#bagging-1",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.4 Bagging",
+    "text": "8.4 Bagging\nBootstrapping\n\n\n\n\n\nAdapted from ISLR, James et al.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#bagging-2",
+    "href": "Slides9.html#bagging-2",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.5 Bagging",
+    "text": "8.5 Bagging\n\nTake repeated bootstrap samples (say \\(B\\)) from the original (single) available dataset.\nBuild a tree on each bootstrap sample and obtain predictions \\(\\hat{f}^{*b}(x), \\ b=1, 2, \\ldots, B\\).\nAverage all the predictions.\n\n\n\n\n\n\n\n\n\n\n\nIndividual trees are grown deep and are not pruned. They have high variance, but low bias.\nFor classification trees, take majority vote: the overall prediction is the most commonly occurring class among the \\(B\\) predictions.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#bagging-disadvantages",
+    "href": "Slides9.html#bagging-disadvantages",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.6 Bagging: Disadvantages",
+    "text": "8.6 Bagging: Disadvantages\n\nBagging improves the prediction accuracy for high variance (and low bias) models at the expense of interpretability and computational speed.\nHowever, although the model building steps are independent, the trees in bagging are not completely independent of each other since all the original features are considered at every split of every tree. Rather, trees from different bootstrap samples typically have similar structure to each other (especially at the top of the tree) due to any underlying strong relationships.\nThis characteristic is known as tree correlation and prevents bagging from further reducing the variance of the individual models. Random forests extend and improve upon bagged decision trees by reducing this correlation and thereby improving the accuracy of the overall ensemble.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#bagging-disadvantages-1",
+    "href": "Slides9.html#bagging-disadvantages-1",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.7 Bagging: Disadvantages",
+    "text": "8.7 Bagging: Disadvantages",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#bagging-disadvantages-2",
+    "href": "Slides9.html#bagging-disadvantages-2",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.8 Bagging: Disadvantages",
+    "text": "8.8 Bagging: Disadvantages\nTree Correlation in Bagging\n\n\n\n\n\nAdapted from HMLR, Boehmke & Greenwell",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#random-forests",
+    "href": "Slides9.html#random-forests",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.9 Random Forests",
+    "text": "8.9 Random Forests\n\nProvide an improvement over bagged trees by reducing the variance further (by decorrelating) when we average the trees.\nAs in bagging, we build a number of decision trees on bootstrapped training samples.\nFor each tree, each time a split is considered, a random selection of \\(m\\) predictors is chosen (split candidates) from the full set of \\(p\\) predictors. The split is allowed to use only one of those \\(m\\) predictors. Note that in bagging, each split for each tree considers all \\(p\\) predictors as split candidates.\nA fresh sample of \\(m\\) predictors is taken at each split. Typical default values are \\(m = p/3\\) (regression) and \\(m = \\sqrt{p}\\) (classification) but this should be considered a tuning parameter, to be chosen by CV.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#gradient-boosting",
+    "href": "Slides9.html#gradient-boosting",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.10 Gradient Boosting",
+    "text": "8.10 Gradient Boosting\nLike bagging and random forests, boosting involves combining a large number of decision trees. However, the main idea of boosting is to add new models to the ensemble sequentially.\nEach model in the process is a weak model, referred to as the base learner. The idea behind boosting is that each model in the sequence slightly improves upon the performance of the previous one, thereby learning slowly.\nAt each step of the process, we fit a tree to the residuals from the previous model, rather than the outcome \\(Y\\), as the response. The final model is a stagewise additive model of \\(B\\) individual trees.\n\\[\\hat{f}(x) = \\displaystyle \\sum_{b=1}^{B} \\lambda \\ \\hat{f}^b(x)\\]\nThe process is called gradient boosting since it uses the gradient descent algorithm to minimize the loss function.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#gradient-boosting-1",
+    "href": "Slides9.html#gradient-boosting-1",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.11 Gradient Boosting",
+    "text": "8.11 Gradient Boosting",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#gradient-boosting-2",
+    "href": "Slides9.html#gradient-boosting-2",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.12 Gradient Boosting",
+    "text": "8.12 Gradient Boosting",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides9.html#gradient-boosting-3",
+    "href": "Slides9.html#gradient-boosting-3",
+    "title": "8  Tree-Based Ensemble Methods",
+    "section": "8.13 Gradient Boosting",
+    "text": "8.13 Gradient Boosting\nThe hyperparameters (to be tuned by CV) include:\n\nNumber of trees: Having too many trees can overfit the training data.\n\n\nShrinkage (\\(\\lambda\\)): Determines the contribution of each tree to the final model and controls how quickly the algorithm learns.\n\n\nTree Depth: Controls the depth of the individual trees.\n\n\n\nMinimum number of observations in terminal nodes: Also, controls the complexity of each tree.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Tree-Based Ensemble Methods</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html",
+    "href": "Slides10.html",
+    "title": "9  Unsupervised Learning",
+    "section": "",
+    "text": "9.1 Other Things To Watch Out For\nSpring works at a juice-packing company where she uses a machine-learning model to predict the demand for different juice flavors. After training and evaluating the model, Spring was confident that it was ready for production. The model was deployed, and the company started using it to plan its production and distribution.\nDuring the first few months, everything was working as expected. But then, the company noticed that the model consistently overestimated the demand for certain flavors. What could be the cause of the problem with the model?",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#other-things-to-watch-out-for",
+    "href": "Slides10.html#other-things-to-watch-out-for",
+    "title": "9  Unsupervised Learning",
+    "section": "",
+    "text": "The model is underfitting and needs more complexity.\nThe model is overfitting and needs more regularization.\nThe model is suffering from data drift.\nThe model is suffering from sampling bias.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#other-things-to-watch-out-for-1",
+    "href": "Slides10.html#other-things-to-watch-out-for-1",
+    "title": "9  Unsupervised Learning",
+    "section": "9.2 Other Things To Watch Out For",
+    "text": "9.2 Other Things To Watch Out For\nSpring’s been working on a model to classify photos of food. Her company is building an application that will let users snap a picture of a plate at a restaurant and show them a potential recipe so they can cook it at home. After a year of work, Spring’s model was working great. The company launched the model worldwide and started monitoring user feedback.\nUnfortunately, users from an Asian country complained because the model wasn’t working for them. What is the most likely reason for the problem?\n\nSpring’s model didn’t have enough complexity to learn all the data, so it’s normal to have problems with certain regions.\nSpring needed to train the model for more time to fully capture the dataset’s information.\nSpring’s model is suffering from data drift.\nSpring’s model is suffering from sampling bias.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#unsupervised-learning",
+    "href": "Slides10.html#unsupervised-learning",
+    "title": "9  Unsupervised Learning",
+    "section": "9.3 Unsupervised Learning",
+    "text": "9.3 Unsupervised Learning\n\nSupervised learning problems involve a set of \\(p\\) features \\(X_1, X_2, \\ldots, X_p\\) and a response \\(Y\\) measured on \\(n\\) observations.\n\nObjective is prediction and explain (if possible) the relation between response and predictors.\n\nIn unsupervised learning problems, we observe only the features \\(X_1, X_2, \\ldots, X_p\\).\n\nObjectives can be to visualize the data, or,\ndiscover subgroups among variables or among observations.\n\n\nWe will discuss two methods:\n\nPrincipal Components Analysis (PCA): Used for data visualization and pre-processing.\nClustering: Discover unknown subgroups in data.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#unsupervised-learning-1",
+    "href": "Slides10.html#unsupervised-learning-1",
+    "title": "9  Unsupervised Learning",
+    "section": "9.4 Unsupervised Learning",
+    "text": "9.4 Unsupervised Learning\n\nUnsupervised learning problems tend to be more subjective than supervised learning problems.\nOften performed as part of an exploratory data analysis.\nDifficult to assess the results obtained from unsupervised learning methods.\nIt is easier to obtain unlabeled data.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#principal-components-analysis-pca",
+    "href": "Slides10.html#principal-components-analysis-pca",
+    "title": "9  Unsupervised Learning",
+    "section": "9.5 Principal Components Analysis (PCA)",
+    "text": "9.5 Principal Components Analysis (PCA)\nPCA seeks a low-dimensional representation of a dataset that captures as much of the information as possible. PCA serves as a tool for\n\nData compression\nData visualization\n\nThe principal components are linear combinations of the \\(p\\) original features subject to certain constraints.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#pca-example",
+    "href": "Slides10.html#pca-example",
+    "title": "9  Unsupervised Learning",
+    "section": "9.6 PCA: Example",
+    "text": "9.6 PCA: Example\nUSArrests dataset\n\nlibrary(ISLR2)   # load package\ndata(\"USArrests\")   # load dataset\n\nhead(USArrests)   # first six observations\n\n           Murder Assault UrbanPop Rape\nAlabama      13.2     236       58 21.2\nAlaska       10.0     263       48 44.5\nArizona       8.1     294       80 31.0\nArkansas      8.8     190       50 19.5\nCalifornia    9.0     276       91 40.6\nColorado      7.9     204       78 38.7",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#pca-data-requirements",
+    "href": "Slides10.html#pca-data-requirements",
+    "title": "9  Unsupervised Learning",
+    "section": "9.7 PCA: Data Requirements",
+    "text": "9.7 PCA: Data Requirements\nTo perform dimension reduction techniques in R, generally, the data should be prepared as follows:\n\nData are in tidy format per Wickham et al. (2014);\nAny missing values in the data must be removed or imputed;\nTypically, the data must all be numeric values (e.g., one-hot, label, ordinal encoding categorical features);\nNumeric data should be standardized (e.g., centered and scaled) to make features comparable.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#pca-toy-example",
+    "href": "Slides10.html#pca-toy-example",
+    "title": "9  Unsupervised Learning",
+    "section": "9.8 PCA: Toy Example",
+    "text": "9.8 PCA: Toy Example",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#pca-toy-example-1",
+    "href": "Slides10.html#pca-toy-example-1",
+    "title": "9  Unsupervised Learning",
+    "section": "9.9 PCA: Toy Example",
+    "text": "9.9 PCA: Toy Example\n\n\n\n\n\nPCs with 2 features. [Adapted from FE&S, Kuhn and Johnson]",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#pca-toy-example-2",
+    "href": "Slides10.html#pca-toy-example-2",
+    "title": "9  Unsupervised Learning",
+    "section": "9.10 PCA: Toy Example",
+    "text": "9.10 PCA: Toy Example\n\n\n\n\n\nPCs with 3 features. [Adapted from HMLR, Boehmke & Greenwell]",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#pca-first-pc",
+    "href": "Slides10.html#pca-first-pc",
+    "title": "9  Unsupervised Learning",
+    "section": "9.11 PCA: First PC",
+    "text": "9.11 PCA: First PC\nThe first principal component \\(Z_1\\) of a set of features \\(X_1, X_2, \\ldots, X_p\\) is the normalized linear combination of the features that has the largest variance.\n\n\n\n\n\n\n\n\n\nBy normalized, we mean \\(\\displaystyle \\sum_{j=1}^p \\phi^2_{j1}=1\\).\nFor the \\(i^{th}\\) observation,\n\n\n\n\n\n\n\n\n\nThe elements \\(\\phi_{11},\\phi_{21}, \\ldots, \\phi_{p1}\\) are loadings of the first PC. The loadings make up the first PC loading vector \\(\\phi_1=(\\phi_{11} \\ \\ \\phi_{21} \\ \\ \\ldots \\ \\ \\phi_{p1})^T\\).\n\\(z_{11}, z_{21}, \\ldots, z_{n1}\\) are the first PC scores.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#pca-first-pc-1",
+    "href": "Slides10.html#pca-first-pc-1",
+    "title": "9  Unsupervised Learning",
+    "section": "9.12 PCA: First PC",
+    "text": "9.12 PCA: First PC\nSuppose an \\(n \\times p\\) feature matrix \\(\\mathbf{X}\\).\n\n\n\n\n\n\n\n\n\nThe first PC is obtained by solving",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#pca-second-pc",
+    "href": "Slides10.html#pca-second-pc",
+    "title": "9  Unsupervised Learning",
+    "section": "9.13 PCA: Second PC",
+    "text": "9.13 PCA: Second PC\nThe second principal component \\(Z_2\\) is the linear combination of \\(X_1,\\ldots,X_p\\) that has maximal variance among all linear combinations that are uncorrelated with \\(Z_1\\).\nThe second PC scores are \\(z_{12}, z_{22}, \\ldots, z_{n2}\\) where\n\n\n\n\n\n\n\n\n\n\\(\\phi_2\\) is the second PC loading vector with loadings \\(\\phi_{12},\\phi_{22}, \\ldots, \\phi_{p2}\\).\n\\(Z_2\\) uncorrelated with \\(Z_1\\) is equivalent to \\(\\phi_2\\) being orthogonal (perpendicular) with \\(\\phi_1\\).",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#pca-how-many-pcs-to-use",
+    "href": "Slides10.html#pca-how-many-pcs-to-use",
+    "title": "9  Unsupervised Learning",
+    "section": "9.14 PCA: How Many PCs to Use?",
+    "text": "9.14 PCA: How Many PCs to Use?\n\nWe would like to use the smallest number of PCs required to get a good understanding of the data.\nCV cannot be implemented to answer this question.\nTwo common approaches in helping to make this decision (depends on the objective and analytic workflow):\n\nProportion of variance explained (PVE)\nScreeplot. Look for an elbow.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#clustering",
+    "href": "Slides10.html#clustering",
+    "title": "9  Unsupervised Learning",
+    "section": "9.15 Clustering",
+    "text": "9.15 Clustering\n\nBroad class of techniques for finding subgroups or clusters in a dataset.\nPartition the data into distinct groups so that observations within each group are similar to each other.\nDefinition of similarity depends on the context and the dataset being studied.\nWe will talk about:\n\nK-means clustering\nHierarchical clustering",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#clustering-applications",
+    "href": "Slides10.html#clustering-applications",
+    "title": "9  Unsupervised Learning",
+    "section": "9.16 Clustering: Applications",
+    "text": "9.16 Clustering: Applications\n\nCancer research: \\(n\\) observations correspond to tissue samples for patients with different types of cancer, \\(p\\) features correspond to gene expression measurements.\nMarket segmentation: \\(n\\) observations on \\(p\\) variables. Identify subgroups of people who might be more receptive to a particular form of advertising.\nSocial network analysis, astronomical data analysis, organizing computing clusters etc.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#k-means-clustering",
+    "href": "Slides10.html#k-means-clustering",
+    "title": "9  Unsupervised Learning",
+    "section": "9.17 K-Means Clustering",
+    "text": "9.17 K-Means Clustering\nPartition the dataset into a pre-specified number of \\(K\\) distinct, non-overlapping clusters.\n\n\n\n\n\n\n\n\n\nThe coloring (ordering) of the clusters is arbitrary.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#k-means-clustering-1",
+    "href": "Slides10.html#k-means-clustering-1",
+    "title": "9  Unsupervised Learning",
+    "section": "9.18 K-Means Clustering",
+    "text": "9.18 K-Means Clustering",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#k-means-clustering-2",
+    "href": "Slides10.html#k-means-clustering-2",
+    "title": "9  Unsupervised Learning",
+    "section": "9.19 K-Means Clustering",
+    "text": "9.19 K-Means Clustering\n\n\n\n\n\nThe idea behind K-means clustering is that a good clustering is one for which the within-cluster variation is as small as possible. The resulting clusters are such that\n\neach observation belongs to at least one cluster, and\nclusters are non-overlapping, no observation belongs to more than one cluster.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#k-means-clustering-formulation",
+    "href": "Slides10.html#k-means-clustering-formulation",
+    "title": "9  Unsupervised Learning",
+    "section": "9.20 K-Means Clustering Formulation",
+    "text": "9.20 K-Means Clustering Formulation\nThe within-cluster variation for cluster \\(C_k\\) is a measure \\(W(C_k)\\) of the amount by which the observations within a cluster differ from each other. Thus the objective is to\n\n\n\n\n\n\n\n\n\nwhere\n\n\n\n\n\n\n\n\n\nCombining, we have,",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#k-means-clustering-algorithm",
+    "href": "Slides10.html#k-means-clustering-algorithm",
+    "title": "9  Unsupervised Learning",
+    "section": "9.21 K-Means Clustering Algorithm",
+    "text": "9.21 K-Means Clustering Algorithm",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#k-means-clustering-algorithm-1",
+    "href": "Slides10.html#k-means-clustering-algorithm-1",
+    "title": "9  Unsupervised Learning",
+    "section": "9.22 K-Means Clustering Algorithm",
+    "text": "9.22 K-Means Clustering Algorithm\n\nThe algorithm is guaranteed to decrease the value of the objective at each step since\n\n\n\n\n\n\n\n\n\n\nwhere \\(\\bar{x}_{kj}=\\frac{1}{|C_k|}\\sum_{i \\in C_k} x_{ij}\\): mean of \\(j^{th}\\) feature in cluster \\(C_k\\).\n\nThe algorithm is not guaranteed to find the global optimum.\nResults depend on the initial (random) cluster assignments. It is recommended to run the algorithm multiple times from different random initial configurations.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#k-means-clustering-algorithm-2",
+    "href": "Slides10.html#k-means-clustering-algorithm-2",
+    "title": "9  Unsupervised Learning",
+    "section": "9.23 K-Means Clustering Algorithm",
+    "text": "9.23 K-Means Clustering Algorithm",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#hierarchical-clustering",
+    "href": "Slides10.html#hierarchical-clustering",
+    "title": "9  Unsupervised Learning",
+    "section": "9.24 Hierarchical Clustering",
+    "text": "9.24 Hierarchical Clustering\n\nK-means clustering requires us to pre-specify the number of clusters \\(K\\). This can be a disadvantage.\nHierarchical clustering is an alternative approach which does not require that we commit to a particular choice of \\(K\\).\nHierarchical clustering results in a tree-based representation of the observations, called a dendrogram.\nWe discuss bottom-up or agglomerative clustering. This is the most common type of hierarchical clustering. The dendrogram is built starting from the leaves (bottom) and combining clusters up to the trunk (top).",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#hierarchical-clustering-1",
+    "href": "Slides10.html#hierarchical-clustering-1",
+    "title": "9  Unsupervised Learning",
+    "section": "9.25 Hierarchical Clustering",
+    "text": "9.25 Hierarchical Clustering",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#hierarchical-clustering-2",
+    "href": "Slides10.html#hierarchical-clustering-2",
+    "title": "9  Unsupervised Learning",
+    "section": "9.26 Hierarchical Clustering",
+    "text": "9.26 Hierarchical Clustering",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#hierarchical-clustering-types-of-linkage",
+    "href": "Slides10.html#hierarchical-clustering-types-of-linkage",
+    "title": "9  Unsupervised Learning",
+    "section": "9.27 Hierarchical Clustering: Types of Linkage",
+    "text": "9.27 Hierarchical Clustering: Types of Linkage",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#hierarchical-clustering-algorithm",
+    "href": "Slides10.html#hierarchical-clustering-algorithm",
+    "title": "9  Unsupervised Learning",
+    "section": "9.28 Hierarchical Clustering Algorithm",
+    "text": "9.28 Hierarchical Clustering Algorithm",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#practical-issues-in-clustering",
+    "href": "Slides10.html#practical-issues-in-clustering",
+    "title": "9  Unsupervised Learning",
+    "section": "9.29 Practical Issues in Clustering",
+    "text": "9.29 Practical Issues in Clustering\n\nScaling of the variables matters.\nChoices in hierarchical clustering.\n\nDissimilarity measure\nType of linkage\nWhere to cut the dendrogram?\n\nChoices in K-means clustering.\n\nWhat should be the value of \\(K\\)?\n\nClustering methods are not very robust to perturbations to the data.\nWhich features should be used for clustering?\nFor more details, see Elements of Statistical Learning, Chapter 14.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#to-sum-it-all-up",
+    "href": "Slides10.html#to-sum-it-all-up",
+    "title": "9  Unsupervised Learning",
+    "section": "9.30 To Sum It All Up",
+    "text": "9.30 To Sum It All Up",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#ml-ethics-and-fairness",
+    "href": "Slides10.html#ml-ethics-and-fairness",
+    "title": "9  Unsupervised Learning",
+    "section": "9.31 ML Ethics and Fairness",
+    "text": "9.31 ML Ethics and Fairness\n\nAs recently as 2015, a major corporation reportedly utilized a model to evaluate applicants’ resumes for technical posts. They scrapped this model upon discovering that, by building this model using resume data from its current technical employees (mostly men), it reinforced a preference for male job applicants. (see Dastin 2018)\nFacial recognition models, increasingly used in police surveillance, are often built using image data of researchers that do not represent the whole of society. Thus, when applied in practice, misidentification is more common among people that are underrepresented in the research process. Given the severe consequences of misidentification, including false arrest, citizens are pushing back on the use of this technology in their communities (see Harmon 2019)\nIn 2020, the New York Civil Liberties Union filed a lawsuit against the U.S. Immigration and Customs Enforcement’s (ICE) use of a “risk classification assessment” model that evaluates whether a subject should be detained or released (see Hadavas 2020). This model is notably unfair, recommending detention in nearly all cases.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#ml-ethics-and-fairness-1",
+    "href": "Slides10.html#ml-ethics-and-fairness-1",
+    "title": "9  Unsupervised Learning",
+    "section": "9.32 ML Ethics and Fairness",
+    "text": "9.32 ML Ethics and Fairness\nFacial recognition\n\n\n\n\n\n\n\n\n\nIan Tucker. ‘A white mask worked better’: why algorithms are not colour blind.\nThe Guardian. 28 May 2017.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#further-readings",
+    "href": "Slides10.html#further-readings",
+    "title": "9  Unsupervised Learning",
+    "section": "9.33 Further Readings",
+    "text": "9.33 Further Readings\n\n \\(\\hspace{1.5cm}\\)  \\(\\hspace{1.5cm}\\)",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  },
+  {
+    "objectID": "Slides10.html#next-steps",
+    "href": "Slides10.html#next-steps",
+    "title": "9  Unsupervised Learning",
+    "section": "9.34 Next Steps",
+    "text": "9.34 Next Steps\n\nStatistics and Data Science Major and/or Minor\nFuture readings\n\nElements of Statistical Learning, HTF\nFeature Engineering & Selection, KJ\nDeep Learning, GBC\nSupervised Machine Learning for Text Analysis in R, HS\nOptimization Algorithms\nLinear Algebra\nML with Python",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Unsupervised Learning</span>"
+    ]
+  }
+]

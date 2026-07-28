@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Feature Engineering – Statistical Machine Learning (208 @ LU) Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Slides8.html" rel="next">
+<link href="./Slides5.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-70896287326667430c62020e2b71b712.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Slides6.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Feature Engineering</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Machine Learning (208 @ LU) Notes</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Terminologies and Notations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Supervised Learning and Trade-offs in SML</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Regression and KNN Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Logistic Regression and KNN Classifiers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cross-Validation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides6.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Decision Trees</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tree-Based Ensemble Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Unsupervised Learning</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-machine-learning-process" id="toc-the-machine-learning-process" class="nav-link active" data-scroll-target="#the-machine-learning-process"><span class="header-section-number">6.1</span> The Machine Learning Process</a></li>
+  <li><a href="#data-preprocessing-and-feature-enginnering" id="toc-data-preprocessing-and-feature-enginnering" class="nav-link" data-scroll-target="#data-preprocessing-and-feature-enginnering"><span class="header-section-number">6.2</span> Data Preprocessing and Feature Enginnering</a></li>
+  <li><a href="#zero-variance-zv-andor-near-zero-variance-nzv-variables" id="toc-zero-variance-zv-andor-near-zero-variance-nzv-variables" class="nav-link" data-scroll-target="#zero-variance-zv-andor-near-zero-variance-nzv-variables"><span class="header-section-number">6.3</span> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</a></li>
+  <li><a href="#imputing-missing-entries" id="toc-imputing-missing-entries" class="nav-link" data-scroll-target="#imputing-missing-entries"><span class="header-section-number">6.4</span> Imputing Missing Entries</a></li>
+  <li><a href="#label-encoding-ordinal-categorical-variables" id="toc-label-encoding-ordinal-categorical-variables" class="nav-link" data-scroll-target="#label-encoding-ordinal-categorical-variables"><span class="header-section-number">6.5</span> Label Encoding Ordinal Categorical Variables</a></li>
+  <li><a href="#normalizing-centering-and-scaling-numeric-predictors" id="toc-normalizing-centering-and-scaling-numeric-predictors" class="nav-link" data-scroll-target="#normalizing-centering-and-scaling-numeric-predictors"><span class="header-section-number">6.6</span> Normalizing (centering and scaling) Numeric Predictors</a></li>
+  <li><a href="#lumping-predictors" id="toc-lumping-predictors" class="nav-link" data-scroll-target="#lumping-predictors"><span class="header-section-number">6.7</span> Lumping Predictors</a></li>
+  <li><a href="#one-hotdummy-encoding-categorical-predictors" id="toc-one-hotdummy-encoding-categorical-predictors" class="nav-link" data-scroll-target="#one-hotdummy-encoding-categorical-predictors"><span class="header-section-number">6.8</span> One-hot/dummy Encoding Categorical Predictors</a></li>
+  <li><a href="#preprocessing-steps" id="toc-preprocessing-steps" class="nav-link" data-scroll-target="#preprocessing-steps"><span class="header-section-number">6.9</span> Preprocessing Steps</a></li>
+  <li><a href="#data-leakage-a-serious-common-problem" id="toc-data-leakage-a-serious-common-problem" class="nav-link" data-scroll-target="#data-leakage-a-serious-common-problem"><span class="header-section-number">6.10</span> Data Leakage (A Serious, Common Problem)</a></li>
+  <li><a href="#data-leakage-example" id="toc-data-leakage-example" class="nav-link" data-scroll-target="#data-leakage-example"><span class="header-section-number">6.11</span> Data Leakage (Example)</a></li>
+  <li><a href="#preprocessing-with-recipes-package" id="toc-preprocessing-with-recipes-package" class="nav-link" data-scroll-target="#preprocessing-with-recipes-package"><span class="header-section-number">6.12</span> Preprocessing With <code>recipes</code> Package</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Feature Engineering</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+<section id="the-machine-learning-process" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-machine-learning-process"><span class="header-section-number">6.1</span> The Machine Learning Process</h2>
+<ul>
+<li><p>Identify the task, perform preliminary EDA (Exploratory Data Analysis).</p></li>
+<li><p>Split the data into training and test data.</p></li>
+<li><p>Perform additional EDA on the training set (graphs, correlation plot, additional checks, etc.)</p></li>
+<li><p>Perform feature engineering.</p></li>
+<li><p>Perform CV for hyperparameter tuning and model selection. Choose the optimal model.</p></li>
+<li><p>Create the final model using the overall training data and estimate its performance on the test data.</p></li>
+</ul>
+</section>
+<section id="data-preprocessing-and-feature-enginnering" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="data-preprocessing-and-feature-enginnering"><span class="header-section-number">6.2</span> Data Preprocessing and Feature Enginnering</h2>
+<p>Data preprocessing and engineering techniques generally refer to the addition, deletion, or transformation of data.</p>
+<p>We will cover several fundamental and common preprocessing tasks that can potentially significantly improve modeling performance.</p>
+<ul>
+<li><p>Dealing with zero-variance (zv) and/or near-zero variance (nzv) variables</p></li>
+<li><p>Imputing missing entries</p></li>
+<li><p>Label encoding ordinal categorical variables</p></li>
+<li><p>Standardizing (centering and scaling) numeric predictors</p></li>
+<li><p>Lumping predictors</p></li>
+<li><p>One-hot/dummy encoding categorical predictors</p></li>
+</ul>
+<!-- ## Ames Housing Dataset {.smaller} -->
+<!-- ```{r, message=FALSE} -->
+<!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- glimpse(ames)  # check type of features -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- sum(is.na(ames))    # check for missing entries -->
+<!-- ``` -->
+<!-- ## Ames Housing Dataset {.smaller} -->
+<!-- ```{r} -->
+<!-- summary(ames)  # check type of features, which features have missing entries? -->
+<!-- ``` -->
+<!-- ## Ames Housing Dataset -->
+<!-- ```{r} -->
+<!-- levels(ames$Overall_Qual)   # the levels are NOT properly ordered -->
+<!-- # relevel the levels -->
+<!-- ames$Overall_Qual <- factor(ames$Overall_Qual, levels = c("Very_Poor", "Poor", "Fair", "Below_Average",  -->
+<!--                                                   "Average", "Above_Average", "Good", "Very_Good",  -->
+<!--                                                   "Excellent", "Very_Excellent")) -->
+<!-- levels(ames$Overall_Qual)   # the levels are properly ordered -->
+<!-- ``` -->
+<!-- ## Ames Housing Dataset  -->
+<!-- ```{r} -->
+<!-- # split the dataset into training and test sets -->
+<!-- set.seed(042324)   # set seed -->
+<!-- train_index <- createDataPartition(ames$Sale_Price, p = 0.8, list = FALSE)   # 'Sale_Price' is the response -->
+<!-- ames_train <- ames[train_index,]   # training data -->
+<!-- ames_test <- ames[-train_index,]   # test data -->
+<!-- ``` -->
+<!-- ## Ames Housing Dataset  -->
+<!-- ```{r} -->
+<!-- # set up the recipe -->
+<!-- library(recipes) -->
+<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # sets up the type and role of variables -->
+<!-- ames_recipe$var_info -->
+<!-- ``` -->
+</section>
+<section id="zero-variance-zv-andor-near-zero-variance-nzv-variables" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="zero-variance-zv-andor-near-zero-variance-nzv-variables"><span class="header-section-number">6.3</span> Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables</h2>
+<p>A rule of thumb for detecting near-zero variance features is:</p>
+<ul>
+<li><p>The fraction of unique values over the sample size is low (say <span class="math inline">\(\le 10\%\)</span>).</p></li>
+<li><p>The ratio of the frequency of the most prevalent value to the frequency of the second most prevalent value is large (say <span class="math inline">\(\ge 20\%\)</span>).</p></li>
+</ul>
+<!-- ## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables -->
+<!-- ```{r} -->
+<!-- # investigate zv/nzv predictors  -->
+<!-- nearZeroVar(ames, saveMetrics = TRUE)   # check which predictors are zv/nzv -->
+<!-- ``` -->
+<!-- ## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables -->
+<!-- ```{r} -->
+<!-- # investigate zv/nzv predictors  -->
+<!-- nearZeroVar(ames_train, saveMetrics = TRUE)   # check which predictors are zv/nzv -->
+<!-- ``` -->
+<!-- ## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables -->
+<!-- ```{r, eval=FALSE} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val)    # filter out zv/nzv predictors -->
+<!-- ``` -->
+</section>
+<section id="imputing-missing-entries" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="imputing-missing-entries"><span class="header-section-number">6.4</span> Imputing Missing Entries</h2>
+<p>Common imputation techniques:</p>
+<ul>
+<li><p><code>step_impute_median</code>: used for numeric (especially discrete) variables</p></li>
+<li><p><code>step_impute_mean</code>: used for numeric variables</p></li>
+<li><p><code>step_impute_knn</code>: used for both numeric and categorical variables (computationally expensive)</p></li>
+<li><p><code>step_impute_mode</code>: used for nominal (having no order) categorical variables</p></li>
+</ul>
+<!-- ## Imputing Missing Entries {.smaller} -->
+<!-- ```{r} -->
+<!-- summary(ames_train)   # check which predictors have missing entries -->
+<!-- ``` -->
+<!-- ## Imputing Missing Entries -->
+<!-- ```{r} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%      # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area)       # impute missing entries -->
+<!-- ``` -->
+</section>
+<section id="label-encoding-ordinal-categorical-variables" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="label-encoding-ordinal-categorical-variables"><span class="header-section-number">6.5</span> Label Encoding Ordinal Categorical Variables</h2>
+<p>Label encoding is a pure numeric conversion of the levels of a categorical variable. If a categorical variable is a factor and it has pre-specified levels then the numeric conversion will be in level order. If no levels are specified, the encoding will be based on alphabetical order.</p>
+<p>We should be careful with label encoding unordered categorical features because most models will treat them as ordered numeric features</p>
+<!-- ## Label Encoding Ordinal Categorical Variables -->
+<!-- ```{r} -->
+<!-- # investigate predictors with possible ordering (label encoding) -->
+<!-- ames_train %>% count(MS_SubClass) -->
+<!-- ``` -->
+<!-- ## Label Encoding Ordinal Categorical Variables -->
+<!-- ```{r} -->
+<!-- # investigate predictors with possible ordering (label encoding) -->
+<!-- ames_train %>% count(Overall_Qual) -->
+<!-- ``` -->
+<!-- ## Label Encoding Ordinal Categorical Variables -->
+<!-- ```{r} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%    # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area) %>%      # impute missing entries -->
+<!--   step_integer(Overall_Qual)        # numeric conversion of levels of the predictors -->
+<!-- ``` -->
+</section>
+<section id="normalizing-centering-and-scaling-numeric-predictors" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="normalizing-centering-and-scaling-numeric-predictors"><span class="header-section-number">6.6</span> Normalizing (centering and scaling) Numeric Predictors</h2>
+<p>Normalizing features includes <strong>centering</strong> and <strong>scaling</strong> so that numeric variables have zero mean and unit variance, which provides a common comparable unit of measure across all the variables.</p>
+<p>Before centering and scaling, it is better to remove zv/nzv variables, and perform necessary imputation and label encoding.</p>
+<!-- ```{r} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%      # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area) %>%       # impute missing entries -->
+<!--   step_integer(Overall_Qual) %>%       # numeric conversion of levels of the predictors -->
+<!--   step_center(all_numeric(), -all_outcomes()) %>%      # center (subtract mean) all numeric predictors -->
+<!--   step_scale(all_numeric(), -all_outcomes())           # scale (divide by standard deviation) all numeric predictors -->
+<!-- ``` -->
+</section>
+<section id="lumping-predictors" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="lumping-predictors"><span class="header-section-number">6.7</span> Lumping Predictors</h2>
+<p>Sometimes features (numerical or categorical) will contain levels that have very few observations (decided by a threshold). It can be beneficial to collapse, or “lump” these into a lesser number of categories.</p>
+<!-- ```{r, eval=FALSE} -->
+<!-- # lumping categorical predictors if need be -->
+<!-- ames_train %>% count(Neighborhood) %>% arrange(n)   # check frequency of categories -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%  # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area) %>%                                   # impute missing entries -->
+<!--   step_integer(Overall_Qual) %>%                                      # numeric conversion of levels of the predictors -->
+<!--   step_center(all_numeric(), -all_outcomes()) %>%                     # center (subtract mean) all numeric predictors -->
+<!--   step_scale(all_numeric(), -all_outcomes()) %>%                      # scale (divide by standard deviation) all numeric predictors -->
+<!--   step_other(Neighborhood, threshold = 0.01, other = "other")         # lumping required predictors -->
+<!-- ``` -->
+</section>
+<section id="one-hotdummy-encoding-categorical-predictors" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="one-hotdummy-encoding-categorical-predictors"><span class="header-section-number">6.8</span> One-hot/dummy Encoding Categorical Predictors</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/ohd.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>Adapted from Hands-on Machine Learning with R, Bradley Boehmke &amp; Brandon Greenwell</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## One-hot/dummy Encoding Categorical Predictors -->
+<!-- ```{r} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%  # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area) %>%                                   # impute missing entries -->
+<!--   step_integer(Overall_Qual) %>%                                      # numeric conversion of levels of the predictors -->
+<!--   step_center(all_numeric(), -all_outcomes()) %>%                     # center (subtract mean) all numeric predictors -->
+<!--   step_scale(all_numeric(), -all_outcomes()) %>%                      # scale (divide by standard deviation) all numeric predictors -->
+<!--   step_other(Neighborhood, threshold = 0.01, other = "other") %>%     # lumping required predictors -->
+<!--   step_dummy(all_nominal(), one_hot = FALSE)                          # one-hot/dummy encode nominal categorical predictors -->
+<!-- ``` -->
+</section>
+<section id="preprocessing-steps" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="preprocessing-steps"><span class="header-section-number">6.9</span> Preprocessing Steps</h2>
+<p>A suggested order of potential steps that should work for most problems:</p>
+<ol type="1">
+<li><p>Filter out zero or near-zero variance features.</p></li>
+<li><p>Perform imputation if required.</p></li>
+<li><p>Label encode ordinal categorical features.</p></li>
+<li><p>Normalize/Standardize (center and scale) numeric features.</p></li>
+<li><p>Lump certain features if required.</p></li>
+<li><p>One-hot or dummy encode categorical features.</p></li>
+</ol>
+</section>
+<section id="data-leakage-a-serious-common-problem" class="level2" data-number="6.10">
+<h2 data-number="6.10" class="anchored" data-anchor-id="data-leakage-a-serious-common-problem"><span class="header-section-number">6.10</span> Data Leakage (A Serious, Common Problem)</h2>
+<p>Data leakage is when information from outside the training data set is used to create the model. Data leakage often occurs when the data preprocessing task is implemented with CV. To minimize this, feature engineering should be done in isolation of each resampling iteration.</p>
+</section>
+<section id="data-leakage-example" class="level2 smaller" data-number="6.11">
+<h2 class="smaller anchored" data-number="6.11" data-anchor-id="data-leakage-example"><span class="header-section-number">6.11</span> Data Leakage (Example)</h2>
+<p><strong>KNN Classification: Toy Example</strong></p>
+<center>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Obs.</th>
+<th><span class="math inline">\(X_1\)</span></th>
+<th><span class="math inline">\(X_2\)</span></th>
+<th>Y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1033</td>
+<td>1.7</td>
+<td>Red</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1112</td>
+<td>1.5</td>
+<td>Red</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1500</td>
+<td>1</td>
+<td>Red</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>999</td>
+<td>1</td>
+<td>Green</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>1012</td>
+<td>1.5</td>
+<td>Green</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>1013</td>
+<td>1</td>
+<td>Red</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>1233</td>
+<td>1</td>
+<td>Green</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>1332</td>
+<td>1</td>
+<td>Red</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p><br>
+</p>
+<p>Suppose you implement 4-fold CV. Let’s say the folds are randomly chosen to be observation pairs (2, 3), (4, 7), (1, 8), and (5, 6).</p>
+</section>
+<section id="preprocessing-with-recipes-package" class="level2" data-number="6.12">
+<h2 data-number="6.12" class="anchored" data-anchor-id="preprocessing-with-recipes-package"><span class="header-section-number">6.12</span> Preprocessing With <code>recipes</code> Package</h2>
+<p>There are three main steps in creating and applying feature engineering with <code>recipes</code>:</p>
+<ul>
+<li><p><strong>recipe:</strong> where you define your feature engineering steps to create your blueprint</p></li>
+<li><p><strong>prepare:</strong> estimate feature engineering parameters based on training data</p></li>
+<li><p><strong>bake:</strong> apply the blueprint to data</p></li>
+</ul>
+<!-- ## Preprocessing With `recipes` Package -->
+<!-- ```{r} -->
+<!-- # finally, after all preprocessing steps have been decided set up the overall blueprint -->
+<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train) -->
+<!-- blueprint <- ames_recipe %>%     -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%  -->
+<!--   step_impute_mean(Gr_Liv_Area) %>% -->
+<!--   step_integer(Overall_Qual) %>% -->
+<!--   step_center(all_numeric(), -all_outcomes()) %>% -->
+<!--   step_scale(all_numeric(), -all_outcomes()) %>% -->
+<!--   step_other(Neighborhood, threshold = 0.01, other = "other") %>% -->
+<!--   step_dummy(all_nominal(), one_hot = FALSE) -->
+<!-- prepare <- prep(blueprint, data = ames_train)    # estimate feature engineering parameters based on training data -->
+<!-- baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to training data for building final/optimal model -->
+<!-- baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data for future use -->
+<!-- ``` -->
+<!-- ## Training Model  {.smaller} -->
+<!-- * **A KNN model** -->
+<!-- ```{r} -->
+<!-- # perform CV to tune K -->
+<!-- set.seed(042324) -->
+<!-- cv_specs <- trainControl(method = "cv", number = 5)   # 5-fold CV (1 repeat) -->
+<!-- k_grid <- expand.grid(k = seq(1, 10, by = 2)) -->
+<!-- knn_fit <- train(blueprint, -->
+<!--                   data = ames_train,  -->
+<!--                   method = "knn", -->
+<!--                   trControl = cv_specs, -->
+<!--                   tuneGrid = k_grid, -->
+<!--                   metric = "RMSE") -->
+<!-- knn_fit -->
+<!-- ``` -->
+<!-- ## Training Model  {.smaller} -->
+<!-- * **A KNN model** -->
+<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+<!-- ggplot(knn_fit) -->
+<!-- ``` -->
+<!-- ## Training Model  {.smaller} -->
+<!-- * **A linear regression model** -->
+<!-- ```{r} -->
+<!-- set.seed(042324) -->
+<!-- lm_fit <- train(blueprint, -->
+<!--                   data = ames_train,  -->
+<!--                   method = "lm", -->
+<!--                   trControl = cv_specs, -->
+<!--                   metric = "RMSE") -->
+<!-- lm_fit -->
+<!-- ``` -->
+<!-- ## Final Model and Test Set Error -->
+<!-- ```{r} -->
+<!-- # refit the final/optimal model using ALL modified training data, and obtain estimate of prediction error from modified test data -->
+<!-- final_model <- lm(Sale_Price ~ ., data = baked_train)    # build final model  -->
+<!-- final_preds <- predict(final_model, newdata = baked_test)   # obtain predictions on test data -->
+<!-- sqrt(mean((baked_test$Sale_Price - final_preds)^2))    # calculate test set RMSE -->
+<!-- ``` -->
+<!-- ## Variable Importance  -->
+<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+<!-- # variable importance -->
+<!-- library(vip) -->
+<!-- vip(object = lm_fit,         # CV object  -->
+<!--     num_features = 20,   # maximum number of predictors to show importance for -->
+<!--     method = "model")            # model-specific VI scores -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> {.smaller} -->
+<!-- You will work with a dataset containing information on employee attrition. Please load the dataset using the code below. -->
+<!-- ```{r} -->
+<!-- attrition <- readRDS("attrition.rds") -->
+<!-- ``` -->
+<!-- **Objective**: The task is to predict `Attrition` (Yes/No) using the rest of the variables in the data (predictors/features). -->
+<!-- * **Step 1**: Investigate the dataset -->
+<!--     - What are the types of features? - categorical or numeric -->
+<!--     - If categorical, are they ordinal or nominal? If ordinal, are their levels in appropriate order? You can use the `levels` function to check the ordering. -->
+<!--     - Are there any features with missing entries? -->
+<!--     - Are there any zv/nzv features? -->
+<!-- * **Step 2**: Split the data into training and test sets (70-30 split) -->
+<!-- * **Step 3**: Perform required data preprocessing and create the blueprint. If using `step_dummy()`, set `one_hot = FALSE`. -->
+<!-- * **Step 4**: Implement 5-fold CV (1 repeat) to compare the performance of the following models. Use `metric = "Accuracy"`. -->
+<!--     - a logistic regression model (`method = "glm"` and `family = "binomial"`) -->
+<!--     - a KNN classifier with the optimal `K` chosen by CV (`method = "knn"`). Use a grid of `K` values $1, 2, \ldots, 10$. -->
+<!-- What is the optimal `K` chosen? How do the models compare in terms of the CV accuracies? -->
+<!-- * **Step 5**: Build your final optimal model. Obtain probability and class label predictions for the test set (use threshold of 0.5). Create the corresponding confusion matrix and report the test set accuracy. Also, create the ROC curve for the optimal model and report the AUC. -->
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Slides5.html" class="pagination-link" aria-label="Cross-Validation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cross-Validation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Slides8.html" class="pagination-link" aria-label="Decision Trees">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Decision Trees</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Statistical Machine Learning (208) Course Notes by Abhishek Chakraborty.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

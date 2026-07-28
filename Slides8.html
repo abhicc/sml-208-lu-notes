@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Decision Trees – Statistical Machine Learning (208 @ LU) Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Slides9.html" rel="next">
+<link href="./Slides6.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-70896287326667430c62020e2b71b712.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Slides8.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Decision Trees</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Machine Learning (208 @ LU) Notes</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Terminologies and Notations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Supervised Learning and Trade-offs in SML</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Regression and KNN Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Logistic Regression and KNN Classifiers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cross-Validation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides8.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Decision Trees</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tree-Based Ensemble Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Unsupervised Learning</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tree-based-methods" id="toc-tree-based-methods" class="nav-link active" data-scroll-target="#tree-based-methods"><span class="header-section-number">7.1</span> Tree-Based Methods</a></li>
+  <li><a href="#terminology-for-trees" id="toc-terminology-for-trees" class="nav-link" data-scroll-target="#terminology-for-trees"><span class="header-section-number">7.2</span> Terminology for Trees</a></li>
+  <li><a href="#terminology-for-trees-1" id="toc-terminology-for-trees-1" class="nav-link" data-scroll-target="#terminology-for-trees-1"><span class="header-section-number">7.3</span> Terminology for Trees</a></li>
+  <li><a href="#building-a-tree" id="toc-building-a-tree" class="nav-link" data-scroll-target="#building-a-tree"><span class="header-section-number">7.4</span> Building a Tree</a></li>
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction"><span class="header-section-number">7.5</span> Prediction</a></li>
+  <li><a href="#building-a-tree-and-prediction" id="toc-building-a-tree-and-prediction" class="nav-link" data-scroll-target="#building-a-tree-and-prediction"><span class="header-section-number">7.6</span> Building a Tree and Prediction</a></li>
+  <li><a href="#building-a-tree-and-prediction-1" id="toc-building-a-tree-and-prediction-1" class="nav-link" data-scroll-target="#building-a-tree-and-prediction-1"><span class="header-section-number">7.7</span> Building a Tree and Prediction</a></li>
+  <li><a href="#building-a-tree-and-prediction-2" id="toc-building-a-tree-and-prediction-2" class="nav-link" data-scroll-target="#building-a-tree-and-prediction-2"><span class="header-section-number">7.8</span> Building a Tree and Prediction</a></li>
+  <li><a href="#building-a-tree-and-prediction-3" id="toc-building-a-tree-and-prediction-3" class="nav-link" data-scroll-target="#building-a-tree-and-prediction-3"><span class="header-section-number">7.9</span> Building a Tree and Prediction</a></li>
+  <li><a href="#building-a-tree-and-prediction-4" id="toc-building-a-tree-and-prediction-4" class="nav-link" data-scroll-target="#building-a-tree-and-prediction-4"><span class="header-section-number">7.10</span> Building a Tree and Prediction</a></li>
+  <li><a href="#building-a-tree-1" id="toc-building-a-tree-1" class="nav-link" data-scroll-target="#building-a-tree-1"><span class="header-section-number">7.11</span> Building a Tree</a></li>
+  <li><a href="#tree-pruning" id="toc-tree-pruning" class="nav-link" data-scroll-target="#tree-pruning"><span class="header-section-number">7.12</span> Tree Pruning</a></li>
+  <li><a href="#tree-pruning-1" id="toc-tree-pruning-1" class="nav-link" data-scroll-target="#tree-pruning-1"><span class="header-section-number">7.13</span> Tree Pruning</a></li>
+  <li><a href="#classification-trees" id="toc-classification-trees" class="nav-link" data-scroll-target="#classification-trees"><span class="header-section-number">7.14</span> Classification Trees</a></li>
+  <li><a href="#trees" id="toc-trees" class="nav-link" data-scroll-target="#trees"><span class="header-section-number">7.15</span> Trees</a></li>
+  <li><a href="#ensemble-methods" id="toc-ensemble-methods" class="nav-link" data-scroll-target="#ensemble-methods"><span class="header-section-number">7.16</span> Ensemble Methods</a></li>
+  <li><a href="#bagging" id="toc-bagging" class="nav-link" data-scroll-target="#bagging"><span class="header-section-number">7.17</span> Bagging</a></li>
+  <li><a href="#bagging-1" id="toc-bagging-1" class="nav-link" data-scroll-target="#bagging-1"><span class="header-section-number">7.18</span> Bagging</a></li>
+  <li><a href="#bagging-2" id="toc-bagging-2" class="nav-link" data-scroll-target="#bagging-2"><span class="header-section-number">7.19</span> Bagging</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Decision Trees</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+<section id="tree-based-methods" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="tree-based-methods"><span class="header-section-number">7.1</span> Tree-Based Methods</h2>
+<ul>
+<li><p>Involves <strong>stratifying</strong> or <strong>segmenting</strong> the predictor space into a number of simple regions.</p></li>
+<li><p>The set of splitting rules used to segment the predictor space can be summarized in a tree, thus, the name <strong>decision tree</strong> methods.</p></li>
+<li><p>Can be used for both classification and regression.</p></li>
+<li><p>Tree-based methods are simple and useful for interpretation, however, not the best in terms of prediction accuracy.</p></li>
+<li><p>Methods such as <strong>bagging</strong>, <strong>random forests</strong>, and <strong>boosting</strong> grow multiple trees and then combine their results.</p></li>
+</ul>
+<!-- ## Regression Trees -->
+<!-- **Hitters dataset** -->
+<!-- ```{r,echo=FALSE} -->
+<!-- data("Hitters") -->
+<!-- Hitters=na.omit(Hitters) -->
+<!-- head(Hitters) -->
+<!-- ``` -->
+<!-- ## Regression Trees -->
+<!-- **Hitters dataset** -->
+<!-- log(Salary) is color-coded from low (blue, green) to high (yellow, red). -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/SL_C8_1.png") -->
+<!-- ``` -->
+<!-- ## Regression Trees -->
+<!-- **Hitters dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/8.1.png") -->
+<!-- ``` -->
+<!-- ## Regression Trees -->
+<!-- **Hitters dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/8.2.png") -->
+<!-- ``` -->
+</section>
+<section id="terminology-for-trees" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="terminology-for-trees"><span class="header-section-number">7.2</span> Terminology for Trees</h2>
+<ul>
+<li><p>Every split is considered to be a <strong>node</strong>.</p></li>
+<li><p>We refer to the first node at the top of the tree as the <strong>root node</strong> (this node contains all of the training data).</p></li>
+<li><p>The final nodes at the bottom of the tree are called the <strong>terminal nodes</strong> or <strong>leaves</strong>.</p></li>
+</ul>
+<!-- The regions $R_1$, $R_2$, and $R_3$ are known as **terminal nodes** or **leaves**. -->
+<ul>
+<li><p>Decision trees are typically drawn <strong>upside down</strong>, in the sense that the leaves are at the bottom of the tree.</p></li>
+<li><p>The points along the tree where the predictor space is split are referred to as <strong>internal nodes</strong>, that is, every node in between the <strong>root node</strong> and <strong>terminal nodes</strong> is referred to as an <strong>internal node</strong>.</p></li>
+<li><p>The segments of the trees that connect the nodes are known as <strong>branches</strong>.</p></li>
+</ul>
+</section>
+<section id="terminology-for-trees-1" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="terminology-for-trees-1"><span class="header-section-number">7.3</span> Terminology for Trees</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/tree2.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Adapted from HMLR, Boehmke &amp; Greenwell</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## Interpretation of Trees -->
+<!-- **Hitters dataset** -->
+<!-- * **Years** is the most important factor in determining **Salary**, and players with less experience earn lower salaries than more experienced players. -->
+<!-- * Given that a player is less experienced, the number of **Hits** that he made in the previous year seems to play little role in his **Salary**. -->
+<!-- * But among players who have been in the major leagues for five or more years, the number of **Hits** made in the previous year does affect **Salary**, and players who made more **Hits** last year tend to have higher salaries. -->
+<!-- * Surely an over-simplification, but compared to a regression model, it is easy to display, interpret and explain. -->
+</section>
+<section id="building-a-tree" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="building-a-tree"><span class="header-section-number">7.4</span> Building a Tree</h2>
+<ul>
+<li>First select the predictor <span class="math inline">\(X_j\)</span> and the cutpoint <span class="math inline">\(s\)</span> such that splitting the predictor space into the regions <span class="math inline">\(\{X|X_j &lt; s\}\)</span> and <span class="math inline">\(\{X|X_j \ge s\}\)</span> leads to the greatest possible reduction in <span class="math inline">\(SSE\)</span>.</li>
+</ul>
+<p>For any <span class="math inline">\(j\)</span> and <span class="math inline">\(s\)</span>, define</p>
+<p><span class="math display">\[R_1 = \{X|X_j &lt; s\} \ \ \text{and} \ \ R_2 = \{X|X_j &gt; s\}\]</span></p>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '67%'} -->
+<!-- knitr::include_graphics("EFT/e8.2.png") -->
+<!-- ``` -->
+<p>Find <span class="math inline">\(j\)</span> and <span class="math inline">\(s\)</span> that minimize</p>
+<p><span class="math display">\[SSE = \displaystyle \sum_{i \in R_1}\left(y_i - \hat{y}_{R_1}\right)^2 + \sum_{i \in R_2}\left(y_i - \hat{y}_{R_2}\right)^2\]</span></p>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '67%'} -->
+<!-- knitr::include_graphics("EFT/e8.3.png") -->
+<!-- ``` -->
+<ul>
+<li><p>Next, repeat the process, look for the best predictor and best cutpoint in order to split the data further. However, this time, instead of splitting the entire predictor space, split one of the two previously identified regions.</p></li>
+<li><p>The process continues until a stopping criterion is reached; say, we may continue until no region contains more than five observations.</p></li>
+</ul>
+</section>
+<section id="prediction" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="prediction"><span class="header-section-number">7.5</span> Prediction</h2>
+<!-- Building a tree involves two steps. -->
+<!-- The steps involved are: -->
+<!-- 1. Dividing the predictor space, that is, the set of possible values for $X_1, X_2, \ldots, X_p$ into $J$ distinct and non-overlapping regions, $R_1, R_2, \ldots, R_J$. -->
+<p>For every observation that falls into the region <span class="math inline">\(R_j\)</span>, make the same prediction, which is</p>
+<ul>
+<li><p>the mean response of the training set observations in <span class="math inline">\(R_j\)</span> (for regression problems),</p></li>
+<li><p>majority vote response of the training set observations in <span class="math inline">\(R_j\)</span> (for classification problems).</p></li>
+</ul>
+</section>
+<section id="building-a-tree-and-prediction" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="building-a-tree-and-prediction"><span class="header-section-number">7.6</span> Building a Tree and Prediction</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/tree1.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Adapted from HMLR, Boehmke &amp; Greenwell</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="building-a-tree-and-prediction-1" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="building-a-tree-and-prediction-1"><span class="header-section-number">7.7</span> Building a Tree and Prediction</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/tree2.jpg" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Adapted from HMLR, Boehmke &amp; Greenwell</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="building-a-tree-and-prediction-2" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="building-a-tree-and-prediction-2"><span class="header-section-number">7.8</span> Building a Tree and Prediction</h2>
+<p><strong>Default Dataset</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Slides8_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="building-a-tree-and-prediction-3" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="building-a-tree-and-prediction-3"><span class="header-section-number">7.9</span> Building a Tree and Prediction</h2>
+<p><strong>Default Dataset</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Slides8_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="building-a-tree-and-prediction-4" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="building-a-tree-and-prediction-4"><span class="header-section-number">7.10</span> Building a Tree and Prediction</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/8.3.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>Adapted from ISLR, James et al.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## Building a Tree -->
+<!-- * In theory, regions could have any shape. However, we -->
+<!-- choose to divide the predictor space into **high-dimensional rectangles**, or **boxes**, for simplicity and for ease of interpretation of the resulting predictive model. -->
+<!-- * **Objective**: Find boxes $R_1, R_2, \ldots R_J$ that minimize the $RSS$, -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/e8.1.png") -->
+<!-- ``` -->
+<!-- where $\hat{y}_{R_j}$ is the mean response for the training observations within the $j^{th}$ box. -->
+</section>
+<section id="building-a-tree-1" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="building-a-tree-1"><span class="header-section-number">7.11</span> Building a Tree</h2>
+<ul>
+<li><p>It is computationally infeasible to consider every possible partition of the feature space into <span class="math inline">\(J\)</span> boxes.</p></li>
+<li><p>For this reason, we take a <strong>top-down, greedy</strong> approach known as <strong>recursive binary splitting</strong>.</p>
+<ul>
+<li><strong>top-down</strong> because it begins at the top of the tree and then successively splits the predictor space.</li>
+<li><strong>greedy</strong> because at each step of the tree-building process, the best split is made at that particular step, rather than looking ahead and picking a split that will lead to a better tree in some future step.</li>
+</ul></li>
+</ul>
+<!-- ## Building a Tree -->
+<!-- ```{r , echo=FALSE,  fig.align='center', fig.cap="Adapted from HMLR, Boehmke & Greenwell", out.width = '100%'} -->
+<!-- knitr::include_graphics("tree2.jpg") -->
+<!-- ``` -->
+</section>
+<section id="tree-pruning" class="level2" data-number="7.12">
+<h2 data-number="7.12" class="anchored" data-anchor-id="tree-pruning"><span class="header-section-number">7.12</span> Tree Pruning</h2>
+<p>The process described above may <strong>overfit</strong> the data.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/pruning.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## Tree Pruning -->
+<!-- * The process described above may **overfit** the data. -->
+<!-- * A smaller tree with fewer splits (that is, fewer regions $R_1,\ldots,R_J$) might lead to lower variance and better interpretation at the cost of a little bias. -->
+<!-- * One possible alternative is to grow the tree only so long as the decrease in the $RSS$ due to each split exceeds some (high) threshold. -->
+<!-- * This strategy will result in smaller trees, but is too short-sighted: a seemingly worthless split early on in the tree might be followed by a very good split, that is, a split that leads to a large reduction in $RSS$ later on. -->
+</section>
+<section id="tree-pruning-1" class="level2" data-number="7.13">
+<h2 data-number="7.13" class="anchored" data-anchor-id="tree-pruning-1"><span class="header-section-number">7.13</span> Tree Pruning</h2>
+<!-- * A better strategy is **pruning**. -->
+<ul>
+<li>Grow a very large tree, and then <strong>prune</strong> it back to obtain a <strong>subtree</strong>.</li>
+</ul>
+<!-- $T_0$ -->
+<ul>
+<li><p>The technique uses is known as <strong>cost complexity pruning</strong> (also known as <strong>weakest link pruning</strong>).</p></li>
+<li><p>Consider a sequence of trees indexed by <span class="math inline">\(\alpha\)</span>. For each <span class="math inline">\(\alpha\)</span>, consider the tree that minimizes</p></li>
+</ul>
+<p><span class="math display">\[SSE + \alpha \ |T|\]</span></p>
+<!-- $T \subset T_0$ -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/e8.4.png") -->
+<!-- ``` -->
+<ul>
+<li>Choose optimal <span class="math inline">\(\alpha\)</span> by CV.</li>
+</ul>
+<!-- ## Building an Optimal Tree -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/algo8.1.png") -->
+<!-- ``` -->
+<!-- ## Building an Optimal Tree -->
+<!-- **Hitters dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/8.4.png") -->
+<!-- ``` -->
+<!-- ## Building an Optimal Tree -->
+<!-- **Hitters dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '90%'} -->
+<!-- knitr::include_graphics("EFT/8.5.png") -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation -->
+<!-- **Ames Housing Dataset** -->
+<!-- ```{r} -->
+<!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # reorder levels of 'Overall_Qual' -->
+<!-- ames$Overall_Qual <- factor(ames$Overall_Qual, levels = c("Very_Poor", "Poor", "Fair", "Below_Average",  -->
+<!--                                                           "Average", "Above_Average", "Good", "Very_Good",  -->
+<!--                                                           "Excellent", "Very_Excellent")) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # split data -->
+<!-- set.seed(050924)   # set seed -->
+<!-- train_index <- createDataPartition(y = ames$Sale_Price, p = 0.7, list = FALSE)   # consider 70-30 split -->
+<!-- ames_train <- ames[train_index,]   # training data -->
+<!-- ames_test <- ames[-train_index,]   # test data -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation -->
+<!-- **Ames Housing Dataset** -->
+<!-- ```{r} -->
+<!-- # create recipe and blueprint, prepare and apply blueprint -->
+<!-- set.seed(050924)   # set seed -->
+<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # set up recipe -->
+<!-- blueprint <- ames_recipe %>% -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%   # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area) %>%                                    # impute missing entries -->
+<!--   step_integer(Overall_Qual) %>%                                       # numeric conversion of levels of the predictors -->
+<!--   step_center(all_numeric(), -all_outcomes()) %>%                      # center (subtract mean) all numeric predictors -->
+<!--   step_scale(all_numeric(), -all_outcomes()) %>%                       # scale (divide by standard deviation) all numeric predictors -->
+<!--   step_other(Neighborhood, threshold = 0.01, other = "other") %>%      # lumping required predictors -->
+<!--   step_dummy(all_nominal(), one_hot = FALSE)                           # one-hot/dummy encode nominal categorical predictors -->
+<!-- prepare <- prep(blueprint, data = ames_train)    # estimate feature engineering parameters based on training data -->
+<!-- baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to training data -->
+<!-- baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation -->
+<!-- **Ames Housing Dataset** -->
+<!-- Implement CV to tune the hyperparameter. -->
+<!-- ```{r} -->
+<!-- set.seed(050924)   # set seed -->
+<!-- cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats = 5)   # CV specifications -->
+<!-- library(rpart)   # for trees -->
+<!-- tree_cv <- train(blueprint, -->
+<!--                  data = ames_train, -->
+<!--                  method = "rpart",   -->
+<!--                  trControl = cv_specs, -->
+<!--                  tuneLength = 20,                   # considers a grid of 20 possible tuning parameter values -->
+<!--                  metric = "RMSE") -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # results from the CV procedure -->
+<!-- tree_cv$bestTune    # optimal hyperparameter -->
+<!-- min(tree_cv$results$RMSE)   # optimal CV RMSE -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation {.smaller} -->
+<!-- **Ames Housing Dataset** -->
+<!-- Results from the CV procedure. -->
+<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+<!-- ggplot(tree_cv)    -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation -->
+<!-- **Ames Housing Dataset** -->
+<!-- ```{r} -->
+<!-- # build final model -->
+<!-- final_model <- rpart(formula = Sale_Price ~ ., -->
+<!--                      data = baked_train, -->
+<!--                      cp = tree_cv$bestTune$cp, -->
+<!--                      xval = 0,                 # no further CV -->
+<!--                      method = "anova")         # for regression -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # obtain predictions and test set RMSE -->
+<!-- final_model_preds <- predict(object = final_model, newdata = baked_test, type = "vector")    # obtain test set predictions -->
+<!-- sqrt(mean((final_model_preds - baked_test$Sale_Price)^2))   # calculate test set RMSE -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation  -->
+<!-- **Ames Housing Dataset** -->
+<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+<!-- library(rpart.plot) -->
+<!-- rpart.plot(final_model)     -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation {.smaller} -->
+<!-- **Ames Housing Dataset** -->
+<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+<!-- # variable importance -->
+<!-- vip(object = tree_cv, num_features = 20, method = "model") -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation -->
+<!-- **Ames Housing Dataset** -->
+<!-- ```{r} -->
+<!-- # build full grown tree (no pruning) -->
+<!-- final_model_no_prune <- rpart(formula = Sale_Price ~ ., -->
+<!--                               data = baked_train, -->
+<!--                               cp = 0,                   # no pruning -->
+<!--                               xval = 0,                 # no CV -->
+<!--                               method = "anova")         # for regression -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # obtain predictions and test set RMSE -->
+<!-- final_model_no_prune_preds <- predict(object = final_model_no_prune, newdata = baked_test, type = "vector")    # test set predictions -->
+<!-- sqrt(mean((final_model_no_prune_preds - baked_test$Sale_Price)^2))   # calculate test set RMSE -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation  -->
+<!-- **Ames Housing Dataset** -->
+<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+<!-- rpart.plot(final_model_no_prune)     -->
+<!-- ``` -->
+<!-- ## Regression Tree: Boston Data Example  {.smaller} -->
+<!-- ```{r} -->
+<!-- library(MASS) -->
+<!-- data("Boston")   # load dataset -->
+<!-- set.seed(05172022) -->
+<!-- ## investigate dataset -->
+<!-- str(Boston)  # check variable types -->
+<!-- ``` -->
+<!-- ## Regression Tree: Boston Data Example  {.smaller} -->
+<!-- ```{r} -->
+<!-- summary(Boston) -->
+<!-- ``` -->
+<!-- ## Regression Tree: Boston Data Example  {.smaller} -->
+<!-- ```{r} -->
+<!-- sum(is.na(Boston))   # check for missing values -->
+<!-- nearZeroVar(Boston, saveMetrics = TRUE)   # check for zv/nzv features -->
+<!-- ``` -->
+<!-- ## Regression Tree: Boston Data Example   -->
+<!-- ```{r} -->
+<!-- # split the data into training and test sets -->
+<!-- train_index <- createDataPartition(Boston$medv, p = 0.8, list = FALSE)   # 80-20 split -->
+<!-- Boston_train <- Boston[train_index, ]   # training set -->
+<!-- Boston_test <- Boston[-train_index, ]   # test set -->
+<!-- # create feature preprocessing blueprint -->
+<!-- blueprint <- recipe(medv ~ ., data = Boston_train) %>% -->
+<!--   step_normalize(all_numeric_predictors()) -->
+<!-- prepare <- prep(blueprint, training = Boston_train) -->
+<!-- baked_train <- bake(prepare, new_data = Boston_train) -->
+<!-- baked_test <- bake(prepare, new_data = Boston_test) -->
+<!-- ``` -->
+<!-- ## Regression Tree: Boston Data Example   -->
+<!-- ```{r} -->
+<!-- # implement CV -->
+<!-- cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats = 5) -->
+<!-- tree_cv <- train(blueprint, -->
+<!--                  data = Boston_train, -->
+<!--                  method = "rpart", -->
+<!--                  trControl = cv_specs, -->
+<!--                  tuneLength = 20,     # considers a grid of 20 possible tuning parameter values -->
+<!--                  metric = "RMSE") -->
+<!-- tree_cv$bestTune   # optimal tuning parameter -->
+<!-- min(tree_cv$results$RMSE)   # CV RMSE -->
+<!-- ``` -->
+<!-- ## Regression Tree: Boston Data Example   -->
+<!-- ```{r} -->
+<!-- tree_cv$finalModel$variable.importance   # importance of features -->
+<!-- ``` -->
+<!-- ## Regression Tree: Boston Data Example   -->
+<!-- ```{r} -->
+<!-- # fit final optimal model -->
+<!-- tree_fit <- rpart(medv ~ ., -->
+<!--                   data = baked_train, -->
+<!--                   cp = tree_cv$bestTune$cp, -->
+<!--                   xval = 0, -->
+<!--                   method = "anova") -->
+<!-- preds_tree <- predict(tree_fit, newdata = baked_test)   # obtain predictions on test set -->
+<!-- sqrt(mean((preds_tree - baked_test$medv)^2))   # test RMSE -->
+<!-- ``` -->
+<!-- ## Regression Tree: Boston Data Example   -->
+<!-- ```{r, fig.align='center'} -->
+<!-- rpart.plot(tree_fit, cex = 0.75) -->
+<!-- ``` -->
+<!-- ## Regression Tree: Boston Data Example   -->
+<!-- ```{r} -->
+<!-- # fit full grown tree (with no pruning) for comparison -->
+<!-- tree_fit1 <- rpart(medv ~ ., -->
+<!--                    data = baked_train, -->
+<!--                    cp = 0,  -->
+<!--                    xval = 0, -->
+<!--                    method = "anova") -->
+<!-- ``` -->
+<!-- ## Regression Tree: Boston Data Example   -->
+<!-- ```{r, fig.align='center'} -->
+<!-- rpart.plot(tree_fit1, cex = 0.75) -->
+<!-- ``` -->
+<!-- ## Classification Trees -->
+<!-- * Very similar to a regression tree, except that it is used to predict a qualitative response rather than a quantitative one. -->
+<!-- * For a classification tree, we predict that each observation belongs to the **most commonly occurring class** of training observations in the region to which it belongs. -->
+<!-- * However, classification error is not sufficiently sensitive for tree-growing. -->
+<!-- ## Classification Trees -->
+<!-- * Another measure is the **Gini Index** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e8.6.png") -->
+<!-- ``` -->
+<!-- measures the total variance across the $K$ classes. It is referred to as a measure of **node purity**. -->
+<!-- * An alternative to the Gini index is **entropy** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e8.7.png") -->
+<!-- ``` -->
+<!-- ## Classification Trees -->
+<!-- **Heart dataset** -->
+<!-- ```{r, echo=FALSE} -->
+<!-- Heart=read.csv("Heart.csv") -->
+<!-- Heart$X=NULL -->
+<!-- head(Heart) -->
+<!-- ``` -->
+<!-- ## Classification Trees -->
+<!-- **Heart dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/8.6a.png") -->
+<!-- ``` -->
+<!-- ## Classification Trees -->
+<!-- **Heart dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/8.6b.png") -->
+<!-- ``` -->
+<!-- ## Trees vs Linear Models -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/8.7.png") -->
+<!-- ``` -->
+</section>
+<section id="classification-trees" class="level2" data-number="7.14">
+<h2 data-number="7.14" class="anchored" data-anchor-id="classification-trees"><span class="header-section-number">7.14</span> Classification Trees</h2>
+<ul>
+<li><p>Still use <strong>recursive binary splitting</strong> to grow a classification tree.</p></li>
+<li><p><span class="math inline">\(SSE\)</span> can be replaced by</p>
+<ul>
+<li><strong>classification error rate</strong>, the fraction of the training observations in that region that do not belong to the most common class.</li>
+</ul>
+<p><span class="math display">\[E = 1 - \max_k \left(\hat{p}_{mk}\right)\]</span></p>
+<ul>
+<li><strong>Gini index</strong>, a measure of node purity—a small value indicates that a node contains predominantly observations from a single class.</li>
+</ul>
+<p><span class="math display">\[G = \displaystyle \sum_{k=1}^{K} \hat{p}_{mk}\left(1-\hat{p}_{mk}\right)\]</span></p></li>
+</ul>
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e8.5.png") -->
+<!-- ``` -->
+<p>Here <span class="math inline">\(\hat{p}_{mk}\)</span> represents the proportion of training observations in the <span class="math inline">\(m^{th}\)</span> region that are from the <span class="math inline">\(k^{th}\)</span> class.</p>
+</section>
+<section id="trees" class="level2" data-number="7.15">
+<h2 data-number="7.15" class="anchored" data-anchor-id="trees"><span class="header-section-number">7.15</span> Trees</h2>
+<p><strong>Advantages</strong></p>
+<ul>
+<li><p>Easy to explain.</p></li>
+<li><p>Closely mirror human decision-making.</p></li>
+<li><p>Can be displayed graphically, and are easily interpreted by non-experts.</p></li>
+<li><p>Handle qualitative predictors without creating dummy variables. Does not require standardization of predictors.</p></li>
+</ul>
+<p><strong>Disadvantages</strong></p>
+<ul>
+<li><p>Do not have same level of prediction accuracy.</p></li>
+<li><p>Can be very non-robust.</p></li>
+</ul>
+<!-- ## Regression Tree: Implementation -->
+<!-- **Ames Housing Dataset** (minimal feature engineering) -->
+<!-- ```{r} -->
+<!-- # create new blueprint (minimal feature engineering), prepare and apply blueprint -->
+<!-- set.seed(050924)   # set seed -->
+<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # set up recipe -->
+<!-- blueprint_minimal <- ames_recipe %>% -->
+<!--   step_impute_mean(Gr_Liv_Area)                                    # impute missing entries -->
+<!-- prepare_minimal <- prep(blueprint_minimal, data = ames_train)    # estimate feature engineering parameters based on training data -->
+<!-- baked_train_minimal <- bake(prepare_minimal, new_data = ames_train)   # apply the blueprint to training data -->
+<!-- baked_test_minimal <- bake(prepare_minimal, new_data = ames_test)    # apply the blueprint to test data -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation -->
+<!-- **Ames Housing Dataset** -->
+<!-- Implement CV to tune the hyperparameter. -->
+<!-- ```{r} -->
+<!-- set.seed(050924)   # set seed -->
+<!-- cv_specs <- trainControl(method = "repeatedcv", number = 5, repeats = 5)   # CV specifications -->
+<!-- tree_cv_min_fe <- train(blueprint_minimal, -->
+<!--                         data = ames_train, -->
+<!--                         method = "rpart",   -->
+<!--                         trControl = cv_specs, -->
+<!--                         tuneLength = 20,                   # considers a grid of 20 possible tuning parameter values -->
+<!--                         metric = "RMSE") -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # results from the CV procedure -->
+<!-- tree_cv_min_fe$bestTune    # optimal hyperparameter -->
+<!-- min(tree_cv_min_fe$results$RMSE)   # optimal CV RMSE -->
+<!-- # doing feature engineering seems to result in a slightly better performance -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation -->
+<!-- **Ames Housing Dataset** -->
+<!-- ```{r} -->
+<!-- # build final model -->
+<!-- final_model_min_fe <- rpart(formula = Sale_Price ~ ., -->
+<!--                             data = baked_train_new, -->
+<!--                             cp = tree_cv_min_fe$bestTune$cp, -->
+<!--                             xval = 0,                 # no CV -->
+<!--                             method = "anova")         # for regression -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # obtain predictions and test set RMSE -->
+<!-- final_model_min_fe_preds <- predict(final_model_min_fe, newdata = baked_test_new)    # obtain test set predictions -->
+<!-- sqrt(mean((final_model_min_fe_preds - baked_test_new$Sale_Price)^2))   # calculate test set RMSE -->
+<!-- ``` -->
+<!-- ## Regression Tree: Implementation -->
+<!-- **Ames Housing Dataset** -->
+<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+<!-- # variable importance -->
+<!-- vip(object = tree_cv_min_fe, num_features = 20, method = "model")           -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> {.smaller} -->
+<!-- You will work with the `iris` dataset which contains measurements in centimeters of four variables for 50 flowers from each of 3 species of iris: setosa, versicolor, and virginica. Please load the dataset using the following code.  -->
+<!-- ```{r} -->
+<!-- data(iris)    # load dataset -->
+<!-- ``` -->
+<!-- We are interested in predicting `Species` using the rest of the variables in the dataset. Compare the performance (in terms of **Accuracy**) of the following models: -->
+<!-- * A logistic regression model; -->
+<!-- * A $K$-NN model with optimal $K$ chosen by CV; -->
+<!-- * A classification tree with optimal hyperparameter chosen by CV. Use `tuneLength = 20`. -->
+<!-- * A classification tree with minimal feature engineering. Use CV to choose the optimal hyperparameter. Use `tuneLength = 20`. -->
+<!-- **Perform the following tasks.** -->
+<!-- * Investigate the dataset and complete any necessary tasks.  -->
+<!-- * Split the data into training and test sets (75-25). -->
+<!-- * Perform required data preprocessing and create the blueprint. If using `step_dummy()`, set `one_hot = FALSE`. Prepare the blueprint on the training data. Obtain the modified training and test datasets.  -->
+<!-- * Implement 10-fold CV repeated 5 times for each of the models above.  -->
+<!-- * Report the optimal CV Accuracy of each model. Report the optimal hyperparameters for each model. Which model performs best in this situation?  -->
+<!-- * Build the final model. Obtain class label predictions on the test set. Create the corresponding confusion matrix and report the test set accuracy. Based on your optimal final model, consult the help page for either `predict.knn3` or `predict.rpart` functions. -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> {.smaller} -->
+<!-- ```{r} -->
+<!-- glimpse(iris)   # all features are numerical -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- summary(iris)   # summary of variables -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- sum(is.na(iris))  # no missing entries -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- ```{r} -->
+<!-- set.seed(050924)   # set seed -->
+<!-- # split the data into training and test sets -->
+<!-- index <- createDataPartition(iris$Species, p = 0.75, list = FALSE) -->
+<!-- iris_train <- iris[index, ] -->
+<!-- iris_test <- iris[-index, ] -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- nearZeroVar(iris_train, saveMetrics = TRUE)  # no zv/nzv features -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- ```{r} -->
+<!-- set.seed(050924)   # set seed -->
+<!-- # create recipe and blueprint, prepare and apply blueprint -->
+<!-- blueprint <- recipe(Species ~ ., data = iris_train) %>% -->
+<!--   step_normalize(all_predictors())               # center and scale numeric predictors, in this case, all predictors -->
+<!-- prepare <- prep(blueprint, training = iris_train) -->
+<!-- baked_train <- bake(prepare, new_data = iris_train) -->
+<!-- baked_test <- bake(prepare, new_data = iris_test) -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- ```{r} -->
+<!-- set.seed(050924)   # set seed -->
+<!-- cv_specs <- trainControl(method = "repeatedcv", number = 10, repeats = 5)   # CV specifications -->
+<!-- ``` -->
+<!-- ```{r, eval = FALSE} -->
+<!-- logistic_cv <- train(blueprint, -->
+<!--                      data = iris_train, -->
+<!--                      method = "glm", -->
+<!--                      family = "binomial", -->
+<!--                      trControl = cv_specs, -->
+<!--                      metric = "Accuracy") -->
+<!-- # The code above will throw an error since this is a 3-class classification problem and -->
+<!-- # logistic regression (with family = binomial) works for a binary (2-class) problem. -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- ```{r} -->
+<!-- set.seed(050924)   # set seed -->
+<!-- # CV for KNN -->
+<!-- k_grid <- expand.grid(k = seq(1, 101, by = 10)) -->
+<!-- knn_cv <- train(blueprint, -->
+<!--                 data = iris_train, -->
+<!--                 method = "knn", -->
+<!--                 trControl = cv_specs, -->
+<!--                 tuneGrid = k_grid, -->
+<!--                 metric = "Accuracy") -->
+<!-- # CV with tree -->
+<!-- tree_cv <- train(blueprint, -->
+<!--                  data = iris_train, -->
+<!--                  method = "rpart", -->
+<!--                  trControl = cv_specs, -->
+<!--                  tuneLength = 20, -->
+<!--                  metric = "Accuracy") -->
+<!-- # CV with tree (minimal feature engineering, no engineering in this case) -->
+<!-- tree_cv_min_fe <- train(Species ~ ., -->
+<!--                         data = iris_train, -->
+<!--                         method = "rpart", -->
+<!--                         trControl = cv_specs, -->
+<!--                         tuneLength = 20, -->
+<!--                         metric = "Accuracy") -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- ```{r} -->
+<!-- # optimal CV Accuracies -->
+<!-- max(knn_cv$results$Accuracy)     # for KNN -->
+<!-- max(tree_cv$results$Accuracy)     # for classification tree -->
+<!-- max(tree_cv_min_fe$results$Accuracy)     # for classification tree with minimal feature engineering -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- ```{r} -->
+<!-- # optimal hyperparameters -->
+<!-- knn_cv$bestTune$k    # for KNN -->
+<!-- tree_cv$bestTune$cp    # for classification tree -->
+<!-- tree_cv_min_fe$bestTune$cp    # for classification tree with minimal feature engineering -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> {.smaller} -->
+<!-- ```{r} -->
+<!-- # final model -->
+<!-- final_model <- knn3(Species ~ ., data = baked_train, k = knn_cv$bestTune$k) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # obtain probability and class label predictions -->
+<!-- final_model_prob_preds <- predict(final_model, newdata = baked_test, type = "prob")   # probability predictions -->
+<!-- final_model_class_preds <- predict(final_model, newdata = baked_test, type = "class")   # class label predictions -->
+<!-- confusionMatrix(data = final_model_class_preds, reference = baked_test$Species) -->
+<!-- ``` -->
+</section>
+<section id="ensemble-methods" class="level2" data-number="7.16">
+<h2 data-number="7.16" class="anchored" data-anchor-id="ensemble-methods"><span class="header-section-number">7.16</span> Ensemble Methods</h2>
+<p>Single regression or classification trees usually have poor predictive performance.</p>
+<p><strong>Ensemble Methods</strong> use a collection of multiple trees to improve the predictive performance at the cost of interpretability.</p>
+<ul>
+<li><p>Bagging</p></li>
+<li><p>Random Forests</p></li>
+<li><p>Boosting</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/2.7.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Adapted from ISLR, James et al.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bagging" class="level2" data-number="7.17">
+<h2 data-number="7.17" class="anchored" data-anchor-id="bagging"><span class="header-section-number">7.17</span> Bagging</h2>
+<ul>
+<li><p><strong>Bootstrap aggregation</strong> or <strong>bagging</strong> is a general-purpose procedure for reducing the variance of a statistical learning method.</p></li>
+<li><p><strong>Idea</strong>: Build multiple trees and average their results.</p></li>
+<li><p><strong>Result</strong>: Given a set of <span class="math inline">\(n\)</span> independent observations (random variables) <span class="math inline">\(Z_1, \ldots, Z_n\)</span>, each with variance <span class="math inline">\(\sigma^2\)</span>, the variance of the mean/average <span class="math inline">\(\bar{Z} = \displaystyle \dfrac{Z_1 + Z_2 + \cdots + Z_n}{n}\)</span> of the observations is <span class="math inline">\(\sigma^2/n\)</span>.</p></li>
+</ul>
+<p>In other words, <strong>averaging a set of observations reduces variance</strong>.</p>
+<ul>
+<li>In reality, we do not have multiple training datasets.</li>
+</ul>
+</section>
+<section id="bagging-1" class="level2" data-number="7.18">
+<h2 data-number="7.18" class="anchored" data-anchor-id="bagging-1"><span class="header-section-number">7.18</span> Bagging</h2>
+<p><strong>Bootstrapping</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/bootstrapping.PNG" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Adapted from ISLR, James et al.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bagging-2" class="level2" data-number="7.19">
+<h2 data-number="7.19" class="anchored" data-anchor-id="bagging-2"><span class="header-section-number">7.19</span> Bagging</h2>
+<ul>
+<li><p>Take repeated bootstrap samples (say <span class="math inline">\(B\)</span>) from the original (single) available dataset.</p></li>
+<li><p>Build a tree on each bootstrap sample and obtain predictions <span class="math inline">\(\hat{f}^{*b}(x), \ b=1, 2, \ldots, B\)</span>.</p></li>
+<li><p>Average all the predictions.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/e8.95b.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:40.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Individual trees are grown deep and are not pruned. They have high variance, but low bias.</p></li>
+<li><p>For classification trees, take <strong>majority vote</strong>: the overall prediction is the most commonly occurring class among the <span class="math inline">\(B\)</span> predictions.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Slides6.html" class="pagination-link" aria-label="Feature Engineering">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Slides9.html" class="pagination-link" aria-label="Tree-Based Ensemble Methods">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tree-Based Ensemble Methods</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Statistical Machine Learning (208) Course Notes by Abhishek Chakraborty.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

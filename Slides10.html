@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Unsupervised Learning – Statistical Machine Learning (208 @ LU) Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Slides9.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-70896287326667430c62020e2b71b712.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Slides10.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Unsupervised Learning</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Machine Learning (208 @ LU) Notes</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Terminologies and Notations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Supervised Learning and Trade-offs in SML</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Regression and KNN Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Logistic Regression and KNN Classifiers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cross-Validation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Decision Trees</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tree-Based Ensemble Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides10.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Unsupervised Learning</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#other-things-to-watch-out-for" id="toc-other-things-to-watch-out-for" class="nav-link active" data-scroll-target="#other-things-to-watch-out-for"><span class="header-section-number">9.1</span> <span style="color:blue">Other Things To Watch Out For</span></a></li>
+  <li><a href="#other-things-to-watch-out-for-1" id="toc-other-things-to-watch-out-for-1" class="nav-link" data-scroll-target="#other-things-to-watch-out-for-1"><span class="header-section-number">9.2</span> <span style="color:blue">Other Things To Watch Out For</span></a></li>
+  <li><a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link" data-scroll-target="#unsupervised-learning"><span class="header-section-number">9.3</span> Unsupervised Learning</a></li>
+  <li><a href="#unsupervised-learning-1" id="toc-unsupervised-learning-1" class="nav-link" data-scroll-target="#unsupervised-learning-1"><span class="header-section-number">9.4</span> Unsupervised Learning</a></li>
+  <li><a href="#principal-components-analysis-pca" id="toc-principal-components-analysis-pca" class="nav-link" data-scroll-target="#principal-components-analysis-pca"><span class="header-section-number">9.5</span> Principal Components Analysis (PCA)</a></li>
+  <li><a href="#pca-example" id="toc-pca-example" class="nav-link" data-scroll-target="#pca-example"><span class="header-section-number">9.6</span> PCA: Example</a></li>
+  <li><a href="#pca-data-requirements" id="toc-pca-data-requirements" class="nav-link" data-scroll-target="#pca-data-requirements"><span class="header-section-number">9.7</span> PCA: Data Requirements</a></li>
+  <li><a href="#pca-toy-example" id="toc-pca-toy-example" class="nav-link" data-scroll-target="#pca-toy-example"><span class="header-section-number">9.8</span> PCA: Toy Example</a></li>
+  <li><a href="#pca-toy-example-1" id="toc-pca-toy-example-1" class="nav-link" data-scroll-target="#pca-toy-example-1"><span class="header-section-number">9.9</span> PCA: Toy Example</a></li>
+  <li><a href="#pca-toy-example-2" id="toc-pca-toy-example-2" class="nav-link" data-scroll-target="#pca-toy-example-2"><span class="header-section-number">9.10</span> PCA: Toy Example</a></li>
+  <li><a href="#pca-first-pc" id="toc-pca-first-pc" class="nav-link" data-scroll-target="#pca-first-pc"><span class="header-section-number">9.11</span> PCA: First PC</a></li>
+  <li><a href="#pca-first-pc-1" id="toc-pca-first-pc-1" class="nav-link" data-scroll-target="#pca-first-pc-1"><span class="header-section-number">9.12</span> PCA: First PC</a></li>
+  <li><a href="#pca-second-pc" id="toc-pca-second-pc" class="nav-link" data-scroll-target="#pca-second-pc"><span class="header-section-number">9.13</span> PCA: Second PC</a></li>
+  <li><a href="#pca-how-many-pcs-to-use" id="toc-pca-how-many-pcs-to-use" class="nav-link" data-scroll-target="#pca-how-many-pcs-to-use"><span class="header-section-number">9.14</span> PCA: How Many PCs to Use?</a></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering"><span class="header-section-number">9.15</span> Clustering</a></li>
+  <li><a href="#clustering-applications" id="toc-clustering-applications" class="nav-link" data-scroll-target="#clustering-applications"><span class="header-section-number">9.16</span> Clustering: Applications</a></li>
+  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">9.17</span> K-Means Clustering</a></li>
+  <li><a href="#k-means-clustering-1" id="toc-k-means-clustering-1" class="nav-link" data-scroll-target="#k-means-clustering-1"><span class="header-section-number">9.18</span> K-Means Clustering</a></li>
+  <li><a href="#k-means-clustering-2" id="toc-k-means-clustering-2" class="nav-link" data-scroll-target="#k-means-clustering-2"><span class="header-section-number">9.19</span> K-Means Clustering</a></li>
+  <li><a href="#k-means-clustering-formulation" id="toc-k-means-clustering-formulation" class="nav-link" data-scroll-target="#k-means-clustering-formulation"><span class="header-section-number">9.20</span> K-Means Clustering Formulation</a></li>
+  <li><a href="#k-means-clustering-algorithm" id="toc-k-means-clustering-algorithm" class="nav-link" data-scroll-target="#k-means-clustering-algorithm"><span class="header-section-number">9.21</span> K-Means Clustering Algorithm</a></li>
+  <li><a href="#k-means-clustering-algorithm-1" id="toc-k-means-clustering-algorithm-1" class="nav-link" data-scroll-target="#k-means-clustering-algorithm-1"><span class="header-section-number">9.22</span> K-Means Clustering Algorithm</a></li>
+  <li><a href="#k-means-clustering-algorithm-2" id="toc-k-means-clustering-algorithm-2" class="nav-link" data-scroll-target="#k-means-clustering-algorithm-2"><span class="header-section-number">9.23</span> K-Means Clustering Algorithm</a></li>
+  <li><a href="#hierarchical-clustering" id="toc-hierarchical-clustering" class="nav-link" data-scroll-target="#hierarchical-clustering"><span class="header-section-number">9.24</span> Hierarchical Clustering</a></li>
+  <li><a href="#hierarchical-clustering-1" id="toc-hierarchical-clustering-1" class="nav-link" data-scroll-target="#hierarchical-clustering-1"><span class="header-section-number">9.25</span> Hierarchical Clustering</a></li>
+  <li><a href="#hierarchical-clustering-2" id="toc-hierarchical-clustering-2" class="nav-link" data-scroll-target="#hierarchical-clustering-2"><span class="header-section-number">9.26</span> Hierarchical Clustering</a></li>
+  <li><a href="#hierarchical-clustering-types-of-linkage" id="toc-hierarchical-clustering-types-of-linkage" class="nav-link" data-scroll-target="#hierarchical-clustering-types-of-linkage"><span class="header-section-number">9.27</span> Hierarchical Clustering: Types of Linkage</a></li>
+  <li><a href="#hierarchical-clustering-algorithm" id="toc-hierarchical-clustering-algorithm" class="nav-link" data-scroll-target="#hierarchical-clustering-algorithm"><span class="header-section-number">9.28</span> Hierarchical Clustering Algorithm</a></li>
+  <li><a href="#practical-issues-in-clustering" id="toc-practical-issues-in-clustering" class="nav-link" data-scroll-target="#practical-issues-in-clustering"><span class="header-section-number">9.29</span> Practical Issues in Clustering</a></li>
+  <li><a href="#to-sum-it-all-up" id="toc-to-sum-it-all-up" class="nav-link" data-scroll-target="#to-sum-it-all-up"><span class="header-section-number">9.30</span> To Sum It All Up</a></li>
+  <li><a href="#ml-ethics-and-fairness" id="toc-ml-ethics-and-fairness" class="nav-link" data-scroll-target="#ml-ethics-and-fairness"><span class="header-section-number">9.31</span> ML Ethics and Fairness</a></li>
+  <li><a href="#ml-ethics-and-fairness-1" id="toc-ml-ethics-and-fairness-1" class="nav-link" data-scroll-target="#ml-ethics-and-fairness-1"><span class="header-section-number">9.32</span> ML Ethics and Fairness</a></li>
+  <li><a href="#further-readings" id="toc-further-readings" class="nav-link" data-scroll-target="#further-readings"><span class="header-section-number">9.33</span> Further Readings</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">9.34</span> Next Steps</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Unsupervised Learning</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+<!-- ## Summary of Supervised Learning Methods -->
+<!-- | Method | Type | R-C | Tuning Params | Feature Eng | Interpretable | Computation | -->
+<!-- | ------------- | ----- | ----- | ------------- | ------------- | ----- | ----- | -->
+<!-- | Linear Reg  |  |  |   |  |   |    |  -->
+<!-- | Logistic Reg |  |  |   |  |   |   | -->
+<!-- | KNN |  |  |   |  |   |   | -->
+<!-- | Single tree |  |  |   |  |   |   | -->
+<!-- | Random forest |  |  |   |  |   |   | -->
+<!-- | Boosted trees |  |  |   |  |   |   | -->
+<section id="other-things-to-watch-out-for" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="other-things-to-watch-out-for"><span class="header-section-number">9.1</span> <span style="color:blue">Other Things To Watch Out For</span></h2>
+<p>Spring works at a juice-packing company where she uses a machine-learning model to predict the demand for different juice flavors. After training and evaluating the model, Spring was confident that it was ready for production. The model was deployed, and the company started using it to plan its production and distribution.</p>
+<p>During the first few months, everything was working as expected. But then, the company noticed that the model consistently overestimated the demand for certain flavors. What could be the cause of the problem with the model?</p>
+<ul>
+<li><p>The model is underfitting and needs more complexity.</p></li>
+<li><p>The model is overfitting and needs more regularization.</p></li>
+<li><p>The model is suffering from data drift.</p></li>
+<li><p>The model is suffering from sampling bias.</p></li>
+</ul>
+<!-- Bnomial_Feb_23-p_17 -->
+</section>
+<section id="other-things-to-watch-out-for-1" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="other-things-to-watch-out-for-1"><span class="header-section-number">9.2</span> <span style="color:blue">Other Things To Watch Out For</span></h2>
+<p>Spring’s been working on a model to classify photos of food. Her company is building an application that will let users snap a picture of a plate at a restaurant and show them a potential recipe so they can cook it at home. After a year of work, Spring’s model was working great. The company launched the model worldwide and started monitoring user feedback.</p>
+<p>Unfortunately, users from an Asian country complained because the model wasn’t working for them. What is the most likely reason for the problem?</p>
+<ul>
+<li><p>Spring’s model didn’t have enough complexity to learn all the data, so it’s normal to have problems with certain regions.</p></li>
+<li><p>Spring needed to train the model for more time to fully capture the dataset’s information.</p></li>
+<li><p>Spring’s model is suffering from data drift.</p></li>
+<li><p>Spring’s model is suffering from sampling bias.</p></li>
+</ul>
+<!-- Bnomial_Feb_23-p_26 -->
+</section>
+<section id="unsupervised-learning" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="unsupervised-learning"><span class="header-section-number">9.3</span> Unsupervised Learning</h2>
+<ul>
+<li><strong>Supervised learning</strong> problems involve a set of <span class="math inline">\(p\)</span> features <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span> and a response <span class="math inline">\(Y\)</span> measured on <span class="math inline">\(n\)</span> observations.
+<ul>
+<li>Objective is prediction and explain (if possible) the relation between response and predictors.</li>
+</ul></li>
+<li>In <strong>unsupervised learning</strong> problems, we observe only the features <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>.
+<ul>
+<li>Objectives can be to visualize the data, or,</li>
+<li>discover subgroups among variables or among observations.</li>
+</ul></li>
+</ul>
+<p>We will discuss two methods:</p>
+<ul>
+<li><p><strong>Principal Components Analysis (PCA)</strong>: Used for data visualization and pre-processing.</p></li>
+<li><p><strong>Clustering</strong>: Discover unknown subgroups in data.</p></li>
+</ul>
+</section>
+<section id="unsupervised-learning-1" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="unsupervised-learning-1"><span class="header-section-number">9.4</span> Unsupervised Learning</h2>
+<ul>
+<li><p>Unsupervised learning problems tend to be more subjective than supervised learning problems.</p></li>
+<li><p>Often performed as part of an <strong>exploratory data analysis</strong>.</p></li>
+<li><p>Difficult to assess the results obtained from unsupervised learning methods.</p></li>
+<li><p>It is easier to obtain <strong>unlabeled data</strong>.</p></li>
+</ul>
+</section>
+<section id="principal-components-analysis-pca" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="principal-components-analysis-pca"><span class="header-section-number">9.5</span> Principal Components Analysis (PCA)</h2>
+<p>PCA seeks a low-dimensional representation of a dataset that captures as much of the information as possible. PCA serves as a tool for</p>
+<ul>
+<li>Data compression</li>
+<li>Data visualization</li>
+</ul>
+<p>The principal components are linear combinations of the <span class="math inline">\(p\)</span> original features subject to certain constraints.</p>
+</section>
+<section id="pca-example" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="pca-example"><span class="header-section-number">9.6</span> PCA: Example</h2>
+<p><strong>USArrests dataset</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR2)   <span class="co"># load package</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"USArrests"</span>)   <span class="co"># load dataset</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(USArrests)   <span class="co"># first six observations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Murder Assault UrbanPop Rape
+Alabama      13.2     236       58 21.2
+Alaska       10.0     263       48 44.5
+Arizona       8.1     294       80 31.0
+Arkansas      8.8     190       50 19.5
+California    9.0     276       91 40.6
+Colorado      7.9     204       78 38.7</code></pre>
+</div>
+</div>
+<!-- ## PCA: Example -->
+<!-- **USArrests dataset** -->
+<!-- ```{r} -->
+<!-- cor(USArrests)   # correlation matrix of variables -->
+<!-- ``` -->
+</section>
+<section id="pca-data-requirements" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="pca-data-requirements"><span class="header-section-number">9.7</span> PCA: Data Requirements</h2>
+<p>To perform dimension reduction techniques in R, generally, the data should be prepared as follows:</p>
+<ul>
+<li><p>Data are in tidy format per Wickham et al.&nbsp;(2014);</p></li>
+<li><p>Any missing values in the data must be removed or imputed;</p></li>
+<li><p>Typically, the data must all be numeric values (e.g., one-hot, label, ordinal encoding categorical features);</p></li>
+<li><p>Numeric data should be standardized (e.g., centered and scaled) to make features comparable.</p></li>
+</ul>
+</section>
+<section id="pca-toy-example" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="pca-toy-example"><span class="header-section-number">9.8</span> PCA: Toy Example</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Slides10_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pca-toy-example-1" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="pca-toy-example-1"><span class="header-section-number">9.9</span> PCA: Toy Example</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/feat_pca.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>PCs with 2 features. [Adapted from FE&amp;S, Kuhn and Johnson]</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## PCA: Toy Example -->
+<!-- ```{r, echo=FALSE, fig.align='center'} -->
+<!-- ggplot(df, aes(var1, var2)) + -->
+<!--   geom_jitter(alpha = .2, size = 1, color = "dodgerblue") + -->
+<!--   geom_segment( -->
+<!--     aes(x = 0, xend = 1.5 , y = 0, yend = 1.5), -->
+<!--     arrow = arrow(length = unit(0.25,"cm")), size = 0.75, color = "black" -->
+<!--   ) + -->
+<!--   annotate("text", x = 1, y = .2, label = "First principal component", size = 2.5, hjust = 0) + -->
+<!--   annotate("text", x = -3, y = .8, label = "Second principal component", size = 2.5, hjust = 0) + -->
+<!--   geom_segment( -->
+<!--     aes(x = 0, xend = -0.27 , y = 0, yend = .65), -->
+<!--     arrow = arrow(length = unit(0.25,"cm")), size = 0.75, color = "black" -->
+<!--   ) + -->
+<!--   xlab(expression(X[1])) + -->
+<!--   ylab(expression(X[2])) + -->
+<!--   theme_bw() -->
+<!-- ``` -->
+</section>
+<section id="pca-toy-example-2" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="pca-toy-example-2"><span class="header-section-number">9.10</span> PCA: Toy Example</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/pca3.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>PCs with 3 features. [Adapted from HMLR, Boehmke &amp; Greenwell]</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pca-first-pc" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="pca-first-pc"><span class="header-section-number">9.11</span> PCA: First PC</h2>
+<p>The <strong>first principal component</strong> <span class="math inline">\(Z_1\)</span> of a set of features <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span> is the normalized linear combination of the features that has the largest variance.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/e10.1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>By <strong>normalized</strong>, we mean <span class="math inline">\(\displaystyle \sum_{j=1}^p \phi^2_{j1}=1\)</span>.</p>
+<p>For the <span class="math inline">\(i^{th}\)</span> observation,</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/e10.2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The elements <span class="math inline">\(\phi_{11},\phi_{21}, \ldots, \phi_{p1}\)</span> are <strong>loadings of the first PC</strong>. The loadings make up the <strong>first PC loading vector</strong> <span class="math inline">\(\phi_1=(\phi_{11} \ \ \phi_{21} \ \ \ldots \ \ \phi_{p1})^T\)</span>.</p>
+<p><span class="math inline">\(z_{11}, z_{21}, \ldots, z_{n1}\)</span> are the <strong>first PC scores</strong>.</p>
+</section>
+<section id="pca-first-pc-1" class="level2" data-number="9.12">
+<h2 data-number="9.12" class="anchored" data-anchor-id="pca-first-pc-1"><span class="header-section-number">9.12</span> PCA: First PC</h2>
+<p>Suppose an <span class="math inline">\(n \times p\)</span> feature matrix <span class="math inline">\(\mathbf{X}\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/DataMatrix1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:40.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The first PC is obtained by solving</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/e10.3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## PCA: First PC -->
+<!-- The loading vector $\phi_1$ defines a direction in feature space along which the data vary the most. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/6.14.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/e6.20.png") -->
+<!-- ``` -->
+<!-- ## PCA: First PC -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/6.15.png") -->
+<!-- ``` -->
+<!-- The first PC scores are the projections of the $n$ data points onto the first PC direction. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/e6.20.png") -->
+<!-- ``` -->
+</section>
+<section id="pca-second-pc" class="level2" data-number="9.13">
+<h2 data-number="9.13" class="anchored" data-anchor-id="pca-second-pc"><span class="header-section-number">9.13</span> PCA: Second PC</h2>
+<p>The <strong>second principal component</strong> <span class="math inline">\(Z_2\)</span> is the linear combination of <span class="math inline">\(X_1,\ldots,X_p\)</span> that has maximal variance among all linear combinations that are <strong>uncorrelated</strong> with <span class="math inline">\(Z_1\)</span>.</p>
+<p>The second PC scores are <span class="math inline">\(z_{12}, z_{22}, \ldots, z_{n2}\)</span> where</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/e10.4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="math inline">\(\phi_2\)</span> is the <strong>second PC loading vector</strong> with <strong>loadings</strong> <span class="math inline">\(\phi_{12},\phi_{22}, \ldots, \phi_{p2}\)</span>.</p>
+<p><span class="math inline">\(Z_2\)</span> <strong>uncorrelated</strong> with <span class="math inline">\(Z_1\)</span> is equivalent to <span class="math inline">\(\phi_2\)</span> being orthogonal (perpendicular) with <span class="math inline">\(\phi_1\)</span>.</p>
+<!-- ## PCA: Second PC -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/6.14.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/e6.19.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '80%'} -->
+<!-- knitr::include_graphics("EFT/e6.205.png") -->
+<!-- ``` -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/t10.1.png") -->
+<!-- ``` -->
+<!-- ## PCA: Example -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '73%'} -->
+<!-- knitr::include_graphics("EFT/10.1.png") -->
+<!-- ``` -->
+<!-- ## PCA: Another Interpretation -->
+<!-- PCs provide low-dimensional linear surfaces that are closest (using average squared Euclidean distance) to the observations. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.2.png") -->
+<!-- ``` -->
+<!-- ## PCA: Scaling the Variables -->
+<!-- If the variables are in different units, scaling each to have standard deviation equal to one is recommended. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.3.png") -->
+<!-- ``` -->
+<!-- ## PCA: Proportion of Variance Explained (PVE) -->
+<!-- **Total variance** present in the dataset -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/e10.6.png") -->
+<!-- ``` -->
+<!-- Variance explained by the $m^{th}$ PC -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '50%'} -->
+<!-- knitr::include_graphics("EFT/e10.7.png") -->
+<!-- ``` -->
+<!-- The PVE of the $m^{th}$ PC is -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/e10.8.png") -->
+<!-- ``` -->
+<!-- ## PCA: Proportion of Variance Explained (PVE) -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.4.png") -->
+<!-- ``` -->
+</section>
+<section id="pca-how-many-pcs-to-use" class="level2" data-number="9.14">
+<h2 data-number="9.14" class="anchored" data-anchor-id="pca-how-many-pcs-to-use"><span class="header-section-number">9.14</span> PCA: How Many PCs to Use?</h2>
+<ul>
+<li><p>We would like to use the smallest number of PCs required to get a good understanding of the data.</p></li>
+<li><p>CV cannot be implemented to answer this question.</p></li>
+<li><p>Two common approaches in helping to make this decision (depends on the objective and analytic workflow):</p>
+<ul>
+<li>Proportion of variance explained (PVE)</li>
+<li>Screeplot. Look for an <strong>elbow</strong>.</li>
+</ul></li>
+</ul>
+<!-- ## <span style="color:blue">Your Turn!!!</span>  {.smaller} -->
+<!-- You will work with the `iris` dataset. Since we are in the unsupervised learning framework we will drop the `Species` variable which is commonly used as the response. -->
+<!-- ```{r} -->
+<!-- data("iris")   # load dataset -->
+<!-- iris <- iris %>% dplyr::select(-Species)   # drop 'Species' -->
+<!-- ``` -->
+<!-- **(1)** Investigate the dataset. -->
+<!-- ```{r} -->
+<!-- sum(is.na(iris))   # no missing entries -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- summary(iris)    # all variables are numerical (need to be standardized) -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- **(2)** Perform PCA on the dataset after required preprocessing. -->
+<!-- ```{r} -->
+<!-- pca <- prcomp(iris, center = TRUE, scale = TRUE)   # perform PCA on scaled dataset -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> {.smaller}
+
+<!-- **(3)** What proportion of variance is explained cumulatively by the first two principal components? -->
+<!-- ```{r} -->
+<!-- summary(pca)   # The first two PCs explain approximately 96% of the total variation. -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- **(4)** What is the sum of squared loadings for the second PC loading vector? -->
+<!-- ```{r} -->
+<!-- pca   # obtain loading vectors -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- sum(pca$rotation[,2]^2)   # sum of squared loadings for second PC -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Your Turn!!!</span> {.smaller} -->
+<!-- **(5)** Create a biplot for the analysis. From the biplot, the loading vector for the first PC places most of its weight on which variable(s)? Similarly, the loading vector for the second PC places most of its weight on which variable(s)? -->
+<!-- ```{r, fig.align='center', fig.height=4.5, fig.width=6} -->
+<!-- biplot(pca, scale = 0, cex = 0.6) -->
+<!-- ``` -->
+<!-- * From the biplot, the loading vector for the first PC places most of its weight on which variable(s)? Similarly, the loading vector for the second PC places most of its weight on which variable(s)?
+
+<!-- ```{r}
+The first loading vector places most if its weight on the variables `Sepal.Length`, `Petal.Length`, and `Petal.Width`. The second loading vector places most if its weight on the variable `Sepal.Width`.
+<!-- ```
+
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+<!-- **(6)** From the biplot, which variables seem to be correlated with the variable `Sepal.Length`? -->
+<!-- <!-- ```{r} -->
+<!-- The variables `Petal.Length` and `Petal.Width` are highly correlated with `Sepal.Length`. One can also verify that from the correlation matrix below. -->
+<!-- ```{r} -->
+<!-- cor(iris)   # correlation matrix -->
+<!-- ``` -->
+<!-- <!-- ``` -->
+<!-- **(7)** From the biplot, which observation has the highest first PC score and which observation has the highest second PC score? -->
+<!-- <!-- ```{r} -->
+<!-- Observation 119 has the highest score for the first PC, whereas observation 61 has the highest score for the second PC. -->
+<!-- <!-- ``` -->
+</section>
+<section id="clustering" class="level2" data-number="9.15">
+<h2 data-number="9.15" class="anchored" data-anchor-id="clustering"><span class="header-section-number">9.15</span> Clustering</h2>
+<ul>
+<li><p>Broad class of techniques for finding <strong>subgroups</strong> or <strong>clusters</strong> in a dataset.</p></li>
+<li><p>Partition the data into distinct groups so that observations within each group are similar to each other.</p></li>
+<li><p>Definition of similarity depends on the context and the dataset being studied.</p></li>
+<li><p>We will talk about:</p>
+<ul>
+<li>K-means clustering</li>
+<li>Hierarchical clustering</li>
+</ul></li>
+</ul>
+</section>
+<section id="clustering-applications" class="level2" data-number="9.16">
+<h2 data-number="9.16" class="anchored" data-anchor-id="clustering-applications"><span class="header-section-number">9.16</span> Clustering: Applications</h2>
+<ul>
+<li><p>Cancer research: <span class="math inline">\(n\)</span> observations correspond to tissue samples for patients with different types of cancer, <span class="math inline">\(p\)</span> features correspond to gene expression measurements.</p></li>
+<li><p>Market segmentation: <span class="math inline">\(n\)</span> observations on <span class="math inline">\(p\)</span> variables. Identify subgroups of people who might be more receptive to a particular form of advertising.</p></li>
+<li><p>Social network analysis, astronomical data analysis, organizing computing clusters etc.</p></li>
+</ul>
+</section>
+<section id="k-means-clustering" class="level2" data-number="9.17">
+<h2 data-number="9.17" class="anchored" data-anchor-id="k-means-clustering"><span class="header-section-number">9.17</span> K-Means Clustering</h2>
+<p>Partition the dataset into a pre-specified number of <span class="math inline">\(K\)</span> distinct, non-overlapping clusters.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/10.5.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The coloring (ordering) of the clusters is arbitrary.</p>
+</section>
+<section id="k-means-clustering-1" class="level2" data-number="9.18">
+<h2 data-number="9.18" class="anchored" data-anchor-id="k-means-clustering-1"><span class="header-section-number">9.18</span> K-Means Clustering</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/10.6.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## K-Means Clustering Formulation -->
+</section>
+<section id="k-means-clustering-2" class="level2" data-number="9.19">
+<h2 data-number="9.19" class="anchored" data-anchor-id="k-means-clustering-2"><span class="header-section-number">9.19</span> K-Means Clustering</h2>
+<!-- Let $C_1,C_2, \ldots, C_K$ denote sets containing the indices of the observations in each cluster. These sets satisfy two properties: -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/e10.85.png") -->
+<!-- ``` -->
+<!-- If the $i^{th}$ observation is in the $k^{th}$ cluster, then $i \in C_k$. -->
+<p>The idea behind K-means clustering is that a <strong>good clustering</strong> is one for which the <strong>within-cluster variation</strong> is as small as possible. The resulting clusters are such that</p>
+<ul>
+<li><p>each observation belongs to at least one cluster, and</p></li>
+<li><p>clusters are non-overlapping, no observation belongs to more than one cluster.</p></li>
+</ul>
+</section>
+<section id="k-means-clustering-formulation" class="level2" data-number="9.20">
+<h2 data-number="9.20" class="anchored" data-anchor-id="k-means-clustering-formulation"><span class="header-section-number">9.20</span> K-Means Clustering Formulation</h2>
+<p>The <strong>within-cluster variation</strong> for cluster <span class="math inline">\(C_k\)</span> is a measure <span class="math inline">\(W(C_k)\)</span> of the amount by which the observations within a cluster differ from each other. Thus the objective is to</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/e10.9.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:30.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>where</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/e10.10.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:55.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Combining, we have,</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/e10.11.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="k-means-clustering-algorithm" class="level2" data-number="9.21">
+<h2 data-number="9.21" class="anchored" data-anchor-id="k-means-clustering-algorithm"><span class="header-section-number">9.21</span> K-Means Clustering Algorithm</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/algo10.1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="k-means-clustering-algorithm-1" class="level2" data-number="9.22">
+<h2 data-number="9.22" class="anchored" data-anchor-id="k-means-clustering-algorithm-1"><span class="header-section-number">9.22</span> K-Means Clustering Algorithm</h2>
+<ul>
+<li>The algorithm is guaranteed to decrease the value of the objective at each step since</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/e10.12.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>where <span class="math inline">\(\bar{x}_{kj}=\frac{1}{|C_k|}\sum_{i \in C_k} x_{ij}\)</span>: mean of <span class="math inline">\(j^{th}\)</span> feature in cluster <span class="math inline">\(C_k\)</span>.</p>
+<ul>
+<li><p>The algorithm is not guaranteed to find the global optimum.</p></li>
+<li><p>Results depend on the initial (random) cluster assignments. It is recommended to run the algorithm multiple times from different random initial configurations.</p></li>
+</ul>
+</section>
+<section id="k-means-clustering-algorithm-2" class="level2" data-number="9.23">
+<h2 data-number="9.23" class="anchored" data-anchor-id="k-means-clustering-algorithm-2"><span class="header-section-number">9.23</span> K-Means Clustering Algorithm</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/10.7.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hierarchical-clustering" class="level2" data-number="9.24">
+<h2 data-number="9.24" class="anchored" data-anchor-id="hierarchical-clustering"><span class="header-section-number">9.24</span> Hierarchical Clustering</h2>
+<ul>
+<li><p>K-means clustering requires us to pre-specify the number of clusters <span class="math inline">\(K\)</span>. This can be a disadvantage.</p></li>
+<li><p>Hierarchical clustering is an alternative approach which does not require that we commit to a particular choice of <span class="math inline">\(K\)</span>.</p></li>
+<li><p>Hierarchical clustering results in a tree-based representation of the observations, called a <strong>dendrogram</strong>.</p></li>
+<li><p>We discuss <strong>bottom-up</strong> or <strong>agglomerative</strong> clustering. This is the most common type of hierarchical clustering. The dendrogram is built starting from the leaves (bottom) and combining clusters up to the trunk (top).</p></li>
+</ul>
+</section>
+<section id="hierarchical-clustering-1" class="level2" data-number="9.25">
+<h2 data-number="9.25" class="anchored" data-anchor-id="hierarchical-clustering-1"><span class="header-section-number">9.25</span> Hierarchical Clustering</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/SL_C10_1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hierarchical-clustering-2" class="level2" data-number="9.26">
+<h2 data-number="9.26" class="anchored" data-anchor-id="hierarchical-clustering-2"><span class="header-section-number">9.26</span> Hierarchical Clustering</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/SL_C10_2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## Hierarchical Clustering: Interpreting a Dendrogram -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.10.png") -->
+<!-- ``` -->
+<!-- ## Hierarchical Clustering: Example -->
+<!-- **Simulated dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/10.8.png") -->
+<!-- ``` -->
+<!-- ## Hierarchical Clustering: Example -->
+<!-- **Dendrogram from simulated dataset** -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.9.png") -->
+<!-- ``` -->
+</section>
+<section id="hierarchical-clustering-types-of-linkage" class="level2" data-number="9.27">
+<h2 data-number="9.27" class="anchored" data-anchor-id="hierarchical-clustering-types-of-linkage"><span class="header-section-number">9.27</span> Hierarchical Clustering: Types of Linkage</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/linkage.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## Hierarchical Clustering: Types of Linkage -->
+<!-- ## Hierarchical Clustering: Types of Linkage -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/10.12.png") -->
+<!-- ``` -->
+</section>
+<section id="hierarchical-clustering-algorithm" class="level2" data-number="9.28">
+<h2 data-number="9.28" class="anchored" data-anchor-id="hierarchical-clustering-algorithm"><span class="header-section-number">9.28</span> Hierarchical Clustering Algorithm</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/algo10.2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## Hierarchical Clustering Algorithm -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/10.11.png") -->
+<!-- ``` -->
+<!-- ## Hierarchical Clustering: Choice of Dissimilarity Measure -->
+<!-- **Correlation-based distance** considers two observations to be similar if their features are highly correlated. It focuses on the shapes of dissimilarity profiles rather than their magnitudes. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '60%'} -->
+<!-- knitr::include_graphics("EFT/10.13.png") -->
+<!-- ``` -->
+</section>
+<section id="practical-issues-in-clustering" class="level2" data-number="9.29">
+<h2 data-number="9.29" class="anchored" data-anchor-id="practical-issues-in-clustering"><span class="header-section-number">9.29</span> Practical Issues in Clustering</h2>
+<ul>
+<li><p>Scaling of the variables matters.</p></li>
+<li><p>Choices in hierarchical clustering.</p>
+<ul>
+<li>Dissimilarity measure</li>
+<li>Type of linkage</li>
+<li>Where to cut the dendrogram?</li>
+</ul></li>
+<li><p>Choices in K-means clustering.</p>
+<ul>
+<li>What should be the value of <span class="math inline">\(K\)</span>?</li>
+</ul></li>
+<li><p>Clustering methods are not very robust to perturbations to the data.</p></li>
+<li><p>Which features should be used for clustering?</p></li>
+<li><p>For more details, see <em>Elements of Statistical Learning</em>, Chapter 14.</p></li>
+</ul>
+<!-- ## <span style="color:blue">Your Turn!!!</span>  -->
+<!-- You will work with the `USArrests` dataset.  -->
+<!-- ```{r} -->
+<!-- library(ISLR2)   # load package -->
+<!-- data("USArrests")   # load dataset -->
+<!-- ``` -->
+<!-- **(1)** Using `fviz_nbclust`, choose an appropriate number of clusters separately for K-means and hierarchical clustering. -->
+<!-- **(2)** Implement K-means with your chosen number of clusters. Plot the resulting clusters. Mention any three states that are clustered together with Wisconsin. -->
+<!-- **(3)** Implement hierarchical clustering (both `complete` and `single` linkage) with your chosen number of clusters. Observe the respective dendrograms. What do you see? -->
+</section>
+<section id="to-sum-it-all-up" class="level2" data-number="9.30">
+<h2 data-number="9.30" class="anchored" data-anchor-id="to-sum-it-all-up"><span class="header-section-number">9.30</span> To Sum It All Up</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/MachineLearningAlgorithms.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ml-ethics-and-fairness" class="level2 smaller" data-number="9.31">
+<h2 class="smaller anchored" data-number="9.31" data-anchor-id="ml-ethics-and-fairness"><span class="header-section-number">9.31</span> ML Ethics and Fairness</h2>
+<ul>
+<li><p>As recently as 2015, a major corporation reportedly utilized a model to evaluate applicants’ resumes for technical posts. They scrapped this model upon discovering that, by building this model using resume data from its current technical employees (mostly men), it reinforced a preference for male job applicants. (see <a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G/">Dastin 2018</a>)</p></li>
+<li><p>Facial recognition models, increasingly used in police surveillance, are often built using image data of researchers that do not represent the whole of society. Thus, when applied in practice, misidentification is more common among people that are underrepresented in the research process. Given the severe consequences of misidentification, including false arrest, citizens are pushing back on the use of this technology in their communities (see <a href="https://www.nytimes.com/2019/07/08/us/detroit-facial-recognition-cameras.html">Harmon 2019</a>)</p></li>
+<li><p>In 2020, the New York Civil Liberties Union filed a lawsuit against the U.S. Immigration and Customs Enforcement’s (ICE) use of a “risk classification assessment” model that evaluates whether a subject should be detained or released (see <a href="https://slate.com/technology/2020/03/ice-lawsuit-hijacked-algorithm.html">Hadavas 2020</a>). This model is notably unfair, recommending detention in nearly all cases.</p></li>
+</ul>
+</section>
+<section id="ml-ethics-and-fairness-1" class="level2" data-number="9.32">
+<h2 data-number="9.32" class="anchored" data-anchor-id="ml-ethics-and-fairness-1"><span class="header-section-number">9.32</span> ML Ethics and Fairness</h2>
+<p><strong>Facial recognition</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/guardian-facial-recognition.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ian Tucker. <a href="https://www.theguardian.com/technology/2017/may/28/joy-buolamwini-when-algorithms-are-racist-facial-recognition-bias">‘A white mask worked better’: why algorithms are not colour blind</a>.<br>
+The Guardian. 28 May 2017.</p>
+</section>
+<section id="further-readings" class="level2" data-number="9.33">
+<h2 data-number="9.33" class="anchored" data-anchor-id="further-readings"><span class="header-section-number">9.33</span> Further Readings</h2>
+<center>
+<img width="20%" src="EFT/weapons-of-math-destruction.jpg"> <span class="math inline">\(\hspace{1.5cm}\)</span> <img width="20%" src="EFT/algorithms-of-oppression.jpg"> <span class="math inline">\(\hspace{1.5cm}\)</span> <img width="20%" src="EFT/ethics-data-science.jpg">
+</center>
+</section>
+<section id="next-steps" class="level2" data-number="9.34">
+<h2 data-number="9.34" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">9.34</span> Next Steps</h2>
+<ul>
+<li><p>Statistics and Data Science Major and/or Minor</p></li>
+<li><p>Future readings</p>
+<ul>
+<li><em>Elements of Statistical Learning</em>, HTF</li>
+<li><em>Feature Engineering &amp; Selection</em>, KJ</li>
+<li><em>Deep Learning</em>, GBC</li>
+<li><em>Supervised Machine Learning for Text Analysis in R</em>, HS</li>
+<li>Optimization Algorithms</li>
+<li>Linear Algebra</li>
+<li>ML with Python</li>
+</ul></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Slides9.html" class="pagination-link" aria-label="Tree-Based Ensemble Methods">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tree-Based Ensemble Methods</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Statistical Machine Learning (208) Course Notes by Abhishek Chakraborty.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

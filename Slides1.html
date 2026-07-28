@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Terminologies and Notations – Statistical Machine Learning (208 @ LU) Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Slides2.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-70896287326667430c62020e2b71b712.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Slides1.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Terminologies and Notations</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistical Machine Learning (208 @ LU) Notes</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Terminologies and Notations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Supervised Learning and Trade-offs in SML</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Linear Regression and KNN Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Logistic Regression and KNN Classifiers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Cross-Validation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Feature Engineering</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Decision Trees</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Tree-Based Ensemble Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Slides10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Unsupervised Learning</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-machine-learning" id="toc-what-is-machine-learning" class="nav-link active" data-scroll-target="#what-is-machine-learning"><span class="header-section-number">1.1</span> What is Machine Learning?</a></li>
+  <li><a href="#what-is-machine-learning-1" id="toc-what-is-machine-learning-1" class="nav-link" data-scroll-target="#what-is-machine-learning-1"><span class="header-section-number">1.2</span> What is Machine Learning?</a></li>
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question"><span class="header-section-number">1.3</span> <span style="color:blue">Question!!!</span></a></li>
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1"><span class="header-section-number">1.4</span> <span style="color:blue">Question!!!</span></a></li>
+  <li><a href="#what-is-machine-learning-2" id="toc-what-is-machine-learning-2" class="nav-link" data-scroll-target="#what-is-machine-learning-2"><span class="header-section-number">1.5</span> What is Machine Learning?</a></li>
+  <li><a href="#statistical-learning-vs-machine-learning-vs-data-science" id="toc-statistical-learning-vs-machine-learning-vs-data-science" class="nav-link" data-scroll-target="#statistical-learning-vs-machine-learning-vs-data-science"><span class="header-section-number">1.6</span> Statistical Learning vs Machine Learning vs Data Science</a></li>
+  <li><a href="#supervised-vs-unsupervised" id="toc-supervised-vs-unsupervised" class="nav-link" data-scroll-target="#supervised-vs-unsupervised"><span class="header-section-number">1.7</span> Supervised vs Unsupervised</a></li>
+  <li><a href="#supervised-learning" id="toc-supervised-learning" class="nav-link" data-scroll-target="#supervised-learning"><span class="header-section-number">1.8</span> Supervised Learning</a></li>
+  <li><a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link" data-scroll-target="#unsupervised-learning"><span class="header-section-number">1.9</span> Unsupervised Learning</a></li>
+  <li><a href="#terminologiesnotations" id="toc-terminologiesnotations" class="nav-link" data-scroll-target="#terminologiesnotations"><span class="header-section-number">1.10</span> Terminologies/Notations</a></li>
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2"><span class="header-section-number">1.11</span> <span style="color:blue">Question!!!</span></a></li>
+  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3"><span class="header-section-number">1.12</span> <span style="color:blue">Question!!!</span></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Terminologies and Notations</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+<section id="what-is-machine-learning" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="what-is-machine-learning"><span class="header-section-number">1.1</span> What is Machine Learning?</h2>
+<ul>
+<li><p>Machine Learning is the study of tools/techniques for understanding complex datasets.</p></li>
+<li><p>The name machine learning was coined in 1959 by Arthur Samuel.</p>
+<ul>
+<li>“Field of study that gives computers the ability to learn without being explicitly programmed.”</li>
+</ul></li>
+</ul>
+</section>
+<section id="what-is-machine-learning-1" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="what-is-machine-learning-1"><span class="header-section-number">1.2</span> What is Machine Learning?</h2>
+<p>Tom M. Mitchell (1998) defined algorithms studied in the machine learning field as</p>
+<p>“A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P if its performance at tasks in T, as measured by P, improves with experience E.”</p>
+<!-- ## But, Textbook is Not About Machine Learning??!!! -->
+<!-- Statisticians focus on the statistical aspect of problems. -->
+<!-- ```{r , echo=FALSE,  fig.align='center', fig.cap="Authors of ISL", out.width = '70%'} -->
+<!-- knitr::include_graphics("EFT/Authors.jpg") -->
+<!-- ``` -->
+</section>
+<section id="question" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="question"><span class="header-section-number">1.3</span> <span style="color:blue">Question!!!</span></h2>
+<p>Suppose your email program watches which emails you do or do not mark as spam, and based on that learns how to better filter spam. According to Tom Mitchell’s definition, what is the task T, experience E, and performance measure P in this setting?</p>
+<ul>
+<li>The number (or fraction) of emails correctly classified as spam/ham.</li>
+<li>Classifying emails as spam or ham (not spam)</li>
+<li>Watching you label emails as spam or ham.</li>
+</ul>
+</section>
+<section id="question-1" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="question-1"><span class="header-section-number">1.4</span> <span style="color:blue">Question!!!</span></h2>
+<p>Suppose you are interested in the problem of housing price prediction. You have collected a set of data on house prices at a city and want to use the house characteristics (square footage, number of bedrooms, etc.) to predict the price.<br>
+</p>
+<p>According to Tom Mitchell’s definition, what is the task T, experience E, and performance measure P in this setting?</p>
+</section>
+<section id="what-is-machine-learning-2" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="what-is-machine-learning-2"><span class="header-section-number">1.5</span> What is Machine Learning?</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/HWdigits.PNG" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>MNIST handwritten digits (from ISLR, James et al.)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="statistical-learning-vs-machine-learning-vs-data-science" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="statistical-learning-vs-machine-learning-vs-data-science"><span class="header-section-number">1.6</span> Statistical Learning vs Machine Learning vs Data Science</h2>
+<ul>
+<li>Machine learning arose as a subfield of Artificial Intelligence.</li>
+<li>Statistical learning arose as a subfield of Statistics.</li>
+<li>There is much overlap, a great deal of “cross-fertilization”.</li>
+<li>“Data Science” - Reflects the fact that both statistical and machine learning are about data.</li>
+<li>“Machine learning” or “Data Science” are “fancier” terms.</li>
+</ul>
+</section>
+<section id="supervised-vs-unsupervised" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="supervised-vs-unsupervised"><span class="header-section-number">1.7</span> Supervised vs Unsupervised</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="EFT/SupUnsup.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Machine Learning Tasks (from Bunker and Fayez, 2017)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<!-- ## Supervised Learning -->
+<!-- * Labeled **training data** -->
+<!-- * Inputs/Features/Regressors/Covariates/Independent Variables -->
+<!-- $$ -->
+<!-- \mathbf{X} = \begin{pmatrix}  -->
+<!--     x_{11} & x_{12} & \dots & x_{1p} \\ -->
+<!--     x_{21} & x_{22} & \dots & x_{2p} \\ -->
+<!--     \vdots & \vdots &\ddots & \vdots \\ -->
+<!--     x_{n1} & x_{n2} & \dots & x_{np} -->
+<!--     \end{pmatrix} -->
+<!-- $$ -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/DataMatrix1.png") -->
+<!-- ``` -->
+<!-- * Response/Target/Dependent Variable -->
+<!-- \[ -->
+<!-- \mathbf{y} = \begin{pmatrix}  -->
+<!--     y_{11} \\ -->
+<!--     y_{21} \\ -->
+<!--     \vdots \\ -->
+<!--     y_{n1}  -->
+<!--     \end{pmatrix} -->
+<!-- \] -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '20%'} -->
+<!-- knitr::include_graphics("EFT/Vector.png") -->
+<!-- ``` -->
+</section>
+<section id="supervised-learning" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="supervised-learning"><span class="header-section-number">1.8</span> Supervised Learning</h2>
+<ul>
+<li><p>We have access to <strong>labeled</strong> data</p></li>
+<li><p>The objective is to learn the overall pattern of the relationship between the inputs (<span class="math inline">\(\mathbf{X}\)</span>) and response (<span class="math inline">\(Y\)</span>) in order to</p>
+<ul>
+<li>Investigate the relationship between inputs and response.</li>
+<li>Predict for potential unseen <strong>test</strong> cases.</li>
+<li>Assess the quality of predictions.<br>
+<br>
+<br>
+</li>
+</ul></li>
+</ul>
+<p>Supervised Learning problems can be categorized into</p>
+<ul>
+<li><strong>Regression</strong> problems (response is quantitative, continuous)</li>
+<li><strong>Classification</strong> problems (response is qualitative, categorical)</li>
+</ul>
+</section>
+<section id="unsupervised-learning" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="unsupervised-learning"><span class="header-section-number">1.9</span> Unsupervised Learning</h2>
+<ul>
+<li>No response/outcome variable, just <span class="math inline">\(\mathbf{X}\)</span>.</li>
+<li>Understand structure within data.
+<ul>
+<li>find similar groups of observations based on features (<strong>clustering</strong>)</li>
+<li>find a smaller subset of features with the most variation (<strong>dimensionality reduction</strong>)</li>
+</ul></li>
+<li>No gold-standard.</li>
+<li>Easier to collect unlabeled data.</li>
+<li>Useful pre-processing step for supervised learning.</li>
+</ul>
+</section>
+<section id="terminologiesnotations" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="terminologiesnotations"><span class="header-section-number">1.10</span> Terminologies/Notations</h2>
+<ul>
+<li><p><strong>Response/Target/Outcome</strong> - variable we are interested in predicting, denoted as <span class="math inline">\(Y\)</span></p></li>
+<li><p><strong>Features/Inputs/Predictors</strong> - variables used to predict the response, denoted as <span class="math inline">\(X\)</span></p></li>
+<li><p><strong>Feature Matrix</strong> - all features taken together, denoted as <span class="math inline">\(\mathbf{X}\)</span></p></li>
+</ul>
+<!-- * Matrices - Bold, Upper-case $\mathbf{X}$ -->
+<!-- * Vectors - Bold, Lower-case $\mathbf{x}$ -->
+<!-- * Scalars - Normal, Lower-case $x$ -->
+<!-- * Random Variables - Normal, Upper-case $X$ -->
+<ul>
+<li><p>Number of data points/observations denoted as <span class="math inline">\(n\)</span></p></li>
+<li><p>Number of features/inputs/predictors denoted as <span class="math inline">\(p\)</span></p></li>
+<li><p>Missing entries in R are denoted as <code>NA</code></p></li>
+</ul>
+<!-- ## Terminologies/Notations   -->
+<!-- * **Ames Housing dataset** - Contains data on 881 houses in Ames, IA. We might be interested in predicting sale price. -->
+<!-- The first ten observations are shown below. -->
+<!-- ```{r, echo=FALSE} -->
+<!-- ames <- readRDS("AmesHousing.rds") -->
+<!-- ames <- ames %>% select(c(1,2,3,5,8,9)) -->
+<!-- head(ames, 10) -->
+<!-- ``` -->
+<!-- ## Terminologies/Notations   -->
+<!-- * **Default dataset** - Contains credit card default data on 10,000 individuals. We might be interested in predicting whether somebody will default or not. -->
+<!-- The first ten observations are shown below. -->
+<!-- ```{r, echo=FALSE} -->
+<!-- set.seed(1) -->
+<!-- data("Default") -->
+<!-- Default <- Default[sample(1:10000, 10000),] -->
+<!-- rownames(Default) <- 1:10000 -->
+<!-- head(Default, 10) -->
+<!-- ``` -->
+<!-- * **US Arrests dataset** - Data on arrests for 50 US states. -->
+<!-- ## Notations -->
+<!-- $$ -->
+<!-- \mathbf{X} = \begin{pmatrix}  -->
+<!--     x_{11} & x_{12} & \dots & x_{1p} \\ -->
+<!--     x_{21} & x_{22} & \dots & x_{2p} \\ -->
+<!--     \vdots & \vdots &\ddots & \vdots \\ -->
+<!--     x_{n1} & x_{n2} & \dots & x_{np} -->
+<!--     \end{pmatrix} -->
+<!-- $$ -->
+<!-- ```{r , echo=FALSE,  fig.align='center', fig.cap="A matrix of dimension n x p", out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/DataMatrix1.png") -->
+<!-- ``` -->
+<!-- \[ -->
+<!-- \mathbf{y} = \begin{pmatrix}  -->
+<!--     y_{11} \\ -->
+<!--     y_{21} \\ -->
+<!--     \vdots \\ -->
+<!--     y_{n1}  -->
+<!--     \end{pmatrix} -->
+<!-- \] -->
+<!-- ```{r , echo=FALSE,  fig.align='center', fig.cap="A n-dimensional vector", out.width = '15%'} -->
+<!-- knitr::include_graphics("EFT/Vector.png") -->
+<!-- ``` -->
+<!-- \[ -->
+<!-- \mathbf{X} = \begin{pmatrix}  -->
+<!--     \mathbf{x}_{1} & \mathbf{x}_{2} & \dots & \mathbf{x}_{p} \\ -->
+<!--        \end{pmatrix} -->
+<!-- \] -->
+<!-- ```{r , echo=FALSE,  fig.align='center', fig.cap="Matrix", out.width = '40%'} -->
+<!-- knitr::include_graphics("EFT/DataMatrix2.png") -->
+<!-- ``` -->
+<!-- ## <span style="color:blue">Question!!!</span> -->
+<!-- Suppose you are given the following feature matrix. -->
+<!-- $$ -->
+<!-- \mathbf{X}=\begin{pmatrix} -->
+<!-- 8.5 & 11.2 & 7.0 & 9.3 \\ -->
+<!-- 8.0 & 11.5 & 13.1 & 7.4 \\ -->
+<!-- 6.4 & 9.6 & 7.0 & 6.8 \\ -->
+<!-- 9.5 & -3.2 & 14.4 & 1.6 -->
+<!-- \end{pmatrix} -->
+<!-- $$ -->
+<!-- For each of the **Ames Housing** and **Default** datasets, -->
+<!-- * What are the corresponding values of $n$ and $p$? -->
+<!-- * What will be the dimension of the corresponding response vector \(Y\)? -->
+<!-- * What is the value of the 3rd feature for the 2nd observation? -->
+</section>
+<section id="question-2" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="question-2"><span class="header-section-number">1.11</span> <span style="color:blue">Question!!!</span></h2>
+<p>Suppose you have information about 867 cancer patients on their age, tumor size, clump thickness of the tumor, uniformity of cell size, and whether the tumor is malignant or benign. Based on these data, you are interested in building a model to predict the type of tumor (malignant or benign) for future cancer patients.</p>
+<ul>
+<li><p>What are the values of <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span> in this dataset?</p></li>
+<li><p>What are the inputs/features?</p></li>
+</ul>
+<!-- ## Unsupervised Learning -->
+<!-- **US Arrests dataset** - Data on arrests for 50 US states. -->
+<!-- The first ten observations are shown below. -->
+<!-- ```{r, echo=FALSE} -->
+<!-- data("USArrests") -->
+<!-- head(USArrests, 10) -->
+<!-- ``` -->
+<!-- ## Supervised Learning -->
+<!-- *Advertising* dataset -->
+<!-- ```{r, echo=FALSE} -->
+<!-- Advertising=read.csv("Advertising.csv") -->
+<!-- Advertising$X=NULL -->
+<!-- names(Advertising)=c("TV","Radio","Newspaper","Sales") -->
+<!-- head(Advertising,15) -->
+<!-- ``` -->
+<!-- * Inputs - *TV*, *Radio*, *Newspaper* -->
+<!-- * Response - *Sales* -->
+<!-- ## Supervised Learning -->
+<!-- ```{r , echo=FALSE,  fig.align='center', out.width = '100%'} -->
+<!-- knitr::include_graphics("EFT/2.1.png") -->
+<!-- ``` -->
+<!-- Shown are *Sales* vs *TV*, *Radio* and *Newspaper*, with a blue straight line fit separately to each. Can we predict *Sales* using these three? -->
+<!-- We could use a model -->
+<!-- $$\text{Sales} \approx f(TV,Radio,Newspaper)$$ -->
+</section>
+<section id="question-3" class="level2 smaller" data-number="1.12">
+<h2 class="smaller anchored" data-number="1.12" data-anchor-id="question-3"><span class="header-section-number">1.12</span> <span style="color:blue">Question!!!</span></h2>
+<p>Some of the problems below are best addressed using a supervised learning algorithm, while others with an unsupervised learning algorithm. In each case, identify whether the problem belongs to the supervised or unsupervised learning paradigm. (Assume some appropriate dataset is available for your algorithm to “learn” from.)</p>
+<ul>
+<li><p>Examine the statistics of two football teams, and predict which team will win tomorrow’s match (given historical data of teams’ wins/losses to learn from).</p></li>
+<li><p>Given genetic (DNA) data from a person, predict the probability of the person developing diabetes over the next 10 years.</p></li>
+<li><p>Take a collection of 1000 essays written on the US economy, and find a way to automatically group these essays into a small number of groups of essays that are somehow “similar” or “related”.</p></li>
+</ul>
+<!-- * Examine a large collection of emails that are known to be spam, to discover if there are sub-types of spam email. -->
+<!-- * Suppose you have information about 867 cancer patients on their age, tumor size, clump thickness of the tumor, uniformity of cell size, and whether the tumor is malignant or benign. Based on these data, you are interested in building a model to predict the type of tumor (malignant or benign) for future cancer patients. -->
+<ul>
+<li>Examine data on the income and years of education of adults in a neighborhood and build a model to predict the income from years of education.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Welcome">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Slides2.html" class="pagination-link" aria-label="Supervised Learning and Trade-offs in SML">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Supervised Learning and Trade-offs in SML</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Statistical Machine Learning (208) Course Notes by Abhishek Chakraborty.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
