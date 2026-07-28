@@ -1,0 +1,751 @@
+---
+title: 'Linear Regression and KNN Regression'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+# library(ggformula)
+# library(gridExtra)
+library(ISLR2)
+```
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+
+
+
+
+
+## Linear Regression
+
+Mathematically, a supervised learning problem can be represented by
+
+$$Y=f(\mathbf{X}) + \epsilon$$
+
+where $\epsilon$ is a **random** error term (includes measurement error, other discrepancies) independent of $\mathbf{X}$ and has mean zero.
+
+**Objective**: To approximate/estimate $f(\mathbf{X})$
+
+For linear regression, we assume that $f(\mathbf{X})$ is a linear function of $\mathbf{X}$, that is, for $p=1$
+
+$$f(\mathbf{X}) = \beta_0 + \beta_1 X_1$$
+
+
+## Linear Regression: Example
+
+Suppose the CEO of a restaurant franchise is considering opening new outlets in different cities. They would like to expand their business to cities that give them higher profits with the assumption that highly populated cities will probably yield higher profits. 
+
+They have data on the population (in 100,000) and profit (in $1,000) at 97 cities where they currently have outlets.
+
+The first ten observations of the dataset are shown below.
+
+```{r, echo=FALSE}
+outlets <- readRDS("datasets/outlets.rds")   # load dataset
+
+head(outlets, 10)   # first ten observations of the dataset
+```
+
+
+## Linear Regression
+
+Given this dataset, our **objective** is to estimate $\beta_0$ and  $\beta_1$.
+
+
+If we are able to estimate $\beta_0$ and  $\beta_1$, we can
+
+* predict the profit for a new city with a given population,
+
+* understand the relationship between `population` and `profit` better.
+
+
+<!-- ## Linear Regression -->
+
+<!-- Some Exploratory Data Analysis (EDA) -->
+
+<!-- ```{r, fig.align='center', fig.width=8, fig.height=6} -->
+<!-- library(GGally) -->
+
+<!-- ggpairs(data = outlets) -->
+<!-- ``` -->
+
+
+
+## Linear Regression: Estimating Parameters
+
+We use training data to find $b_0$ and $b_1$ such that
+
+$$\hat{y}=b_0 + b_1 \ x_1$$
+Observed response: $y_i$ for $i=1,\ldots,n$
+
+Predicted response: $\hat{y}_i$ for $i=1, \ldots, n$
+
+Residual: $e_i = \hat{y}_i - y_i$ for $i=1, \ldots, n$
+
+Mean Squared Error (MSE): $MSE =\dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}$  also known as the **loss/cost function**
+
+Problem: Find $b_0$ and $b_1$ which minimizes $MSE$
+
+
+
+<!-- ## Linear Regression: Estimating Parameters -->
+
+<!-- A scatterplot of the dataset -->
+
+<!-- ```{r, fig.align='center', fig.width=8, fig.height=6} -->
+<!-- ggplot(data = outlets) + -->
+<!--   geom_point(mapping = aes(x = population, y = profit)) -->
+<!-- ``` -->
+
+
+
+## Gradient Descent Algorithm
+
+How do we minimize the $MSE$?
+
+One optimization technique we can use is called the **gradient descent**. 
+
+
+**NOTE**: Gradient Descent is not a machine learning technique. It is an optimization technique that helps to build machine learning models.
+
+
+## Gradient Descent Algorithm
+
+```{r, fig.align='center', fig.width=8, fig.height=6, echo=FALSE}
+x <- seq(-5, 5, by = .01)
+y <- x^2 + 3
+df <- data.frame(x, y)
+
+# plot
+ggplot(df, aes(x, y)) +
+  geom_line(size = 1.5, alpha = .5) +
+  theme_classic() +
+  scale_y_continuous("Cost/Loss function of the variable", limits = c(0, 30)) +
+  xlab("variable") 
+```
+
+Updates to the variable:
+
+$$\text{new value of variable} = \text{old value of variable} - \big(\text{step size} \times \text{gradient of function with respect to variable}\big)$$
+
+## Gradient Descent Algorithm
+
+```{r, fig.align='center', fig.width=8, fig.height=6, echo=FALSE}
+
+# create data to plot
+x <- seq(-5, 5, by = .05)
+y <- x^2 + 3
+df <- data.frame(x, y)
+step <- 5
+step_size <- .2
+for(i in seq_len(18)) {
+  next_step <- max(step) + round(diff(range(max(step), which.min(df$y))) * step_size, 0)
+  step <- c(step, next_step)
+  next
+}
+steps <- df[step, ] %>%
+  mutate(x2 = lag(x), y2 = lag(y)) %>%
+  dplyr::slice(1:18)
+# plot
+ggplot(df, aes(x, y)) +
+  geom_line(size = 1.5, alpha = .5) +
+  theme_classic() +
+  scale_y_continuous("Cost/Loss function of the variable", limits = c(0, 30)) +
+  xlab("variable") +
+  geom_segment(data = df[c(5, which.min(df$y)), ], aes(x = x, y = y, xend = x, yend = -Inf), lty = "dashed") +
+  geom_point(data = filter(df, y == min(y)), aes(x, y), size = 4, shape = 21, fill = "yellow") +
+  geom_point(data = steps, aes(x, y), size = 3, shape = 21, fill = "blue", alpha = .5) +
+  geom_curve(data = steps[-1,], aes(x = x, y = y, xend = x2, yend = y2), curvature = 1, lty = "dotted") +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  annotate("text", x = df[5, "x"], y = 1, label = "initial value", hjust = -0.1, vjust = .8) +
+  annotate("text", x = df[which.min(df$y), "x"], y = 1, label = "minimium", hjust = -0.1, vjust = .8) +
+  annotate("text", x = df[5, "x"], y = df[5, "y"], label = "learning rate (step size)", hjust = -.8, vjust = 0)
+```
+
+
+## Gradient Descent Algorithm
+
+```{r, fig.align='center', fig.width=10, fig.height=6, echo=FALSE}
+# create too small of a learning rate
+step <- 5
+step_size <- .05
+for(i in seq_len(10)) {
+  next_step <- max(step) + round(diff(range(max(step), which.min(df$y))) * step_size, 0)
+  step <- c(step, next_step)
+  next
+}
+too_small <- df[step, ] %>%
+  mutate(x2 = lag(x), y2 = lag(y))
+
+# plot
+p1 <- ggplot(df, aes(x, y)) +
+  geom_line(size = 1.5, alpha = .5) +
+  theme_classic() +
+  scale_y_continuous("Cost/Loss function of the variable", limits = c(0, 30)) +
+  xlab("variable") +
+  geom_segment(data = too_small[1, ], aes(x = x, y = y, xend = x, yend = -Inf), lty = "dashed") +
+  geom_point(data = too_small, aes(x, y), size = 3, shape = 21, fill = "blue", alpha = .5) +
+  geom_curve(data = too_small[-1, ], aes(x = x, y = y, xend = x2, yend = y2), curvature = 1, lty = "dotted") +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  annotate("text", x = df[5, "x"], y = 1, label = "initial value", hjust = -0.1, vjust = .8) +
+  ggtitle("b) step size too small")
+
+
+
+
+# create too large of a learning rate
+too_large <- df[round(which.min(df$y) * (1 + c(-.9, -.6, -.2, .3)), 0), ] %>%
+  mutate(x2 = lag(x), y2 = lag(y))
+
+# plot
+p2 <- ggplot(df, aes(x, y)) +
+  geom_line(size = 1.5, alpha = .5) +
+  theme_classic() +
+  scale_y_continuous("Cost/Loss function of the variable", limits = c(0, 30)) +
+  xlab("variable") +
+  geom_segment(data = too_large[1, ], aes(x = x, y = y, xend = x, yend = -Inf), lty = "dashed") +
+  geom_point(data = too_large, aes(x, y), size = 3, shape = 21, fill = "blue", alpha = .5) +
+  geom_curve(data = too_large[-1, ], aes(x = x, y = y, xend = x2, yend = y2), curvature = 1, lty = "dotted") +
+  theme(
+    axis.ticks = element_blank(),
+    axis.text = element_blank()
+  ) +
+  annotate("text", x = too_large[1, "x"], y = 1, label = "initial value", hjust = -0.1, vjust = .8) +
+  ggtitle("a) step size too big")
+
+gridExtra::grid.arrange(p2, p1, nrow = 1)
+
+```
+
+
+## Gradient Descent for Linear Regression
+
+**Objective**: We want to find $b_0$ and $b_1$ which minimizes 
+
+$$MSE = \dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n} = \dfrac{(\hat{y}_1 - y_1)^2 +  (\hat{y}_2 - y_2)^2 + \ldots + (\hat{y}_n - y_n)^2}{n}$$
+\
+\
+
+
+$$MSE = \dfrac{(b_0 + b_1 \ x_{11} - y_1)^2 +  (b_0 + b_1 \ x_{12} - y_2)^2 + \ldots + (b_0 + b_1 \ x_{1n} - y_n)^2}{n}$$
+\
+\
+
+
+$$MSE = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (b_0 + b_1 \ x_{1i} - y_i)^2 = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (\hat{y}_i - y_i)^2 = \displaystyle \dfrac{1}{n}\sum_{i=1}^{n} (e_i)^2$$
+
+
+## Gradient Descent for Linear Regression
+
+To minimize $MSE$ with respect to $b_0$ and $b_1$, we need the derivatives/gradients of $MSE$ with respect to $b_0$ and $b_1$.
+
+
+$$\text{gradient of MSE with respect to} \ b_0 = \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} (b_0 + b_1 \ x_{1i} - y_i) = \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} (\hat{y}_i - y_i)$$
+\
+\
+\
+
+
+$$\text{gradient of MSE with respect to} \ b_1 = \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} x_{1i} (b_0 + b_1 \ x_{1i} - y_i) = \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} x_{1i} (\hat{y}_i - y_i)$$
+
+
+## Gradient Descent for Linear Regression
+
+The gradient descent updates will be as follows:
+
+* For $b_0$
+
+$$b_0 \ \text{(new)} = b_0 \ \text{(old)}- \bigg(\text{step size} \times \text{gradient with respect to} \ b_0\bigg)$$
+$$b_0 \ \text{(new)} = b_0 \ \text{(old)}- \bigg(\text{step size} \times \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} (\hat{y}_i - y_i)\bigg)$$
+\
+\
+\
+
+* For $b_1$
+
+$$b_1  \ \text{(new)} = b_1  \ \text{(old)} - \bigg(\text{step size} \times \text{gradient with respect to} \ b_1 \bigg)$$
+
+$$b_1  \ \text{(new)} = b_1  \ \text{(old)} - \bigg(\text{step size} \times \dfrac{2}{n} \displaystyle \sum_{i=1}^{n} x_{1i} (\hat{y}_i - y_i)\bigg)$$
+
+
+Let's now implement this algorithm in R.
+
+
+<!-- ## Linear Regression in R -->
+
+<!-- ```{r} -->
+<!-- outlets_model <- lm(profit ~ population, data = outlets) -->
+
+<!-- outlets_model -->
+<!-- ``` -->
+
+
+<!-- ## Linear Regression in R -->
+
+<!-- ```{r, fig.align='center', fig.width=8, fig.height=6, echo=FALSE} -->
+<!-- ggplot(data = outlets) + -->
+<!--   geom_point(mapping = aes(x = population, y = profit)) +    # create scatterplot -->
+<!--   geom_smooth(mapping = aes(x = population, y = profit), method = "lm", se = FALSE)   # add the regression line -->
+<!-- ``` -->
+
+
+
+
+<!-- ## Linear Regression in R: Prediction -->
+
+<!-- ```{r} -->
+<!-- predict(outlets_model, newdata = data.frame(population = 17)) -->
+<!-- ``` -->
+
+
+
+## Multiple Linear Regression
+
+Response $Y$ and predictor variables $X_1, X_2, \ldots, X_p$. We assume
+
+$$Y=f(\mathbf{X}) + \epsilon=\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon$$
+
+$\beta_j$ quantifies the association between the $j^{th}$ predictor and the response.
+
+
+
+## Multiple Linear Regression: Estimating Parameters
+
+We use training data to find $b_0, b_1, \ldots, b_p$ such that
+
+$$\hat{y}=b_0 + b_1 \ x_1 + \ldots + b_p \ x_p$$
+Observed response: $y_i$ for $i=1,\ldots,n$
+
+Predicted response: $\hat{y}_i$ for $i=1, \ldots, n$
+
+Residual: $e_i = \hat{y}_i - y_i$ for $i=1, \ldots, n$
+
+Mean Squared Error (MSE): $MSE =\dfrac{e^2_1+e^2_2+\ldots+e^2_n}{n}$  also known as the **loss/cost function**
+
+Problem: Find $b_0, b_1, \ldots, b_p$ which minimizes $MSE$
+\
+\
+\
+
+We can use **Gradient Descent** to minimize the $MSE$ with respect to $b_0, b_1, \ldots, b_p$.
+
+
+## Multiple Linear Regression
+
+**House Prices dataset**
+
+* `size` is in square feet
+
+* `num_bedrooms` is a count
+
+* `price` is in $1,000
+
+
+<!-- ```{r} -->
+<!-- house_prices <- readRDS("house_prices.rds")   # load dataset -->
+
+<!-- head(house_prices, 6)   # first 6 observations -->
+<!-- ``` -->
+
+
+## Multiple Linear Regression
+
+Some Exploratory Data Analysis (EDA)
+
+```{r, fig.align='center', fig.width=8, fig.height=6, echo=FALSE}
+
+house_prices <- readRDS("datasets/house_prices.rds")
+
+library(GGally)
+
+ggpairs(data = house_prices)   # correlation plot
+```
+
+
+## Multiple Linear Regression: Gradient Descent
+
+The gradient descent framework for multiple regression is an extension of the ideas covered in simple (one-predictor) linear regression.
+\
+\
+
+
+Implementing gradient descent for multiple regression is an extension of the ideas/R codes we used for simple (one-predictor) regression.
+
+
+
+<!-- ## Multiple Linear Regression in R -->
+
+<!-- **House Prices dataset** -->
+
+<!-- ```{r} -->
+
+<!-- mlr_model <- lm(price ~ size + num_bedrooms, data = house_prices)   # fit the model -->
+
+<!-- summary(mlr_model)   # produce result summaries of the model -->
+
+<!-- ``` -->
+
+
+<!-- ## Multiple Linear Regression: Interpreting Parameters -->
+
+<!-- **House Prices dataset** -->
+
+<!-- * $\hat{\beta}_0=-2.242e+06$: With `Gr_Liv_Area` equaling 0 square feet, and `Year_Built` equaling 0, the predicted `Sale_Price` is approximately -2.242e+06 USD. The interpretation is not meaningful in this context. -->
+
+<!-- * $b_1=0.1392$: With `num_bedrooms` remaining fixed, an additional 1 square foot of `size` leads to an increase in `price` by approximately $139. -->
+
+<!-- * $\hat{\beta}_2=1.155e+03$: With `Gr_Liv_Area` remaining fixed, an additional 1 year on `Year_Built` leads to an increase in `Sale_Price` by approximately 1155 USD. -->
+
+
+<!-- ## Multiple Linear Regression: Prediction -->
+
+<!-- **House Prices dataset** -->
+
+<!-- Prediction of `price` when `size` is 2000 square feet for a house with 3 bedrooms. -->
+
+<!-- ```{r} -->
+
+<!-- predict(mlr_model, newdata = data.frame(size = 2000, num_bedrooms = 3))   # obtain prediction -->
+
+<!-- ``` -->
+
+
+
+## Linear Regression: Comparing Models
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+
+With the **House Prices** dataset, we create three models with `price` as the response:
+
+<!-- ```{r} -->
+<!-- advertising <- readRDS("Advertising.rds")   # load dataset -->
+<!-- ``` -->
+
+* **fit1**: a simple linear regression model with `num_bedrooms`  as the only predictor
+
+* **fit2**: a simple linear regression model with `size` as the only predictor
+
+* **mlr_model**: a multiple regression model with both `size` and `num_bedrooms` as predictors
+
+<!-- For each model, note $p$ (the number of predictors), $R^2$, $\text{Adjusted} \ R^2$, $RSS$, and $RSE$. -->
+
+
+## Linear Regression: Comparing Models
+
+<!-- * Residual Sum of Squares (RSS) -->
+* Mean Squared Error (MSE)
+
+$$MSE = \displaystyle \sum_{i=1}^n e_i^2$$
+
+* Residual Standard Error (RSE)
+
+$$RSE=\sqrt{\dfrac{MSE}{n-p-1}}$$
+
+
+<!-- * $R^2$ statistic -->
+
+<!-- $$R^2=\dfrac{TSS-RSS}{TSS} = 1 - \dfrac{RSS}{TSS}$$ -->
+
+
+<!-- * Adjusted $R^2$ statistic -->
+
+<!-- $$\text{Adjusted} \ R^2 = 1 - \dfrac{RSS/(n-p-1)}{TSS/(n-1)}$$ -->
+
+
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+
+<!-- With the **Advertising** dataset, create three models with **sales** as response: -->
+
+<!-- ```{r} -->
+<!-- advertising <- readRDS("Advertising.rds")   # load dataset -->
+<!-- ``` -->
+
+<!-- * `fit1`: a linear regression model with **TV** as the only predictor -->
+
+<!-- * `fit2`: a linear regression model with **TV** and **radio** as predictors -->
+
+<!-- * `fit3`: a linear regression model with **TV**, **radio**, and **newspaper** as predictors -->
+
+<!-- For each model, note $p$ (the number of predictors), $R^2$, $\text{Adjusted} \ R^2$, $RSS$, and $RSE$. -->
+
+
+<!-- ## Linear Regression: Assessing Accuracy of Model -->
+
+<!-- ```{r} -->
+<!-- round(cor(advertising), 3)   # obtain correlation matrix -->
+<!-- ``` -->
+
+
+<!-- ## <span style="color:blue">Question!!!</span> -->
+
+<!-- As we add variables to the linear regression model, (Select all that apply) -->
+
+<!-- 1. the RSE always decreases. -->
+
+<!-- 2. the RSS always decreases. -->
+
+<!-- 3. the $R^2$ always increases. -->
+
+<!-- 4. the $\text{Adjusted} \ R^2$ always increases. -->
+
+<!-- 5. the number of parameters always increases. -->
+
+
+<!-- ## <span style="color:blue">Question!!!</span> -->
+
+<!-- Consider the population model $Y = \beta_0 + \beta_1 X + \epsilon$. The estimated model is $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x$. Reflecting on the concepts from week 1, fill in the blanks below. -->
+
+<!-- 1. If $\beta_0$ and $\beta_1$ were known ("truth" known), the discrepancy between response $Y$ and $\beta_0 + \beta_1 X$ is related to the $\underline{\hspace{5cm}}$ (irreducible/reducible) error. -->
+
+<!-- 2. The inaccuracy of $\hat{\beta}_0$ and $\hat{\beta}_1$ as estimates of $\beta_0$ and $\beta_1$ is related to the $\underline{\hspace{5cm}}$ (irreducible/reducible) error. -->
+
+
+<!-- ## <span style="color:blue">Question!!!</span> -->
+
+<!-- The least squares approach -->
+
+<!-- * minimizes the sum of squared predictor values. -->
+
+<!-- * minimizes the sum of squared response values. -->
+
+<!-- * minimizes the sum of squared residuals. -->
+
+<!-- * maximizes the sum of squared residuals. -->
+
+
+
+## Regression: Conditional Averaging
+
+**Restaurant Outlets Profit dataset**
+
+```{r, fig.align='center', fig.height=4, fig.width=7, echo=FALSE}
+outlets <- readRDS("datasets/outlets.rds")   # load dataset
+
+ggplot(data = outlets, aes(x = population, y = profit)) +
+  geom_point() +   # create scatterplot
+  geom_smooth(method = "lm", se = FALSE)   # add the SLR line
+```
+
+
+What is a good value of $\hat{f}(x)$ (expected profit), say at $x=6$?
+
+A possible choice is the **average of the observed responses** at $x=6$. But we may not observe responses for certain $x$ values.
+
+
+<!-- ## Regression: Conditional Averaging -->
+
+<!-- What is a good value of $\hat{f}(x)$, say at $x=6$? A possible value is the **average of the observed responses** at $x=6$. -->
+
+<!-- $$\hat{f}(x)=E(Y|x=1008)$$ -->
+
+<!-- $E(Y|x=1008)$ means **expected value**, or, the **average of the observed responses** at $x=1008$. -->
+
+<!-- But we may not observe responses for certain $x$ values. -->
+
+
+## K-Nearest Neighbors Regression
+
+* Non-parametric approach
+
+* Given a value for $K$ and a test data point $x_0$,
+
+$$\hat{f}(x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} y_i=\text{Average} \ \left(y_i \ \text{for all} \ i:\ x_i \in \mathcal{N}_0\right) $$
+
+where $\mathcal{N}_0$ is known as the **neighborhood** of $x_0$.
+
+
+* The method is based on the concept of closeness of $x_i$'s from $x_0$ for inclusion in the neighborhood $\mathcal{N}_0$. Usually, the **Euclidean distance** is used as a measure of closeness. The Euclidean distance between two $p$-dimensional vectors $\mathbf{a}=(a_1, a_2, \ldots, a_p)$ and $\mathbf{b}=(b_1, b_2, \ldots, b_p)$ is
+
+$$||\mathbf{a}-\mathbf{b}||_2 = \sqrt{(a_1-b_1)^2 + (a_2-b_2)^2 + \ldots + (a_p-b_p)^2}$$
+
+
+<!-- ## K-Nearest Neighbors Regression (single predictor): Fit -->
+
+<!-- **Restaurant Outlets Profit dataset** -->
+
+<!-- ```{r, message=FALSE} -->
+<!-- library(caret)   # load the caret package -->
+<!-- ``` -->
+
+<!-- * **1-NN regression** -->
+
+<!-- ```{r} -->
+<!-- knnfit1 <- knnreg(profit ~ population, data = outlets, k = 1)   # 1-nn regression -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- predict(knnfit1, newdata = data.frame(population = 6))  # 1-nn prediction -->
+<!-- ``` -->
+
+
+<!-- * **5-NN regression** -->
+
+<!-- ```{r} -->
+<!-- knnfit5 <- knnreg(profit ~ population, data = outlets, k = 5)   # 5-nn regression -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- predict(knnfit5, newdata = data.frame(population = 6))  # 5-nn prediction -->
+<!-- ``` -->
+
+<!-- ## K-Nearest Neighbors Regression (single predictor): Prediction -->
+
+<!-- **Ames Housing dataset** -->
+
+<!-- ```{r} -->
+<!-- nearest_neighbors <- ames %>% -->
+<!--   select(Sale_Price, Gr_Liv_Area) %>% -->
+<!--   mutate(distance = sqrt((1008-Gr_Liv_Area)^2)) %>%   # calculate distance -->
+<!--   arrange(distance)   # sort by increasing distance -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- predict(knnfit1, newdata = data.frame(population = 1008))  # 1-nn prediction -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- predict(knnfit5, newdata = data.frame(population = 1008))  # 5-nn prediction -->
+<!-- ``` -->
+
+
+<!-- ## Regression Methods: Comparison -->
+
+<!-- **Restaurant Outlets Profit dataset** -->
+
+<!-- ```{r, echo=FALSE, fig.align='center', fig.height=5, fig.width=8, fig.cap="dashed cyan: 1-nn fit, dotted red: 5-nn fit, blue: linear regression fit"} -->
+<!-- slrfit <- lm(profit ~ population, data = outlets)   # fit the SLR model -->
+
+<!-- pop_seq <- seq(min(outlets$population, na.rm = TRUE), max(outlets$population, na.rm = TRUE), 0.01) -->
+
+<!-- # obtain predictions for all training data points -->
+<!-- # knn_1 <- predict(knnfit1, newdata = data.frame(population = min(outlets$population, na.rm = TRUE):max(outlets$population, na.rm = TRUE))) -->
+<!-- knn_1 <- predict(knnfit1, newdata = data.frame(population = pop_seq)) -->
+<!-- # knn_5 <- predict(knnfit5, newdata = data.frame(population = min(outlets$population, na.rm = TRUE):max(outlets$population, na.rm = TRUE))) -->
+<!-- knn_5 <- predict(knnfit5, newdata = data.frame(population = pop_seq)) -->
+<!-- # p <-  predict(slrfit, newdata = data.frame(population = min(outlets$population, na.rm = TRUE):max(outlets$population, na.rm = TRUE))) -->
+<!-- p <-  predict(slrfit, newdata = data.frame(population = pop_seq)) -->
+
+<!-- # column bind original data with predicted values -->
+<!-- # ames1 <- outlets %>% select(profit, population) %>% filter(!is.na(population)) -->
+<!-- # predictions <- data.frame(population = min(outlets$population, na.rm = TRUE):max(outlets$population, na.rm = TRUE), -->
+<!--                           # linear = p, knn_1, knn_5) -->
+<!-- predictions <- data.frame(population = pop_seq, -->
+<!--                           linear = p, knn_1, knn_5) -->
+
+<!-- # plot the three models -->
+<!-- ggplot(data = outlets, aes(x = population, y = profit)) + -->
+<!--   geom_point() + -->
+<!--   geom_line(data = predictions, aes(x = population, y = knn_1), color = "cyan", linetype = "dashed", linewidth = 1) +   # 1-nn regression -->
+<!--   geom_line(data = predictions, aes(x = population, y = knn_5), color = "red", linetype = "dotted", linewidth = 1) +   # 5-nn regression -->
+<!--   geom_line(data = predictions, aes(x = population, y = linear), color = "blue", linewidth = 1) + -->
+<!--   theme_bw() -->
+
+<!-- ``` -->
+
+
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+
+<!-- For the **Advertising** dataset, create a 10-nearest neighbors fit **knnfit10** with **sales** as response and **TV** as predictor. Obtain the predicted **sales** for $\text{TV} = 225,000$. -->
+
+
+## <span style="color:blue">Question!!!</span>
+
+As $k$ in KNN regression increases,
+
+* the flexibility of the fit $\underline{\hspace{5cm}}$ (increases/decreases)
+
+* the bias of the fit $\underline{\hspace{5cm}}$ (increases/decreases)
+
+* the variance of the fit $\underline{\hspace{5cm}}$ (increases/decreases)
+
+
+## K-Nearest Neighbors Regression (multiple predictors)
+
+It is important to **scale (subtract mean and divide by standard deviation)** the predictors when considering KNN regression so that the Euclidean distance is not dominated by a few of them with large values.
+
+<!-- **House Prices dataset** -->
+
+<!-- ```{r} -->
+
+<!-- # scale predictors -->
+<!-- house_prices_scaled <- data.frame(size_scaled = scale(house_prices$size), -->
+<!--                                   num_bedrooms_scaled = scale(house_prices$num_bedrooms), -->
+<!--                                   price = house_prices$price) -->
+
+<!-- head(house_prices_scaled)   # first six observations -->
+
+<!-- ``` -->
+
+
+<!-- ## K-Nearest Neighbors Regression (multiple predictors) -->
+
+<!-- **House Prices dataset** -->
+
+<!-- ```{r, message=FALSE} -->
+<!-- library(caret)   # load library -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- knnfit10 <- knnreg(price ~ size_scaled + num_bedrooms_scaled, data = house_prices_scaled, k = 10)   # 10-nn regression -->
+
+<!-- ``` -->
+
+
+<!-- It is also important to apply scaling to test data points before prediction. Suppose, you want predictions for `size` = 2000 square feet, and `num_bedrooms` = 3, then -->
+
+<!-- ```{r} -->
+<!-- # obtain 10-nn prediction -->
+
+<!-- predict(knnfit10, newdata = data.frame(size_scaled = (2000 - mean(house_prices$size, na.rm = TRUE))/sd(house_prices$size, na.rm = TRUE), -->
+<!--                                      num_bedrooms_scaled = (3 - mean(house_prices$num_bedrooms))/sd(house_prices$num_bedrooms))) -->
+<!-- ``` -->
+
+
+## Linear Regression vs K-Nearest Neighbors
+
+
+<!-- * Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric. -->
+
+<!-- * Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification ($Y$ qualitative). -->
+
+<!-- * Linear regression is interpretable, KNN is not. -->
+
+<!-- * Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well. Using Euclidean distance with KNN does not allow for qualitative predictors. -->
+
+<!-- * In terms of prediction, KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - curse of dimensionality. -->
+
+
+<center>
+|  |  Linear Regression | KNN Regression |
+|-----------|----------|-----------
+| Type |  |  |
+| Task |  |  |
+| Predictive Performance |  |  |
+| Interpretability |  |  |
+| Other |  |  |
+
+</center>
+\
+
+
+
+

@@ -1,0 +1,492 @@
+---
+title: 'Feature Engineering'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+# library(ggformula)
+# library(gridExtra)
+library(ISLR2)
+```
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+
+
+
+
+## The Machine Learning Process
+
+* Identify the task, perform preliminary EDA (Exploratory Data Analysis).
+
+* Split the data into training and test data.
+
+* Perform additional EDA on the training set (graphs, correlation plot, additional checks, etc.)
+
+* Perform feature engineering.
+
+* Perform CV for hyperparameter tuning and model selection. Choose the optimal model.
+
+* Create the final model using the overall training data and estimate its performance on the test data.
+
+
+
+## Data Preprocessing and Feature Enginnering
+
+Data preprocessing and engineering techniques generally refer to the addition, deletion, or transformation of data. 
+
+We will cover several fundamental and common preprocessing tasks that can potentially significantly improve modeling performance.
+
+* Dealing with zero-variance (zv) and/or near-zero variance (nzv) variables
+
+* Imputing missing entries
+
+* Label encoding ordinal categorical variables
+
+* Standardizing (centering and scaling) numeric predictors
+
+* Lumping predictors
+
+* One-hot/dummy encoding categorical predictors
+
+
+<!-- ## Ames Housing Dataset {.smaller} -->
+
+<!-- ```{r, message=FALSE} -->
+<!-- ames <- readRDS("AmesHousing.rds")   # load dataset -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- glimpse(ames)  # check type of features -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- sum(is.na(ames))    # check for missing entries -->
+<!-- ``` -->
+
+
+<!-- ## Ames Housing Dataset {.smaller} -->
+
+<!-- ```{r} -->
+<!-- summary(ames)  # check type of features, which features have missing entries? -->
+<!-- ``` -->
+
+
+<!-- ## Ames Housing Dataset -->
+
+<!-- ```{r} -->
+<!-- levels(ames$Overall_Qual)   # the levels are NOT properly ordered -->
+
+<!-- # relevel the levels -->
+<!-- ames$Overall_Qual <- factor(ames$Overall_Qual, levels = c("Very_Poor", "Poor", "Fair", "Below_Average",  -->
+<!--                                                   "Average", "Above_Average", "Good", "Very_Good",  -->
+<!--                                                   "Excellent", "Very_Excellent")) -->
+
+<!-- levels(ames$Overall_Qual)   # the levels are properly ordered -->
+<!-- ``` -->
+
+
+<!-- ## Ames Housing Dataset  -->
+
+<!-- ```{r} -->
+<!-- # split the dataset into training and test sets -->
+
+<!-- set.seed(042324)   # set seed -->
+
+<!-- train_index <- createDataPartition(ames$Sale_Price, p = 0.8, list = FALSE)   # 'Sale_Price' is the response -->
+
+<!-- ames_train <- ames[train_index,]   # training data -->
+
+<!-- ames_test <- ames[-train_index,]   # test data -->
+<!-- ``` -->
+
+
+<!-- ## Ames Housing Dataset  -->
+
+<!-- ```{r} -->
+<!-- # set up the recipe -->
+
+<!-- library(recipes) -->
+
+<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # sets up the type and role of variables -->
+
+<!-- ames_recipe$var_info -->
+<!-- ``` -->
+
+
+## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables
+
+A rule of thumb for detecting near-zero variance features is:
+
+* The fraction of unique values over the sample size is low (say $\le 10\%$).
+
+* The ratio of the frequency of the most prevalent value to the frequency of the second most prevalent value is large (say $\ge 20\%$).
+
+
+<!-- ## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables -->
+
+<!-- ```{r} -->
+<!-- # investigate zv/nzv predictors  -->
+
+<!-- nearZeroVar(ames, saveMetrics = TRUE)   # check which predictors are zv/nzv -->
+<!-- ``` -->
+
+
+<!-- ## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables -->
+
+<!-- ```{r} -->
+<!-- # investigate zv/nzv predictors  -->
+
+<!-- nearZeroVar(ames_train, saveMetrics = TRUE)   # check which predictors are zv/nzv -->
+<!-- ``` -->
+
+
+
+<!-- ## Zero-Variance (zv) and/or Near-Zero Variance (nzv) Variables -->
+
+<!-- ```{r, eval=FALSE} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val)    # filter out zv/nzv predictors -->
+<!-- ``` -->
+
+
+## Imputing Missing Entries
+
+Common imputation techniques:
+
+* `step_impute_median`: used for numeric (especially discrete) variables
+
+* `step_impute_mean`: used for numeric variables
+
+* `step_impute_knn`: used for both numeric and categorical variables (computationally expensive)
+
+* `step_impute_mode`: used for nominal (having no order) categorical variables
+
+
+<!-- ## Imputing Missing Entries {.smaller} -->
+
+
+<!-- ```{r} -->
+<!-- summary(ames_train)   # check which predictors have missing entries -->
+<!-- ``` -->
+
+<!-- ## Imputing Missing Entries -->
+
+<!-- ```{r} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%      # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area)       # impute missing entries -->
+<!-- ``` -->
+
+
+## Label Encoding Ordinal Categorical Variables
+
+Label encoding is a pure numeric conversion of the levels of a categorical variable. If a categorical variable is a factor and it has pre-specified levels then the numeric conversion will be in level order. If no levels are specified, the encoding will be based on alphabetical order.
+
+We should be careful with label encoding unordered categorical features because most models will treat them as ordered numeric features
+
+<!-- ## Label Encoding Ordinal Categorical Variables -->
+
+<!-- ```{r} -->
+<!-- # investigate predictors with possible ordering (label encoding) -->
+
+<!-- ames_train %>% count(MS_SubClass) -->
+<!-- ``` -->
+
+
+<!-- ## Label Encoding Ordinal Categorical Variables -->
+
+<!-- ```{r} -->
+<!-- # investigate predictors with possible ordering (label encoding) -->
+
+<!-- ames_train %>% count(Overall_Qual) -->
+<!-- ``` -->
+
+
+<!-- ## Label Encoding Ordinal Categorical Variables -->
+
+<!-- ```{r} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%    # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area) %>%      # impute missing entries -->
+<!--   step_integer(Overall_Qual)        # numeric conversion of levels of the predictors -->
+<!-- ``` -->
+
+
+
+## Normalizing (centering and scaling) Numeric Predictors
+
+Normalizing features includes **centering** and **scaling** so that numeric variables have zero mean and unit variance, which provides a common comparable unit of measure across all the variables.
+
+Before centering and scaling, it is better to remove zv/nzv variables, and perform necessary imputation and label encoding.
+
+
+<!-- ```{r} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%      # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area) %>%       # impute missing entries -->
+<!--   step_integer(Overall_Qual) %>%       # numeric conversion of levels of the predictors -->
+<!--   step_center(all_numeric(), -all_outcomes()) %>%      # center (subtract mean) all numeric predictors -->
+<!--   step_scale(all_numeric(), -all_outcomes())           # scale (divide by standard deviation) all numeric predictors -->
+<!-- ``` -->
+
+
+## Lumping Predictors
+
+Sometimes features (numerical or categorical) will contain levels that have very few observations (decided by a threshold). It can be beneficial to collapse, or “lump” these into a lesser number of categories.
+
+
+<!-- ```{r, eval=FALSE} -->
+<!-- # lumping categorical predictors if need be -->
+
+<!-- ames_train %>% count(Neighborhood) %>% arrange(n)   # check frequency of categories -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%  # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area) %>%                                   # impute missing entries -->
+<!--   step_integer(Overall_Qual) %>%                                      # numeric conversion of levels of the predictors -->
+<!--   step_center(all_numeric(), -all_outcomes()) %>%                     # center (subtract mean) all numeric predictors -->
+<!--   step_scale(all_numeric(), -all_outcomes()) %>%                      # scale (divide by standard deviation) all numeric predictors -->
+<!--   step_other(Neighborhood, threshold = 0.01, other = "other")         # lumping required predictors -->
+<!-- ``` -->
+
+
+## One-hot/dummy Encoding Categorical Predictors
+
+```{r , echo=FALSE,  fig.align='center', fig.cap="Adapted from Hands-on Machine Learning with R, Bradley Boehmke & Brandon Greenwell", out.width = '50%'}
+knitr::include_graphics("EFT/ohd.jpg")
+```
+
+
+<!-- ## One-hot/dummy Encoding Categorical Predictors -->
+
+<!-- ```{r} -->
+<!-- blueprint <- ames_recipe %>%  -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%  # filter out zv/nzv predictors -->
+<!--   step_impute_mean(Gr_Liv_Area) %>%                                   # impute missing entries -->
+<!--   step_integer(Overall_Qual) %>%                                      # numeric conversion of levels of the predictors -->
+<!--   step_center(all_numeric(), -all_outcomes()) %>%                     # center (subtract mean) all numeric predictors -->
+<!--   step_scale(all_numeric(), -all_outcomes()) %>%                      # scale (divide by standard deviation) all numeric predictors -->
+<!--   step_other(Neighborhood, threshold = 0.01, other = "other") %>%     # lumping required predictors -->
+<!--   step_dummy(all_nominal(), one_hot = FALSE)                          # one-hot/dummy encode nominal categorical predictors -->
+<!-- ``` -->
+
+
+## Preprocessing Steps
+
+A suggested order of potential steps that should work for most problems:
+
+1. Filter out zero or near-zero variance features.
+
+2. Perform imputation if required.
+
+3. Label encode ordinal categorical features.
+
+4. Normalize/Standardize (center and scale) numeric features.
+
+5. Lump certain features if required.
+
+6. One-hot or dummy encode categorical features.
+
+
+## Data Leakage (A Serious, Common Problem)
+
+Data leakage is when information from outside the training data set is used to create the model. Data leakage often occurs when the data preprocessing task is implemented with CV. To minimize this, feature engineering should be done in isolation of each resampling iteration.
+
+
+## Data Leakage (Example) {.smaller}
+
+**KNN Classification: Toy Example**
+
+<center>
+| Obs. | $X_1$ | $X_2$ | Y |
+|------|-------|-------|-------|
+| 1 | 1033 | 1.7 | Red |
+| 2 | 1112 | 1.5 | Red |
+| 3 | 1500 | 1 | Red |
+| 4 | 999 | 1 | Green |
+| 5 | 1012 | 1.5 | Green |
+| 6 | 1013 | 1 | Red |
+| 7 | 1233 | 1 | Green |
+| 8 | 1332 | 1 | Red |
+</center>
+\
+
+
+Suppose you implement 4-fold CV. Let's say the folds are randomly chosen to be observation pairs (2, 3), (4, 7), (1, 8), and (5, 6).
+
+
+
+
+## Preprocessing With `recipes` Package
+
+There are three main steps in creating and applying feature engineering with `recipes`:
+
+* **recipe:** where you define your feature engineering steps to create your blueprint
+
+* **prepare:** estimate feature engineering parameters based on training data
+
+* **bake:** apply the blueprint to data
+
+
+
+
+<!-- ## Preprocessing With `recipes` Package -->
+
+<!-- ```{r} -->
+<!-- # finally, after all preprocessing steps have been decided set up the overall blueprint -->
+
+<!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train) -->
+
+<!-- blueprint <- ames_recipe %>%     -->
+<!--   step_nzv(Street, Utilities, Pool_Area, Screen_Porch, Misc_Val) %>%  -->
+<!--   step_impute_mean(Gr_Liv_Area) %>% -->
+<!--   step_integer(Overall_Qual) %>% -->
+<!--   step_center(all_numeric(), -all_outcomes()) %>% -->
+<!--   step_scale(all_numeric(), -all_outcomes()) %>% -->
+<!--   step_other(Neighborhood, threshold = 0.01, other = "other") %>% -->
+<!--   step_dummy(all_nominal(), one_hot = FALSE) -->
+
+
+<!-- prepare <- prep(blueprint, data = ames_train)    # estimate feature engineering parameters based on training data -->
+
+
+<!-- baked_train <- bake(prepare, new_data = ames_train)   # apply the blueprint to training data for building final/optimal model -->
+
+<!-- baked_test <- bake(prepare, new_data = ames_test)    # apply the blueprint to test data for future use -->
+<!-- ``` -->
+
+
+<!-- ## Training Model  {.smaller} -->
+
+<!-- * **A KNN model** -->
+
+<!-- ```{r} -->
+<!-- # perform CV to tune K -->
+
+<!-- set.seed(042324) -->
+
+<!-- cv_specs <- trainControl(method = "cv", number = 5)   # 5-fold CV (1 repeat) -->
+
+<!-- k_grid <- expand.grid(k = seq(1, 10, by = 2)) -->
+
+<!-- knn_fit <- train(blueprint, -->
+<!--                   data = ames_train,  -->
+<!--                   method = "knn", -->
+<!--                   trControl = cv_specs, -->
+<!--                   tuneGrid = k_grid, -->
+<!--                   metric = "RMSE") -->
+
+<!-- knn_fit -->
+<!-- ``` -->
+
+
+<!-- ## Training Model  {.smaller} -->
+
+<!-- * **A KNN model** -->
+
+<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+<!-- ggplot(knn_fit) -->
+<!-- ``` -->
+
+
+<!-- ## Training Model  {.smaller} -->
+
+<!-- * **A linear regression model** -->
+
+<!-- ```{r} -->
+<!-- set.seed(042324) -->
+
+<!-- lm_fit <- train(blueprint, -->
+<!--                   data = ames_train,  -->
+<!--                   method = "lm", -->
+<!--                   trControl = cv_specs, -->
+<!--                   metric = "RMSE") -->
+
+<!-- lm_fit -->
+<!-- ``` -->
+
+
+<!-- ## Final Model and Test Set Error -->
+
+<!-- ```{r} -->
+<!-- # refit the final/optimal model using ALL modified training data, and obtain estimate of prediction error from modified test data -->
+
+<!-- final_model <- lm(Sale_Price ~ ., data = baked_train)    # build final model  -->
+
+<!-- final_preds <- predict(final_model, newdata = baked_test)   # obtain predictions on test data -->
+
+<!-- sqrt(mean((baked_test$Sale_Price - final_preds)^2))    # calculate test set RMSE -->
+<!-- ``` -->
+
+
+<!-- ## Variable Importance  -->
+
+<!-- ```{r, fig.align='center', fig.height=6, fig.width=8} -->
+<!-- # variable importance -->
+
+<!-- library(vip) -->
+
+<!-- vip(object = lm_fit,         # CV object  -->
+<!--     num_features = 20,   # maximum number of predictors to show importance for -->
+<!--     method = "model")            # model-specific VI scores -->
+<!-- ``` -->
+
+
+
+<!-- ## <span style="color:blue">Your Turn!!!</span> {.smaller} -->
+
+<!-- You will work with a dataset containing information on employee attrition. Please load the dataset using the code below. -->
+
+<!-- ```{r} -->
+<!-- attrition <- readRDS("attrition.rds") -->
+<!-- ``` -->
+
+
+<!-- **Objective**: The task is to predict `Attrition` (Yes/No) using the rest of the variables in the data (predictors/features). -->
+
+
+<!-- * **Step 1**: Investigate the dataset -->
+
+<!--     - What are the types of features? - categorical or numeric -->
+
+<!--     - If categorical, are they ordinal or nominal? If ordinal, are their levels in appropriate order? You can use the `levels` function to check the ordering. -->
+
+<!--     - Are there any features with missing entries? -->
+
+<!--     - Are there any zv/nzv features? -->
+
+<!-- * **Step 2**: Split the data into training and test sets (70-30 split) -->
+
+<!-- * **Step 3**: Perform required data preprocessing and create the blueprint. If using `step_dummy()`, set `one_hot = FALSE`. -->
+
+<!-- * **Step 4**: Implement 5-fold CV (1 repeat) to compare the performance of the following models. Use `metric = "Accuracy"`. -->
+
+<!--     - a logistic regression model (`method = "glm"` and `family = "binomial"`) -->
+
+<!--     - a KNN classifier with the optimal `K` chosen by CV (`method = "knn"`). Use a grid of `K` values $1, 2, \ldots, 10$. -->
+
+<!-- What is the optimal `K` chosen? How do the models compare in terms of the CV accuracies? -->
+
+<!-- * **Step 5**: Build your final optimal model. Obtain probability and class label predictions for the test set (use threshold of 0.5). Create the corresponding confusion matrix and report the test set accuracy. Also, create the ROC curve for the optimal model and report the AUC. -->
+
+
+
+
+

@@ -1,0 +1,539 @@
+---
+title: 'Logistic Regression and KNN Classifiers'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+# library(ggformula)
+# library(gridExtra)
+library(ISLR2)
+```
+
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+
+
+
+## K-Nearest Neighbors Regression
+
+* Non-parametric approach
+
+* Given a value for $K$ and a test data point $x_0$,
+
+$$\hat{f}(x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} y_i=\text{Average} \ \left(y_i \ \text{for all} \ i:\ x_i \in \mathcal{N}_0\right) $$
+
+where $\mathcal{N}_0$ is known as the **neighborhood** of $x_0$.
+
+
+* The method is based on the concept of closeness of $x_i$'s from $x_0$ for inclusion in the neighborhood $\mathcal{N}_0$. Usually, the **Euclidean distance** is used as a measure of closeness. The Euclidean distance between two $p$-dimensional vectors $\mathbf{a}=(a_1, a_2, \ldots, a_p)$ and $\mathbf{b}=(b_1, b_2, \ldots, b_p)$ is
+
+$$||\mathbf{a}-\mathbf{b}||_2 = \sqrt{(a_1-b_1)^2 + (a_2-b_2)^2 + \ldots + (a_p-b_p)^2}$$
+
+
+<!-- ## K-Nearest Neighbors Regression (single predictor): Fit -->
+
+<!-- **Restaurant Outlets Profit dataset** -->
+
+<!-- ```{r, message=FALSE} -->
+<!-- library(caret)   # load the caret package -->
+<!-- ``` -->
+
+<!-- * **1-NN regression** -->
+
+<!-- ```{r} -->
+<!-- knnfit1 <- knnreg(profit ~ population, data = outlets, k = 1)   # 1-nn regression -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- predict(knnfit1, newdata = data.frame(population = 6))  # 1-nn prediction -->
+<!-- ``` -->
+
+
+<!-- * **5-NN regression** -->
+
+<!-- ```{r} -->
+<!-- knnfit5 <- knnreg(profit ~ population, data = outlets, k = 5)   # 5-nn regression -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- predict(knnfit5, newdata = data.frame(population = 6))  # 5-nn prediction -->
+<!-- ``` -->
+
+<!-- ## K-Nearest Neighbors Regression (single predictor): Prediction -->
+
+<!-- **Ames Housing dataset** -->
+
+<!-- ```{r} -->
+<!-- nearest_neighbors <- ames %>% -->
+<!--   select(Sale_Price, Gr_Liv_Area) %>% -->
+<!--   mutate(distance = sqrt((1008-Gr_Liv_Area)^2)) %>%   # calculate distance -->
+<!--   arrange(distance)   # sort by increasing distance -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- predict(knnfit1, newdata = data.frame(population = 1008))  # 1-nn prediction -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- predict(knnfit5, newdata = data.frame(population = 1008))  # 5-nn prediction -->
+<!-- ``` -->
+
+
+<!-- ## Regression Methods: Comparison -->
+
+<!-- **Restaurant Outlets Profit dataset** -->
+
+<!-- ```{r, echo=FALSE, fig.align='center', fig.height=5, fig.width=8, fig.cap="dashed cyan: 1-nn fit, dotted red: 5-nn fit, blue: linear regression fit"} -->
+<!-- slrfit <- lm(profit ~ population, data = outlets)   # fit the SLR model -->
+
+<!-- pop_seq <- seq(min(outlets$population, na.rm = TRUE), max(outlets$population, na.rm = TRUE), 0.01) -->
+
+<!-- # obtain predictions for all training data points -->
+<!-- # knn_1 <- predict(knnfit1, newdata = data.frame(population = min(outlets$population, na.rm = TRUE):max(outlets$population, na.rm = TRUE))) -->
+<!-- knn_1 <- predict(knnfit1, newdata = data.frame(population = pop_seq)) -->
+<!-- # knn_5 <- predict(knnfit5, newdata = data.frame(population = min(outlets$population, na.rm = TRUE):max(outlets$population, na.rm = TRUE))) -->
+<!-- knn_5 <- predict(knnfit5, newdata = data.frame(population = pop_seq)) -->
+<!-- # p <-  predict(slrfit, newdata = data.frame(population = min(outlets$population, na.rm = TRUE):max(outlets$population, na.rm = TRUE))) -->
+<!-- p <-  predict(slrfit, newdata = data.frame(population = pop_seq)) -->
+
+<!-- # column bind original data with predicted values -->
+<!-- # ames1 <- outlets %>% select(profit, population) %>% filter(!is.na(population)) -->
+<!-- # predictions <- data.frame(population = min(outlets$population, na.rm = TRUE):max(outlets$population, na.rm = TRUE), -->
+<!--                           # linear = p, knn_1, knn_5) -->
+<!-- predictions <- data.frame(population = pop_seq, -->
+<!--                           linear = p, knn_1, knn_5) -->
+
+<!-- # plot the three models -->
+<!-- ggplot(data = outlets, aes(x = population, y = profit)) + -->
+<!--   geom_point() + -->
+<!--   geom_line(data = predictions, aes(x = population, y = knn_1), color = "cyan", linetype = "dashed", linewidth = 1) +   # 1-nn regression -->
+<!--   geom_line(data = predictions, aes(x = population, y = knn_5), color = "red", linetype = "dotted", linewidth = 1) +   # 5-nn regression -->
+<!--   geom_line(data = predictions, aes(x = population, y = linear), color = "blue", linewidth = 1) + -->
+<!--   theme_bw() -->
+
+<!-- ``` -->
+
+
+<!-- ## <span style="color:blue">Your Turn!!!</span> -->
+
+<!-- For the **Advertising** dataset, create a 10-nearest neighbors fit **knnfit10** with **sales** as response and **TV** as predictor. Obtain the predicted **sales** for $\text{TV} = 225,000$. -->
+
+
+<!-- ## <span style="color:blue">Question!!!</span> -->
+
+<!-- As $k$ in KNN regression increases, -->
+
+<!-- * the flexibility of the fit $\underline{\hspace{5cm}}$ (increases/decreases) -->
+
+<!-- * the bias of the fit $\underline{\hspace{5cm}}$ (increases/decreases) -->
+
+<!-- * the variance of the fit $\underline{\hspace{5cm}}$ (increases/decreases) -->
+
+
+## K-Nearest Neighbors Regression (multiple predictors)
+
+It is important to **scale (subtract mean and divide by standard deviation)** the predictors when considering KNN regression so that the Euclidean distance is not dominated by a few of them with large values.
+
+<!-- **House Prices dataset** -->
+
+<!-- ```{r} -->
+
+<!-- # scale predictors -->
+<!-- house_prices_scaled <- data.frame(size_scaled = scale(house_prices$size), -->
+<!--                                   num_bedrooms_scaled = scale(house_prices$num_bedrooms), -->
+<!--                                   price = house_prices$price) -->
+
+<!-- head(house_prices_scaled)   # first six observations -->
+
+<!-- ``` -->
+
+
+<!-- ## K-Nearest Neighbors Regression (multiple predictors) -->
+
+<!-- **House Prices dataset** -->
+
+<!-- ```{r, message=FALSE} -->
+<!-- library(caret)   # load library -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- knnfit10 <- knnreg(price ~ size_scaled + num_bedrooms_scaled, data = house_prices_scaled, k = 10)   # 10-nn regression -->
+
+<!-- ``` -->
+
+
+<!-- It is also important to apply scaling to test data points before prediction. Suppose, you want predictions for `size` = 2000 square feet, and `num_bedrooms` = 3, then -->
+
+<!-- ```{r} -->
+<!-- # obtain 10-nn prediction -->
+
+<!-- predict(knnfit10, newdata = data.frame(size_scaled = (2000 - mean(house_prices$size, na.rm = TRUE))/sd(house_prices$size, na.rm = TRUE), -->
+<!--                                      num_bedrooms_scaled = (3 - mean(house_prices$num_bedrooms))/sd(house_prices$num_bedrooms))) -->
+<!-- ``` -->
+
+
+## Linear Regression vs K-Nearest Neighbors
+
+
+<!-- * Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric. -->
+
+<!-- * Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification ($Y$ qualitative). -->
+
+<!-- * Linear regression is interpretable, KNN is not. -->
+
+<!-- * Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well. Using Euclidean distance with KNN does not allow for qualitative predictors. -->
+
+<!-- * In terms of prediction, KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - curse of dimensionality. -->
+
+
+<center>
+|  |  Linear Regression | KNN Regression |
+|-----------|----------|-----------
+| Type |  |  |
+| Task |  |  |
+| Predictive Performance |  |  |
+| Interpretability |  |  |
+| Other |  |  |
+
+</center>
+\
+
+
+
+
+<!-- ## Linear Regression vs K-Nearest Neighbors (Recap) -->
+
+
+<!-- * Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric. -->
+
+<!-- * Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification ($Y$ qualitative). -->
+
+<!-- * Linear regression is interpretable, KNN is not. -->
+
+<!-- * Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well. Using Euclidean distance with KNN does not allow for qualitative predictors. -->
+
+<!-- * In terms of prediction, KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - curse of dimensionality. -->
+
+
+<!-- <center> -->
+<!-- |  |  Linear Regression | KNN Regression | -->
+<!-- |-----------|----------|----------- -->
+<!-- | Type |  |  | -->
+<!-- | Task |  |  | -->
+<!-- | Predictive Performance |  |  | -->
+<!-- | Interpretability |  |  | -->
+<!-- | Other |  |  | -->
+
+<!-- </center> -->
+<!-- \ -->
+
+
+
+
+## Classification Problems
+
+* Response $Y$ is qualitative (categorical).
+
+* The objective is to build a classifier $\hat{Y}=\hat{C}(\mathbf{X})$ that assigns a class label to a future unlabeled (unseen) observation and understand the relationship between the predictors and response.
+
+* There can be two types of predictions based on the research problem.
+
+  + Class probabilities
+  
+  + Class labels
+
+<!-- Often we are more interested in estimating the probabilities than actual class labels. -->
+
+
+<!-- ## Classification Problems: Example -->
+
+<!-- ## Logistic Regression -->
+
+<!-- * Supervised learning -->
+
+<!-- * Classification (even though the term contains "Regression") -->
+
+<!-- * Parametric approach -->
+
+<!-- **Default dataset** -->
+
+<!-- ```{r, message=FALSE} -->
+<!-- library(ISLR2)   # load library -->
+<!-- data("Default")   # load dataset -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- head(Default)   # print first six observations -->
+<!-- ``` -->
+
+<!-- ```{r,message=FALSE} -->
+<!-- table(Default$default)   # class frequencies -->
+<!-- ``` -->
+
+
+<!-- **We will consider `default` as the response variable.** -->
+
+
+<!-- ## Classification Problems: Example -->
+
+<!-- For some algorithms, we might need to convert the categorical response to numeric (0/1) values. -->
+
+<!-- **Default dataset** -->
+
+<!-- ```{r,message=FALSE} -->
+<!-- Default$default_id <- ifelse(Default$default == "Yes", 1, 0)   # create 0/1 variable -->
+
+<!-- head(Default, 10)   # print first ten observations -->
+<!-- ``` -->
+
+
+
+
+## K-Nearest Neighbors Classifier
+
+Given a value for $K$ and a test data point $x_0$,
+$$P(Y=j | X=x_0)=\dfrac{1}{K} \sum_{x_i \in \mathcal{N}_0} I(y_i = j)$$
+
+where $\mathcal{N}_0$ is known as the **neighborhood** of $x_0$.
+
+
+For classification problems, the predictions are obtained in terms of **majority vote** (unlike in regression where predictions are obtained by averaging).
+
+Let's implement this classifier in R.
+
+
+<!-- ## K-Nearest Neighbors Classifier: Build Model  -->
+
+<!-- **Default dataset** -->
+
+<!-- response ($Y$): `default` and predictor ($X$): `balance` -->
+
+<!-- ```{r} -->
+<!-- library(caret)   # load package 'caret' -->
+
+<!-- knnfit <- knn3(default ~ balance, data = Default, k = 10)   # fit 10-nn model -->
+<!-- ``` -->
+
+
+<!-- ## K-Nearest Neighbors Classifier: Predictions  -->
+
+<!-- **Default dataset** -->
+
+<!-- * One can directly obtain the class label predictions as below. -->
+
+<!-- ```{r} -->
+<!-- knn_class_preds_1 <- predict(knnfit, newdata = Default, type = "class")   # obtain default class label predictions -->
+<!-- ``` -->
+
+
+<!-- * Otherwise, one can first obtain predictions in terms of probabilities and then convert them into class label predictions based on a threshold. -->
+
+<!-- ```{r} -->
+<!-- knn_prob_preds <- predict(knnfit, newdata = Default, type = "prob")   # obtain predictions as probabilities -->
+<!-- ``` -->
+
+
+<!-- ```{r} -->
+<!-- threshold <- 0.5   # set threshold -->
+
+<!-- knn_class_preds_2 <- factor(ifelse(knn_prob_preds[,2] > threshold, "Yes", "No"))   # obtain predictions as class labels -->
+<!-- ``` -->
+
+
+<!-- ## K-Nearest Neighbors Classifier: Performance  {.smaller} -->
+
+<!-- **Default dataset** -->
+
+<!-- ```{r} -->
+<!-- # create confusion matrix -->
+
+<!-- # use the following code only when all predictions are from the same class -->
+<!-- # levels(knn_class_preds_1) = c("No", "Yes")  -->
+
+<!-- confusionMatrix(data = knn_class_preds_1, reference = Default$default, positive = "Yes")    -->
+<!-- ``` -->
+
+
+
+
+
+## Logistic Regression {.smaller}
+
+A logistic regression classifier is a common ML model for binary classification problems. It assumes a functional form of the relationship between the response and the predictors.
+\
+\
+
+Consider a one-dimensional two-class problem.
+
+* Transform the linear model $\beta_0 + \beta_1 \ X$ so that the output is a probability.
+
+* Use **logistic** or **sigmoid** function $$g(t)=\dfrac{e^t}{1+e^t} \ \ \ \text{for} \ t \in \mathcal{R}$$
+
+* Suppose $p(X)=P(Y=1|X)$. Then, $$p(X)=g\left(\beta_0 + \beta_1 \ X\right)=\dfrac{e^{\beta_0 + \beta_1 \ X}}{1+e^{\beta_0 + \beta_1 \ X}}$$
+
+* $e \approx 2.71828$ is a mathematical constant (Euler's number).
+
+* $\log \left(\dfrac{p(X)}{1-p(X)}\right) = \beta_0 + \beta_1 \ X$
+
+
+Let's implement this model in R.
+
+
+
+## Why Not Linear Regression? 
+
+**Default dataset**
+
+```{r, echo=FALSE}
+Default$default_id <- ifelse(Default$default == "Yes", 1, 0)
+# lrfit <- lm(default_id ~ balance, data = Default)   # fit SLR
+# summary(lrfit$fitted.values)   # summary of y_hats
+```
+
+```{r, echo=FALSE,  fig.align='center', fig.width=7, fig.height=4.5}
+ggplot(data = Default, aes(x = balance, y = default_id)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) + 
+  scale_y_continuous(breaks = c(0, 0.5, 1)) + labs(y = "Default = Yes is 1, otherwise 0")
+```
+
+Linear regression does not model probabilities well. Linear regression might produce probabilities less than zero or bigger than one.
+
+
+## Logistic Regression
+
+**Default dataset**
+
+```{r , fig.align='center', fig.width=7, fig.height=4.5, echo = FALSE}
+logregfit <- glm(default ~ balance, data = Default, family = binomial)   # fit logistic regression model
+
+ggplot(data = Default, aes(x = balance, y = ifelse(default == "Yes", 1, 0))) +
+  geom_point() +
+  geom_line(aes(y = logregfit$fitted.values), color = "blue") + 
+  scale_y_continuous(breaks = c(0, 0.5, 1)) +
+  labs(y = "Default = Yes is 1, otherwise 0")
+```
+
+
+
+## Why Not Linear Regression?
+
+Suppose we have a response $Y$,
+
+<center>
+$Y=\begin{cases}
+1; & \text{if stroke} \\
+2; & \text{if drug overdose} \\
+3; & \text{if epileptic seizure}
+\end{cases}$
+</center>
+\
+
+Linear regression suggests an ordering, and in fact implies that the difference between stroke and drug overdose is the same as between drug overdose and epileptic seizure.
+
+
+
+<!-- ## Logistic Regression -->
+
+## Logistic Regression: Predictions and Interpretation
+
+**Default dataset**
+
+For `balance`=\$700,
+
+<!-- $$\hat{p}(X)=\dfrac{e^{\hat{\beta}_0+\hat{\beta}_1 X}}{1+e^{\hat{\beta}_0+\hat{\beta}_1 X}}=\dfrac{e^{-10.465328 + (0.005389 \times 700)}}{1+e^{-10.465328 + (0.005389 \times 700)}}=0.0012$$ -->
+
+$$\hat{p}(X)=\dfrac{e^{b_0+b_1 X}}{1+e^{b_0+b_1 X}}=\dfrac{e^{-10.68 + (0.005516 \times 700)}}{1+e^{-10.68 + (0.005516 \times 700)}}=0.0011$$
+
+
+<!-- ```{r, message=FALSE} -->
+<!-- predict(logregfit, newdata = data.frame(balance = 700))   # obtain log-odds predictions -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- predict(logregfit, newdata = data.frame(balance = 700), type = "response")   # obtain probability predictions -->
+<!-- ``` -->
+
+**Interpretations**: A positive $\hat{\beta}_1$ indicates that a higher balance is associated with a larger log odds of default, in other words, a higher probability of default. However, the change in the probability of default due to a one-unit change in balance depends on the current balance value.
+
+
+
+## Logistic Regression vs K-Nearest Neighbors
+
+
+<!-- * Linear regression is a parametric approach (with restrictive assumptions), KNN is non-parametric. -->
+
+<!-- * Linear regression works for regression problems ($Y$ numerical), KNN can be used for both regression and classification ($Y$ qualitative). -->
+
+<!-- * Linear regression is interpretable, KNN is not. -->
+
+<!-- * Linear regression can accommodate qualitative predictors and can be extended to include interaction terms as well. Using Euclidean distance with KNN does not allow for qualitative predictors. -->
+
+<!-- * In terms of prediction, KNN can be pretty good for small $p$, that is, $p \le 4$ and large $n$. Performance of KNN deteriorates as $p$ increases - curse of dimensionality. -->
+
+
+<center>
+|  |  Logistic Regression | KNN Classifier |
+|-----------|----------|-----------
+| Type |  |  |
+| Task |  |  |
+| Predictive Performance |  |  |
+| Interpretability |  |  |
+| Other |  |  |
+
+</center>
+\
+
+
+## Model Assessment: Confusion Matrix
+
+<!-- <center> -->
+<!-- |  | Predicted class labels | -->
+<!-- |-----------|----------|----------- -->
+<!-- |  |  0 | 1 | -->
+<!-- |-----------|----------|----------- -->
+<!-- | 0 | True Negative |  False Positive  | -->
+<!-- | 1 | False Negative |  True Positive | -->
+<!-- </center> -->
+<!-- \ -->
+
+<!-- <center> -->
+<!-- |  | Reference class labels | -->
+<!-- |-----------|----------|-----------| -->
+
+
+<center>
+|  |  Actual Positive/Event | Actual Negative/Non-event |
+|-----------|----------|-----------
+| Predicted Positive/Event |  |  |
+| Predicted Negative/non-event |  |  |
+</center>
+\
+
+
+
+## Model Assessment: ROC Curve
+
+A Receiver Operating Characteristic curve, or ROC curve, is a graphical plot that illustrates the performance of a binary classifier model at varying threshold values.
+
+The ROC curve with the `pROC` package in R plots sensitivity (recall) along the vertical y-axis and specificity along the horizontal x-axis.
+
+The closer the curve hugs the upper left-hand corner, the better is the performance of the classifier. AUC refers to the Area Under this Curve.
+
+
+

@@ -16,32 +16,17 @@ book:
   
   chapters:
     - index.qmd
+    - Slides1.qmd
+    - Slides2.qmd
+    - Slides3.qmd
+    - Slides4.qmd
+    - Slides5.qmd
+    - Slides6.qmd
+    - Slides8.qmd
+    - Slides9.qmd
+    - Slides10.qmd
     
-    - part: SQL
-      chapters: 
-        - sql_1.qmd
-        - sql_2.qmd
-        - sql_3.qmd
-        - sql_4.qmd
-        
-    - part: Text Analysis
-      chapters: 
-        - TextAnalysis_1.qmd
-        - TextAnalysis_2.qmd
-        - TextAnalysis_3.qmd
-        
-    - part: Geospatial Data
-      chapters: 
-        - GeospatialData.qmd
-        
-    - part: Code Performance
-      chapters: 
-        - CodePerformance.qmd
-        
-    - part: R Package
-      chapters: 
-        - Rpackage.qmd    
-        
+
         
         
 #    - intro.qmd
