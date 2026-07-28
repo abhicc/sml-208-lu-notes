@@ -68,7 +68,7 @@ library(rpart.plot)
 
 <!-- ames_recipe <- recipe(Sale_Price ~ ., data = ames_train)   # set up recipe -->
 
-<!-- blueprint_minimal <- ames_recipe %>% -->
+<!-- blueprint_minimal <- ames_recipe |> -->
 <!--   step_impute_mean(Gr_Liv_Area)                                    # impute missing entries -->
 
 
@@ -230,7 +230,7 @@ library(rpart.plot)
 
 <!-- # create recipe and blueprint, prepare and apply blueprint -->
 
-<!-- blueprint <- recipe(Species ~ ., data = iris_train) %>% -->
+<!-- blueprint <- recipe(Species ~ ., data = iris_train) |> -->
 <!--   step_normalize(all_predictors())               # center and scale numeric predictors, in this case, all predictors -->
 
 <!-- prepare <- prep(blueprint, training = iris_train) -->
@@ -449,6 +449,7 @@ The process is called **gradient boosting** since it uses the **gradient descent
 ## Gradient Boosting
 
 ```{r, echo=FALSE, fig.align='center', fig.height=6, fig.width=8}
+
 # Simulate sine wave data
 set.seed(1112)  # for reproducibility
 df <- tibble::tibble(
@@ -470,14 +471,14 @@ rpartBoost <- function(x, y, data, num_trees = 100, learn_rate = 0.1, tree_depth
     r <- r - g_b_hat
     colnames(G_b_hat) <- paste0("tree_", c(0, seq_len(num_trees)))
   }
-  cbind(df, as.data.frame(G_b_hat)) %>%
-    gather(tree, prediction, starts_with("tree")) %>%
-    mutate(tree = stringr::str_extract(tree, "\\d+") %>% as.numeric())
+  cbind(df, as.data.frame(G_b_hat)) |>
+    gather(tree, prediction, starts_with("tree")) |>
+    mutate(tree = stringr::str_extract(tree, "\\d+") |> as.numeric())
 }
 
 # Plot boosted tree sequence
-rpartBoost(x, y, data = df, num_trees = 2^10, learn_rate = 0.05, tree_depth = 1) %>%
-  filter(tree %in% c(0, 2^c(0:10))) %>%
+rpartBoost(x, y, data = df, num_trees = 2^10, learn_rate = 0.05, tree_depth = 1) |>
+  filter(tree %in% c(0, 2^c(0:10))) |>
   ggplot(aes(x, prediction)) +
     ylab("y") +
     geom_point(data = df, aes(x, y), alpha = .1) +
