@@ -1,0 +1,32 @@
+# Quarto build outputs
+/_book/
+/_site/
+site_libs
+/*.html
+
+# Quarto freeze and execution caches
+/*_cache/
+/*_files/
+.quarto/
+**/*.quarto_ipynb
+
+# R/RStudio specific files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+/.quarto/
+
+# LaTeX and PDF build artifacts
+*.aux
+*.log
+*.tex
+*.pdf
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.out
+*.toc
+*.lof
+*.lot

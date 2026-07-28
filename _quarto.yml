@@ -1,0 +1,61 @@
+project:
+  type: book
+
+book:
+  title: "Statistical Machine Learning (208 @ LU) Notes"
+  author: "Abhishek Chakraborty"
+  date: today
+  date-format: long
+  reader-mode: true
+  
+  page-footer:
+    left: |
+      Statistical Machine Learning (208) Course Notes by Abhishek Chakraborty.
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+  
+  chapters:
+    - index.qmd
+    
+    - part: SQL
+      chapters: 
+        - sql_1.qmd
+        - sql_2.qmd
+        - sql_3.qmd
+        - sql_4.qmd
+        
+    - part: Text Analysis
+      chapters: 
+        - TextAnalysis_1.qmd
+        - TextAnalysis_2.qmd
+        - TextAnalysis_3.qmd
+        
+    - part: Geospatial Data
+      chapters: 
+        - GeospatialData.qmd
+        
+    - part: Code Performance
+      chapters: 
+        - CodePerformance.qmd
+        
+    - part: R Package
+      chapters: 
+        - Rpackage.qmd    
+        
+        
+        
+#    - intro.qmd
+#    - summary.qmd
+#    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: scrreprt
+
+
